@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10131a"><meta name="description" content="JARVIS.IR AI assistant">
+<link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icon.svg">
+<title>JARVIS.IR</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0d12;color:#f4f7fb;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+.app{max-width:980px;margin:auto;min-height:100vh;display:flex;flex-direction:column}
+header{position:sticky;top:0;z-index:5;background:#10131aee;backdrop-filter:blur(12px);border-bottom:1px solid #242936;padding:14px 18px;display:flex;justify-content:space-between}
+.brand{font-weight:800;font-size:20px}.status{font-size:12px;color:#8ee6a8}
+main{flex:1;padding:20px 14px 110px}.welcome{text-align:center;margin:14vh auto 0}.welcome h1{font-size:36px;margin:0 0 10px}.welcome p{color:#aeb7c6}
+.messages{display:flex;flex-direction:column;gap:12px}.msg{max-width:82%;padding:12px 15px;border-radius:18px;line-height:1.8;white-space:pre-wrap;word-break:break-word}
+.user{align-self:flex-start;background:#1d6fe8}.ai{align-self:flex-end;background:#171b23;border:1px solid #252b38}
+.composer{position:fixed;bottom:0;left:0;right:0;background:#0b0d12ee;backdrop-filter:blur(14px);padding:12px;z-index:10}
+.composer-inner{max-width:980px;margin:auto;display:flex;gap:8px;align-items:end;background:#171b23;border:1px solid #2a3140;border-radius:22px;padding:8px}
+textarea{flex:1;resize:none;min-height:44px;max-height:140px;border:0;outline:0;background:transparent;color:white;padding:10px;font:inherit}
+button{border:0;border-radius:15px;min-width:44px;height:44px;background:#242b38;color:white;cursor:pointer;font-size:18px}.send{background:#1d6fe8}.on{background:#b33a3a}.error{background:#35191d;border:1px solid #71343c}
+.hint{text-align:center;font-size:11px;color:#70798a;margin-top:7px}@media(max-width:600px){.welcome h1{font-size:30px}.msg{max-width:92%}}
+</style></head>
+<body>
+<div class="app">
+<header><div class="brand">JARVIS.IR</div><div id="status" class="status">در حال اتصال…</div></header>
+<main><section id="welcome" class="welcome"><h1>سلام، من JARVIS هستم</h1><p>سؤالت را بنویس یا با میکروفون صحبت کن.</p></section><section id="messages" class="messages"></section></main>
+<div class="composer"><div class="composer-inner"><button id="mic">🎙️</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS.IR • دستیار هوش مصنوعی</div></div>
+</div>
+<script>
+const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic");
+const messages=[];
+function add(role,text){welcome.style.display="none";const e=document.createElement("div");e.className="msg "+(role==="user"?"user":"ai");e.textContent=text;list.appendChild(e);e.scrollIntoView({behavior:"smooth"});}
+async function health(){try{const r=await fetch("/health",{cache:"no-store"});if(!r.ok)throw 0;status.textContent="● آنلاین"}catch{status.textContent="● آفلاین"}}
+async function ask(){
+ const text=input.value.trim();if(!text)return;input.value="";messages.push({role:"user",content:text});add("user",text);send.disabled=true;
+ const load=document.createElement("div");load.className="msg ai";load.textContent="در حال فکر کردن…";list.appendChild(load);
+ try{const r=await fetch("/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages})});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||("HTTP "+r.status));const reply=d.reply||d.answer||"پاسخی دریافت نشد.";load.remove();messages.push({role:"assistant",content:reply});add("assistant",reply)}
+ catch(e){load.className="msg ai error";load.textContent="ارتباط با هوش مصنوعی برقرار نشد.\n"+e.message}
+ finally{send.disabled=false;input.focus()}
+}
+send.onclick=ask;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask()}});
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){const rec=new SR();rec.lang="fa-IR";rec.interimResults=false;rec.onstart=()=>mic.classList.add("on");rec.onend=()=>mic.classList.remove("on");rec.onresult=e=>{input.value=e.results[0][0].transcript;ask()};mic.onclick=()=>rec.start()}else mic.onclick=()=>alert("تشخیص گفتار در این مرورگر پشتیبانی نمی‌شود.");
+health();if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
+</script></body></html>
