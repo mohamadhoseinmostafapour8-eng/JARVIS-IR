@@ -1,4 +1,3 @@
-
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -15,13 +14,14 @@ const PORT = Number(process.env.PORT || 3000);
 function getReply(message) {
   const text = message.toLowerCase().trim();
 
-  if (/^(سلام|درود|hi|hello|hey)\b?/.test(text) || text === "سلام") {
-    return "سلام! من جارویس هستم. 🤖 چطور می‌تونم کمکت کنم؟";
+  if (text.includes("سلام") || text.includes("درود") ||
+      text.includes("hello") || text.includes("hi")) {
+    return "سلام! من جارویس هستم! 🤖 چطور می‌تونم کمکت کنم؟";
   }
 
   if (text.includes("اسمت") || text.includes("نامت") ||
       text.includes("who are you")) {
-    return "من JARVIS.IR هستم؛ دستیار سادهٔ رایگان تو!";
+    return "من JARVIS.IR هستم؛ دستیار سادهٔ تو!";
   }
 
   if (text.includes("خوبی") || text.includes("how are you")) {
@@ -30,18 +30,14 @@ function getReply(message) {
 
   if (text.includes("ممنون") || text.includes("مرسی") ||
       text.includes("thank")) {
-    return "خواهش می‌کنم! هر وقت خواستی من اینجام. 💙";
-  }
-
-  if (text.includes("کمک") || text.includes("help")) {
-    return "حتماً! سؤالت رو ساده و واضح بنویس تا تا جایی که می‌تونم کمکت کنم.";
+    return "خواهش می‌کنم! 💙";
   }
 
   if (text.includes("خداحافظ") || text.includes("bye")) {
-    return "خداحافظ! تا دیدار بعدی! 👋";
+    return "خداحافظ! 👋";
   }
 
-  return "من در حالت رایگان ساده هستم و هنوز پاسخ این سؤال رو بلد نیستم. می‌تونی سؤال ساده‌تری بپرسی.";
+  return "من در حالت رایگان ساده هستم و هنوز پاسخ این سؤال رو بلد نیستم.";
 }
 
 app.get("/health", (_req, res) => {
@@ -57,10 +53,7 @@ app.post(["/chat", "/ask", "/api/chat"], (req, res) => {
     : null;
 
   if (!last || !last.content.trim()) {
-    return res.status(400).json({
-      ok: false,
-      error: "Please enter a message."
-    });
+    return res.status(400).json({ ok: false, error: "Please enter a message." });
   }
 
   const reply = getReply(last.content);
