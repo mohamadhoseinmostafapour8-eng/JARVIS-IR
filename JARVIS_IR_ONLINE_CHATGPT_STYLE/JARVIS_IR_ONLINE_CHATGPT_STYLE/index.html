@@ -89,7 +89,20 @@ async function ask(){
  const load=document.createElement("div");load.className="msg ai";load.textContent="یک لحظه…";list.appendChild(load);
  try{
    await new Promise(resolve=>setTimeout(resolve,180));
-   const reply=localReply(text);
+ const response = await fetch("/api/chat", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    message: text,
+    history: messages.slice(0, -1).slice(-20)
+  })
+});
+
+if (!response.ok) throw new Error("AI request failed");
+
+const data = await response.json();
+const reply = data.reply;
+  
    load.remove();messages.push({role:"user",content:text},{role:"assistant",content:reply});add("assistant",reply);speak(reply);
  }catch(e){load.className="msg ai error";load.textContent="پاسخ آماده نشد. دوباره امتحان کن."}
  finally{send.disabled=false;input.focus()}
