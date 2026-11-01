@@ -98,13 +98,14 @@ async function ask(){
   })
 });
 
-if (!response.ok) throw new Error("AI request failed");
+const data = await response.json().catch(() => ({}));
+if (!response.ok) throw new Error(data.error || "AI request failed");
 
-const data = await response.json();
-const reply = data.reply;
+const reply = data.reply || data.answer;
+if (typeof reply !== "string" || !reply.trim()) throw new Error("پاسخ خالی از سرور دریافت شد.");
   
    load.remove();messages.push({role:"user",content:text},{role:"assistant",content:reply});add("assistant",reply);speak(reply);
- }catch(e){load.className="msg ai error";load.textContent="پاسخ آماده نشد. دوباره امتحان کن."}
+ }catch(e){load.className="msg ai error";load.textContent=e.message || "پاسخ آماده نشد. دوباره امتحان کن."}
  finally{send.disabled=false;input.focus()}
 }
 send.onclick=ask;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask()}});
