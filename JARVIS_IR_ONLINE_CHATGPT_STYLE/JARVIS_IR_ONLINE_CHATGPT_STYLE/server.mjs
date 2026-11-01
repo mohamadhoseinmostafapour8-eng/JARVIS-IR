@@ -37,16 +37,23 @@ app.post(["/chat", "/ask", "/api/chat"], async (req, res) => {
     return res.status(503).json({ ok: false, error: "HF_TOKEN is missing in Render Environment." });
   }
 
-  const messages = Array.isArray(req.body?.messages)
-    ? req.body.messages
-        .filter(m => m && ["user", "assistant"].includes(m.role) && typeof m.content === "string" && m.content.trim())
-        .slice(-20)
-        .map(m => ({ role: m.role, content: m.content.trim().slice(0, 8000) }))
-    : [];
+  const clean = (items) => items
+    .filter(m => m && ["user", "assistant"].includes(m.role) && typeof m.content === "string" && m.content.trim())
+    .slice(-20)
+    .map(m => ({ role: m.role, content: m.content.trim().slice(0, 8000) }));
 
-  if (!messages.length && typeof req.body?.message === "string" && req.body.message.trim()) {
+  let messages = Array.isArray(req.body?.messages) ? clean(req.body.messages) : [];
+
+  // The current website sends the conversation as "history" plus "message".
+  if (!messages.length && Array.isArray(req.body?.history)) {
+    messages = clean(req.body.history);
+  }
+
+  if (typeof req.body?.message === "string" && req.body.message.trim()) {
     messages.push({ role: "user", content: req.body.message.trim().slice(0, 8000) });
   }
+
+  messages = messages.slice(-20);
 
   if (!messages.length) {
     return res.status(400).json({ ok: false, error: "Please enter a message." });
