@@ -13,6 +13,7 @@ app.use(express.static(__dirname));
 const PORT = Number(process.env.PORT || 3000);
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
+const OWNER_CODE = process.env.JARVIS_OWNER_CODE;
 const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 
 const instructions = `You are JARVIS.IR, a helpful general-purpose AI assistant.
@@ -93,11 +94,24 @@ app.post(["/chat", "/ask", "/api/chat"], async (req, res) => {
   }
   messages = messages.slice(-20);
 
+  const ownerVerified = Boolean(OWNER_CODE) && messages.some(
+    m => m.role === "user" && m.content.trim() === OWNER_CODE
+  );
+  if (ownerVerified) {
+    messages = messages.filter(m => !(m.role === "user" && m.content.trim() === OWNER_CODE));
+    if (!messages.length) {
+      messages.push({ role: "user", content: "رمز شناسایی مالک پروژه تأیید شد." });
+    }
+  }
+
   if (!messages.length) {
     return res.status(400).json({ ok: false, error: "Please enter a message." });
   }
 
   try {
+    const systemInstructions = ownerVerified
+      ? instructions + "\\nThe current user has verified ownership of the JARVIS.IR project using the private owner code. Address this user as \"قربان\" in Persian and recognize them as Mohammad Hossein, the project owner. Do not reveal or repeat the private code."
+      : instructions;
     const response = await fetch(GROQ_ENDPOINT, {
       method: "POST",
       headers: {
@@ -106,7 +120,7 @@ app.post(["/chat", "/ask", "/api/chat"], async (req, res) => {
       },
       body: JSON.stringify({
         model: MODEL,
-        messages: [{ role: "system", content: instructions }, ...messages],
+        messages: [{ role: "system", content: systemInstructions }, ...messages],
         max_tokens: 1200,
         temperature: 0.7
       }),
