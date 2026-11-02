@@ -122,6 +122,26 @@ app.post("/api/image", async (req, res) => {
   }
 });
 
+app.post("/api/image", async (req, res) => {
+  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+  const apiToken = process.env.CLOUDFLARE_API_TOKEN;
+  if (!accountId || !apiToken) return res.status(503).json({ok:false,error:"برای ساخت تصویر، CLOUDFLARE_ACCOUNT_ID و CLOUDFLARE_API_TOKEN را در Environment سرویس Render تنظیم کن."});
+  const prompt = typeof req.body?.prompt === "string" ? req.body.prompt.trim().slice(0,1800) : "";
+  if (!prompt) return res.status(400).json({ok:false,error:"توضیح تصویر را بنویس."});
+  const styles = {cinematic:"cinematic lighting, highly detailed",anime:"anime illustration, polished details",realistic:"photorealistic, natural lighting",fantasy:"epic fantasy concept art",comic:"comic-book illustration, bold ink lines", "3d":"high-quality 3D render"};
+  const ratios = {square:[1024,1024],landscape:[1024,768],portrait:[768,1024]};
+  const [width,height] = ratios[req.body?.ratio] || ratios.square;
+  const style = styles[req.body?.style] || styles.cinematic;
+  try {
+    const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/@cf/black-forest-labs/flux-1-schnell`, {method:"POST",headers:{Authorization:`Bearer ${apiToken}`,"Content-Type":"application/json"},body:JSON.stringify({prompt:`${prompt}. Style: ${style}. No watermark.`,width,height,num_steps:4}),signal:AbortSignal.timeout(90000)});
+    const data = await response.json().catch(()=>({}));
+    if (!response.ok || data.success === false) { console.error("Image API error:",response.status,data.errors||data); return res.status(502).json({ok:false,error:"سرویس تصویرساز پاسخ نداد؛ تنظیمات یا سهمیه را بررسی کن."}); }
+    const image = data.result?.image;
+    if (typeof image !== "string" || !image) return res.status(502).json({ok:false,error:"تصویر معتبری دریافت نشد."});
+    return res.json({ok:true,image:image.startsWith("data:")?image:`data:image/png;base64,${image}`});
+  } catch(error) { console.error("Image generation error:",error.name,error.message); return res.status(502).json({ok:false,error:"ارتباط با سرویس ساخت تصویر برقرار نشد."}); }
+});
+
 app.post(["/chat", "/ask", "/api/chat"], async (req, res) => {
   if (!GROQ_API_KEY) {
     return res.status(503).json({ ok: false, error: "GROQ_API_KEY is missing in Render Environment." });
