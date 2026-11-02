@@ -12,7 +12,7 @@ body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#1
 body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(#7895bd12 1px,transparent 1px),linear-gradient(90deg,#7895bd12 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
 .app{position:relative;max-width:1020px;margin:auto;min-height:100vh;display:flex;flex-direction:column;padding:0 22px}
 header{position:sticky;top:0;z-index:5;margin:0 -22px;padding:16px 26px;display:flex;align-items:center;justify-content:space-between;background:#080d18d9;backdrop-filter:blur(18px);border-bottom:1px solid #26354c}
-.brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:19px;letter-spacing:1.5px}.brand:before{content:"";width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#d9fbff 0 10%,#51dfff 13% 23%,#1765b9 28% 48%,#0c203e 53%);box-shadow:0 0 18px #42cfff99, inset 0 0 8px #b9f8ff}.status{font-size:12px;color:#91f0c0;background:#10271f;border:1px solid #24533d;padding:7px 11px;border-radius:99px}
+.header-actions{display:flex;align-items:center;gap:10px}.clear-chat{height:34px;min-width:0;padding:0 11px;border-radius:11px;font-size:11px;color:#c3d5ec;background:#172337;border:1px solid #344761}.brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:19px;letter-spacing:1.5px}.brand:before{content:"";width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#d9fbff 0 10%,#51dfff 13% 23%,#1765b9 28% 48%,#0c203e 53%);box-shadow:0 0 18px #42cfff99, inset 0 0 8px #b9f8ff}.status{font-size:12px;color:#91f0c0;background:#10271f;border:1px solid #24533d;padding:7px 11px;border-radius:99px}
 main{flex:1;padding:24px 0 150px}.welcome{text-align:center;margin:10vh auto 42px;max-width:680px}.welcome:before{content:"AI • PERSONAL ASSISTANT";display:inline-block;color:var(--cyan);font-size:10px;letter-spacing:3px;font-weight:800;border:1px solid #3c7c9a66;background:#10283a99;padding:8px 14px;border-radius:99px;margin-bottom:22px}.welcome h1{font-size:clamp(32px,6vw,54px);line-height:1.25;margin:0 0 14px;font-weight:850;letter-spacing:-1px;background:linear-gradient(100deg,#fff 20%,#9eeeff 60%,#7ca7ff);color:transparent;background-clip:text}.welcome p{color:var(--muted);font-size:15px;line-height:2;margin:0 auto;max-width:520px}
 .suggestions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:28px auto 0;max-width:690px}.suggestion{background:#101a2bba;border:1px solid #293b56;border-radius:16px;padding:14px 12px;color:#dceaff;font:inherit;font-size:13px;min-height:66px;cursor:pointer;transition:.2s}.suggestion:hover{border-color:#55c9f3;transform:translateY(-2px);background:#14263d}
 .messages{display:flex;flex-direction:column;gap:15px;max-width:850px;margin:auto}.msg{max-width:82%;padding:13px 17px;border-radius:19px;line-height:1.95;white-space:pre-wrap;word-break:break-word;box-shadow:0 8px 24px #0002}.user{align-self:flex-start;background:linear-gradient(135deg,#2467c9,#2453a2);border:1px solid #6ba5ff55;border-bottom-left-radius:6px}.ai{align-self:flex-end;background:linear-gradient(145deg,#172337,#111a29);border:1px solid #2b405e;border-bottom-right-radius:6px}
@@ -24,14 +24,40 @@ button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;ba
 </style></head>
 <body>
 <div class="app">
-<header><div class="brand">JARVIS.IR</div><div id="status" class="status">در حال اتصال…</div></header>
+<header><div class="brand">JARVIS.IR</div><div class="header-actions"><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status">در حال اتصال…</div></div></header>
 <main><section id="welcome" class="welcome"><h1>دستیار هوشمند شما</h1><p>اینجا شروع یک گفت‌وگوی تازه است. سؤالت را بنویس یا با میکروفون صحبت کن.</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی روبلاکس بده">🎮 ایده برای بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را ساده توضیح بده">🧠 درباره هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 حقیقت علمی جالب</button></div></section><section id="messages" class="messages"></section></main>
 <div class="composer"><div class="composer-inner"><button id="mic">🎙️</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS.IR • حالت رایگان و ساده، بدون API</div></div>
 </div>
 <script>
 const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic");
+const STORAGE_KEY="jarvis_ir_chat_history_v1";
 const messages=[];
-function add(role,text){welcome.style.display="none";const e=document.createElement("div");e.className="msg "+(role==="user"?"user":"ai");e.textContent=text;list.appendChild(e);e.scrollIntoView({behavior:"smooth"});}
+function saveHistory(){
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify(messages.slice(-40)))}catch(e){console.warn("Chat history could not be saved",e)}
+}
+function add(role,text,scroll=true){
+ welcome.style.display="none";
+ const e=document.createElement("div");e.className="msg "+(role==="user"?"user":"ai");e.textContent=text;list.appendChild(e);
+ if(scroll)e.scrollIntoView({behavior:"smooth"});
+}
+function restoreHistory(){
+ try{
+  const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
+  if(!Array.isArray(saved))return;
+  for(const item of saved.slice(-40)){
+   if(item&&["user","assistant"].includes(item.role)&&typeof item.content==="string"&&item.content.trim()){
+    messages.push({role:item.role,content:item.content.slice(0,8000)});
+    add(item.role,item.content,false);
+   }
+  }
+  if(messages.length)list.lastElementChild?.scrollIntoView();
+ }catch(e){console.warn("Saved chat history could not be loaded",e)}
+}
+function clearHistory(){
+ if(!confirm("گفتگوی ذخیره‌شده پاک شود؟"))return;
+ messages.length=0;list.replaceChildren();welcome.style.display="";
+ try{localStorage.removeItem(STORAGE_KEY)}catch(e){}
+}
 function localReply(raw){
  const s=raw.trim().toLowerCase();
  const has=(...words)=>words.some(w=>s.includes(w));
@@ -100,11 +126,12 @@ if (!response.ok) throw new Error(data.error || "AI request failed");
 const reply = data.reply || data.answer;
 if (typeof reply !== "string" || !reply.trim()) throw new Error("پاسخ خالی از سرور دریافت شد.");
   
-   load.remove();messages.push({role:"user",content:text},{role:"assistant",content:reply});add("assistant",reply);
+   load.remove();messages.push({role:"user",content:text},{role:"assistant",content:reply});saveHistory();add("assistant",reply);
  }catch(e){load.className="msg ai error";load.textContent=e.message || "پاسخ آماده نشد. دوباره امتحان کن."}
  finally{send.disabled=false;input.focus()}
 }
 document.querySelectorAll(".suggestion").forEach(b=>b.onclick=()=>{input.value=b.dataset.prompt;ask()});
+$("clearChat").onclick=clearHistory;restoreHistory();
 send.onclick=ask;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask()}});
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 if(SR){const rec=new SR();rec.lang="fa-IR";rec.interimResults=false;rec.onstart=()=>mic.classList.add("on");rec.onend=()=>mic.classList.remove("on");rec.onresult=e=>{input.value=e.results[0][0].transcript;ask()};mic.onclick=()=>{try{rec.start()}catch{}}}
