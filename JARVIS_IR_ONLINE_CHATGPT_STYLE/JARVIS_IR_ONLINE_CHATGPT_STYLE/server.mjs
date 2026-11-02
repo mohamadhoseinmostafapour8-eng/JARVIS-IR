@@ -15,7 +15,7 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
 const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 
-const instructions = `You are JARVIS.IR, a helpful general-purpose AI assistant.
+const instructions = `You are JARVIS, a helpful general-purpose AI assistant.
 Answer in the user's language, including Persian and English.
 Help with science, mathematics, technology, programming, history,
 geography, education, writing, and general knowledge.
@@ -25,7 +25,7 @@ Never invent facts, sources, URLs, or actions. Admit uncertainty.`;
 app.get("/health", (_req, res) => {
   res.json({
     ok: true,
-    service: "JARVIS.IR",
+    service: "JARVIS",
     aiConfigured: Boolean(GROQ_API_KEY),
     provider: "Groq",
     model: MODEL
@@ -99,5 +99,5 @@ app.post(["/chat", "/ask", "/api/chat"], async (req, res) => {
 });
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`JARVIS.IR Groq mode listening on ${PORT}`);
+  console.log(`JARVIS Groq mode listening on ${PORT}`);
 });
