@@ -26,7 +26,7 @@ button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;ba
 <div class="app">
 <header><div class="brand">JARVIS</div><div class="header-actions"><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status">در حال اتصال…</div></div></header>
 <main><section id="welcome" class="welcome"><h1>دستیار هوشمند شما</h1><p>اینجا شروع یک گفت‌وگوی تازه است. سؤالت را بنویس یا با میکروفون صحبت کن.</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی روبلاکس بده">🎮 ایده برای بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را ساده توضیح بده">🧠 درباره هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 حقیقت علمی جالب</button></div></section><section id="messages" class="messages"></section></main>
-<div class="composer"><div class="composer-inner"><button id="mic" title="شروع صحبت">🎙️</button><button id="langToggle" title="تغییر زبان تشخیص گفتار">فا</button><button id="voiceToggle" class="voice-active" title="خاموش‌کردن صدای پاسخ‌ها">🔊</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • حالت رایگان و ساده، بدون API</div></div>
+<div class="composer"><div class="composer-inner"><button id="mic" title="شروع صحبت">🎙️</button><button id="langToggle" title="تغییر زبان تشخیص گفتار">فا</button><button id="voiceToggle" class="voice-active" title="خاموش‌کردن صدای پاسخ‌ها">🔊</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • تشخیص گفتار از طریق سرور</div></div>
 </div>
 <script>
 const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic"), voiceToggle=$("voiceToggle"), langToggle=$("langToggle");
@@ -156,9 +156,47 @@ if (typeof reply !== "string" || !reply.trim()) throw new Error("پاسخ خال
 document.querySelectorAll(".suggestion").forEach(b=>b.onclick=()=>{input.value=b.dataset.prompt;ask()});
 $("clearChat").onclick=clearHistory;restoreHistory();
 send.onclick=ask;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask()}});
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(SR){const rec=new SR();rec.lang=speechLanguage;rec.interimResults=false;rec.maxAlternatives=1;rec.onstart=()=>mic.classList.add("on");rec.onend=()=>mic.classList.remove("on");rec.onerror=e=>{mic.classList.remove("on");if(e.error==="not-allowed")alert("برای استفاده از میکروفون، اجازهٔ دسترسی را در مرورگر فعال کن.");};rec.onresult=e=>{input.value=e.results[0][0].transcript;ask()};mic.onclick=()=>{try{rec.lang=speechLanguage;rec.start()}catch{}}}
-else mic.onclick=()=>alert("تشخیص گفتار در این مرورگر پشتیبانی نمی‌شود. می‌توانی پیام را تایپ کنی.");
+let mediaRecorder=null, audioChunks=[];
+async function startRecording(){
+ if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){
+  alert("ضبط صدا در این مرورگر در دسترس نیست. مطمئن شو سایت با HTTPS باز شده است.");return;
+ }
+ try{
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  let mimeType="";
+  if(MediaRecorder.isTypeSupported("audio/webm;codecs=opus"))mimeType="audio/webm;codecs=opus";
+  else if(MediaRecorder.isTypeSupported("audio/ogg;codecs=opus"))mimeType="audio/ogg;codecs=opus";
+  mediaRecorder=new MediaRecorder(stream,mimeType?{mimeType}:undefined);
+  audioChunks=[];
+  mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size)audioChunks.push(e.data)};
+  mediaRecorder.onerror=()=>{stream.getTracks().forEach(t=>t.stop());mic.classList.remove("on");mic.textContent="🎙️";alert("هنگام ضبط صدا خطایی رخ داد.")};
+  mediaRecorder.onstop=async()=>{
+   stream.getTracks().forEach(t=>t.stop());
+   mic.classList.remove("on");mic.textContent="🎙️";mic.disabled=true;
+   const blob=new Blob(audioChunks,{type:mediaRecorder.mimeType||"audio/webm"});
+   if(!blob.size){mic.disabled=false;return}
+   const previous=mic.title;mic.title="در حال تبدیل صدا به متن…";status.textContent="● در حال تشخیص گفتار…";
+   try{
+    const lang=speechLanguage==="fa-IR"?"fa":"en";
+    const response=await fetch("/transcribe?language="+lang,{method:"POST",headers:{"Content-Type":blob.type||"audio/webm"},body:blob});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(data.error||"تبدیل صدا به متن ناموفق بود.");
+    if(!data.text)throw new Error("صدای واضحی تشخیص داده نشد؛ دوباره صحبت کن.");
+    input.value=data.text;await ask();
+   }catch(error){alert(error.message||"تشخیص گفتار ناموفق بود.")}
+   finally{mic.disabled=false;mic.title=previous;status.textContent="● متصل"}
+  };
+  mediaRecorder.start();
+  mic.classList.add("on");mic.textContent="⏹️";mic.title="پایان ضبط و تبدیل گفتار";
+ }catch(error){
+  if(error.name==="NotAllowedError"||error.name==="PermissionDeniedError")alert("اجازهٔ استفاده از میکروفون داده نشده است. دسترسی میکروفون را برای این سایت فعال کن.");
+  else alert("میکروفون در دسترس نیست: "+error.message);
+ }
+}
+mic.onclick=()=>{
+ if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();
+ else startRecording();
+};
 health();
 if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
 </script></body></html>
