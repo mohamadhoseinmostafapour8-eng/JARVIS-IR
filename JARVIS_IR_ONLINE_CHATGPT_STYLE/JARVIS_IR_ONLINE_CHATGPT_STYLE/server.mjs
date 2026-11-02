@@ -23,6 +23,7 @@ Explain difficult topics simply. Be accurate and honest.
 Never invent facts, sources, URLs, or actions. Admit uncertainty.`;
 
 app.post("/transcribe", express.raw({ type: () => true, limit: "20mb" }), async (req, res) => {
+  console.log("Transcription request received:", req.headers["content-type"], req.body?.length || 0);
   if (!GROQ_API_KEY) {
     return res.status(503).json({ ok: false, error: "GROQ_API_KEY is missing in Render Environment." });
   }
@@ -43,13 +44,14 @@ app.post("/transcribe", express.raw({ type: () => true, limit: "20mb" }), async 
       method: "POST",
       headers: { Authorization: `Bearer ${GROQ_API_KEY}` },
       body: form,
-      signal: AbortSignal.timeout(60000)
+      signal: AbortSignal.timeout(30000)
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
       console.error("Groq transcription failed:", response.status, data);
       return res.status(502).json({ ok: false, error: "سرویس تبدیل گفتار فعلاً نتوانست صدا را پردازش کند. کمی بعد دوباره امتحان کن." });
     }
+    console.log("Groq transcription completed:", String(data.text || "").trim().length, "characters");
     return res.json({ ok: true, text: String(data.text || "").trim() });
   } catch (error) {
     console.error("JARVIS transcription error:", error.name, error.message);
