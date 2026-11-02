@@ -78,6 +78,50 @@ app.get("/health", (_req, res) => {
   });
 });
 
+
+app.post("/api/image", async (req, res) => {
+  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+  const apiToken = process.env.CLOUDFLARE_API_TOKEN;
+  if (!accountId || !apiToken) {
+    return res.status(503).json({ ok:false, error:"برای فعال‌شدن ساخت تصویر، CLOUDFLARE_ACCOUNT_ID و CLOUDFLARE_API_TOKEN باید در Environment سرویس Render تنظیم شوند." });
+  }
+  const prompt = typeof req.body?.prompt === "string" ? req.body.prompt.trim().slice(0, 1800) : "";
+  if (!prompt) return res.status(400).json({ ok:false, error:"توضیح تصویر را بنویس." });
+  const styles = {
+    cinematic:"cinematic lighting, highly detailed, professional composition",
+    anime:"beautiful anime illustration, expressive details, polished anime art",
+    realistic:"photorealistic, natural lighting, realistic textures",
+    fantasy:"epic fantasy concept art, magical atmosphere, intricate details",
+    comic:"dynamic comic-book illustration, bold ink lines, dramatic shading",
+    3d:"high-quality 3D render, detailed materials, studio lighting"
+  };
+  const style = styles[req.body?.style] || styles.cinematic;
+  const ratios = { square:[1024,1024], landscape:[1024,768], portrait:[768,1024] };
+  const [width,height] = ratios[req.body?.ratio] || ratios.square;
+  try {
+    const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/@cf/black-forest-labs/flux-1-schnell`, {
+      method:"POST",
+      headers:{Authorization:`Bearer ${apiToken}`,"Content-Type":"application/json"},
+      body:JSON.stringify({prompt:`${prompt}. Style: ${style}. No text, no watermark.`,width,height,num_steps:4}),
+      signal:AbortSignal.timeout(90000)
+    });
+    const data = await response.json().catch(()=>({}));
+    if (!response.ok || data.success === false) {
+      console.error("JARVIS image generation failed:",response.status,data.errors||data);
+      return res.status(502).json({ok:false,error:"سرویس تصویرساز فعلاً نتوانست تصویر بسازد. تنظیمات حساب یا سهمیهٔ رایگان را بررسی کن."});
+    }
+    const image = data.result?.image;
+    if (typeof image !== "string" || !image.length) {
+      console.error("JARVIS image response missing image data");
+      return res.status(502).json({ok:false,error:"تصویر معتبری از سرویس دریافت نشد."});
+    }
+    return res.json({ok:true,image:image.startsWith("data:")?image:`data:image/png;base64,${image}`});
+  } catch(error) {
+    console.error("JARVIS image error:",error.name,error.message);
+    return res.status(502).json({ok:false,error:"ارتباط با سرویس ساخت تصویر برقرار نشد. دوباره امتحان کن."});
+  }
+});
+
 app.post(["/chat", "/ask", "/api/chat"], async (req, res) => {
   if (!GROQ_API_KEY) {
     return res.status(503).json({ ok: false, error: "GROQ_API_KEY is missing in Render Environment." });
