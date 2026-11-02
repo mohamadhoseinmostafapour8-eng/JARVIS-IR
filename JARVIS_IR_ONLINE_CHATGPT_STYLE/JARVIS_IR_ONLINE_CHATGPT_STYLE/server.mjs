@@ -127,8 +127,7 @@ app.post(["/chat", "/ask", "/api/chat"], async (req, res) => {
         max_tokens: 1200,
         temperature: 0.7,
         tool_choice: "auto",
-        tools: [{ type: "browser_search" }],
-        citation_options: "enabled"
+        tools: [{ type: "browser_search" }]
       }),
       signal: AbortSignal.timeout(60000)
     });
