@@ -75,15 +75,6 @@ function localReply(raw){
  if(has("capital of usa","capital of the united states")) return "The capital of the United States is Washington, D.C.";
  return "هنوز جواب این سؤال رو بلد نیستم. 🧠 این نسخهٔ رایگان و ساده است و از مدل هوش مصنوعی پیشرفته استفاده نمی‌کنه. می‌تونی سؤال ساده‌تری بپرسی یا یک محاسبه مثل 12 * 4 بنویسی.";
 }
-function speak(text){
- if(!("speechSynthesis" in window)) return;
- window.speechSynthesis.cancel();
- return; // Voice replies are disabled for both Persian and English.
- if(!speechText)return;
- const u=new SpeechSynthesisUtterance(speechText);
- u.lang=/[\u0600-\u06FF]/.test(text)?"fa-IR":"en-US";
- u.rate=1; window.speechSynthesis.speak(u);
-}
 async function health(){
  status.textContent="● حالت رایگان";
  status.title="پاسخ‌های ساده در همین مرورگر تولید می‌شوند؛ API لازم نیست.";
@@ -109,7 +100,7 @@ if (!response.ok) throw new Error(data.error || "AI request failed");
 const reply = data.reply || data.answer;
 if (typeof reply !== "string" || !reply.trim()) throw new Error("پاسخ خالی از سرور دریافت شد.");
   
-   load.remove();messages.push({role:"user",content:text},{role:"assistant",content:reply});add("assistant",reply);speak(reply);
+   load.remove();messages.push({role:"user",content:text},{role:"assistant",content:reply});add("assistant",reply);
  }catch(e){load.className="msg ai error";load.textContent=e.message || "پاسخ آماده نشد. دوباره امتحان کن."}
  finally{send.disabled=false;input.focus()}
 }
