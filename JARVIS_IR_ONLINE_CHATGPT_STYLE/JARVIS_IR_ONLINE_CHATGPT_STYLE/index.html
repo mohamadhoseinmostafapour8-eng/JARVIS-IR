@@ -2,9 +2,9 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10131a"><meta name="description" content="JARVIS.IR AI assistant">
+<meta name="theme-color" content="#10131a"><meta name="description" content="JARVIS AI assistant">
 <link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icon.svg">
-<title>JARVIS.IR</title>
+<title>JARVIS</title>
 <style>
 :root{color-scheme:dark;--bg:#080b13;--panel:#111827;--line:#27334a;--muted:#9aa9c2;--cyan:#65e4ff;--blue:#4b8cff}
 *{box-sizing:border-box}
@@ -24,9 +24,9 @@ button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;ba
 </style></head>
 <body>
 <div class="app">
-<header><div class="brand">JARVIS.IR</div><div class="header-actions"><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status">در حال اتصال…</div></div></header>
+<header><div class="brand">JARVIS</div><div class="header-actions"><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status">در حال اتصال…</div></div></header>
 <main><section id="welcome" class="welcome"><h1>دستیار هوشمند شما</h1><p>اینجا شروع یک گفت‌وگوی تازه است. سؤالت را بنویس یا با میکروفون صحبت کن.</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی روبلاکس بده">🎮 ایده برای بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را ساده توضیح بده">🧠 درباره هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 حقیقت علمی جالب</button></div></section><section id="messages" class="messages"></section></main>
-<div class="composer"><div class="composer-inner"><button id="mic">🎙️</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS.IR • حالت رایگان و ساده، بدون API</div></div>
+<div class="composer"><div class="composer-inner"><button id="mic">🎙️</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • حالت رایگان و ساده، بدون API</div></div>
 </div>
 <script>
 const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic");
@@ -62,9 +62,9 @@ function localReply(raw){
  const s=raw.trim().toLowerCase();
  const has=(...words)=>words.some(w=>s.includes(w));
  if(/^(hi|hello|hey|سلام|درود|سلام جارویس|سلام جارويس)[!.؟? ]*$/.test(s) || has("سلام جارویس","سلام جارويس"))
-   return has("hello","hi","hey") && !has("سلام") ? "Hello! I'm JARVIS.IR. I can answer simple questions locally without an API key." : "سلام! من جارویس هستم 🤖 فعلاً در حالت رایگان و ساده کار می‌کنم. چه کمکی از دستم برمیاد؟";
+   return has("hello","hi","hey") && !has("سلام") ? "Hello! I'm JARVIS. I can answer simple questions locally without an API key." : "سلام! من جارویس هستم 🤖 فعلاً در حالت رایگان و ساده کار می‌کنم. چه کمکی از دستم برمیاد؟";
  if(has("اسم تو چیه","اسمت چیه","تو کی هستی","who are you","your name"))
-   return "من JARVIS.IR هستم؛ دستیار ساده‌ای که بدون کلید API کار می‌کنه.";
+   return "من JARVIS هستم؛ دستیار ساده‌ای که بدون کلید API کار می‌کنه.";
  if(has("چه کار","چیکار","چه کمکی","help","قابلیت"))
    return "می‌تونم به سلام و احوال‌پرسی، چند سؤال عمومی و محاسبات ساده جواب بدم. این نسخه از مدل هوش مصنوعی پیشرفته استفاده نمی‌کنه و جواب‌هام محدوده.";
  if(has("ممنون","مرسی","تشکر","thank you","thanks"))
@@ -96,7 +96,7 @@ function localReply(raw){
    return "جواب: "+result;
  }
  if(has("hello","hi","good morning","good evening"))
-   return "Hello! I'm JARVIS.IR. This is the free basic mode, so I can answer only a limited set of questions.";
+   return "Hello! I'm JARVIS. This is the free basic mode, so I can answer only a limited set of questions.";
  if(has("capital of spain")) return "The capital of Spain is Madrid.";
  if(has("capital of usa","capital of the united states")) return "The capital of the United States is Washington, D.C.";
  return "هنوز جواب این سؤال رو بلد نیستم. 🧠 این نسخهٔ رایگان و ساده است و از مدل هوش مصنوعی پیشرفته استفاده نمی‌کنه. می‌تونی سؤال ساده‌تری بپرسی یا یک محاسبه مثل 12 * 4 بنویسی.";
