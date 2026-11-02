@@ -133,13 +133,12 @@ async function ask(){
  input.value="";add("user",text);send.disabled=true;
  const load=document.createElement("div");load.className="msg ai";load.textContent="یک لحظه…";list.appendChild(load);
  try{
-   await new Promise(resolve=>setTimeout(resolve,180));
  const response = await fetch("/api/chat", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     message: text,
-    history: messages.slice(0, -1).slice(-20)
+    history: messages.slice(0, -1).slice(-10)
   })
 });
 
