@@ -75,7 +75,7 @@ function localReply(raw){
 function speak(text){
  if(!("speechSynthesis" in window)) return;
  window.speechSynthesis.cancel();
- const u=new SpeechSynthesisUtterance(text);
+ const speechText=text.replace(/\\bJARVIS\\s*\\.?\\s*IR\\b/gi,"").replace(/\\s{2,}/g," ").trim();\n if(!speechText)return;\n const u=new SpeechSynthesisUtterance(speechText);
  u.lang=/[\u0600-\u06FF]/.test(text)?"fa-IR":"en-US";
  u.rate=1; window.speechSynthesis.speak(u);
 }
