@@ -85,8 +85,8 @@ app.post(["/chat", "/ask", "/api/chat"], async (req, res) => {
 
   const clean = (items) => items
     .filter(m => m && ["user", "assistant"].includes(m.role) && typeof m.content === "string" && m.content.trim())
-    .slice(-20)
-    .map(m => ({ role: m.role, content: m.content.trim().slice(0, 8000) }));
+    .slice(-10)
+    .map(m => ({ role: m.role, content: m.content.trim().slice(0, 4000) }));
 
   let messages = Array.isArray(req.body?.messages) ? clean(req.body.messages) : [];
   if (!messages.length && Array.isArray(req.body?.history)) {
@@ -95,7 +95,7 @@ app.post(["/chat", "/ask", "/api/chat"], async (req, res) => {
   if (typeof req.body?.message === "string" && req.body.message.trim()) {
     messages.push({ role: "user", content: req.body.message.trim().slice(0, 8000) });
   }
-  messages = messages.slice(-20);
+  messages = messages.slice(-10);
 
   const ownerVerified = Boolean(OWNER_CODE) && messages.some(
     m => m.role === "user" && m.content.trim() === OWNER_CODE
@@ -124,12 +124,12 @@ app.post(["/chat", "/ask", "/api/chat"], async (req, res) => {
       body: JSON.stringify({
         model: MODEL,
         messages: [{ role: "system", content: systemInstructions }, ...messages],
-        max_tokens: 1200,
-        temperature: 0.7,
+        max_tokens: 700,
+        temperature: 0.4,
         tool_choice: "auto",
         tools: [{ type: "browser_search" }]
       }),
-      signal: AbortSignal.timeout(60000)
+      signal: AbortSignal.timeout(35000)
     });
 
     const data = await response.json().catch(() => ({}));
