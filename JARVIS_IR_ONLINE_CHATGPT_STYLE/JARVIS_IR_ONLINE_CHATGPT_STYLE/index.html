@@ -178,12 +178,12 @@ async function startRecording(){
    const previous=mic.title;mic.title="در حال تبدیل صدا به متن…";status.textContent="● در حال تشخیص گفتار…";
    try{
     const lang=speechLanguage==="fa-IR"?"fa":"en";
-    const response=await fetch("/transcribe?language="+lang,{method:"POST",headers:{"Content-Type":blob.type||"audio/webm"},body:blob});
+    const response=await fetch("/transcribe?language="+lang,{method:"POST",headers:{"Content-Type":blob.type||"audio/webm"},body:blob,signal:AbortSignal.timeout(40000)});
     const data=await response.json().catch(()=>({}));
     if(!response.ok)throw new Error(data.error||"تبدیل صدا به متن ناموفق بود.");
     if(!data.text)throw new Error("صدای واضحی تشخیص داده نشد؛ دوباره صحبت کن.");
     input.value=data.text;await ask();
-   }catch(error){alert(error.message||"تشخیص گفتار ناموفق بود.")}
+   }catch(error){alert(error.name==="TimeoutError"||error.name==="AbortError"?"زمان پاسخ‌گویی تشخیص گفتار تمام شد. دوباره با یک پیام کوتاه امتحان کن.":(error.message||"تشخیص گفتار ناموفق بود."))}
    finally{mic.disabled=false;mic.title=previous;status.textContent="● متصل"}
   };
   mediaRecorder.start();
