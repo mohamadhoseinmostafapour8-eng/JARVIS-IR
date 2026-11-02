@@ -22,6 +22,41 @@ geography, education, writing, and general knowledge.
 Explain difficult topics simply. Be accurate and honest.
 Never invent facts, sources, URLs, or actions. Admit uncertainty.`;
 
+app.post("/transcribe", express.raw({ type: () => true, limit: "20mb" }), async (req, res) => {
+  if (!GROQ_API_KEY) {
+    return res.status(503).json({ ok: false, error: "GROQ_API_KEY is missing in Render Environment." });
+  }
+  if (!Buffer.isBuffer(req.body) || req.body.length === 0) {
+    return res.status(400).json({ ok: false, error: "No audio was received." });
+  }
+
+  try {
+    const mime = String(req.headers["content-type"] || "audio/webm").split(";")[0];
+    const extension = mime.includes("ogg") ? "ogg" : mime.includes("mp4") ? "mp4" : mime.includes("wav") ? "wav" : "webm";
+    const form = new FormData();
+    form.append("file", new Blob([req.body], { type: mime }), "recording." + extension);
+    form.append("model", "whisper-large-v3-turbo");
+    form.append("language", req.query.language === "en" ? "en" : "fa");
+    form.append("response_format", "json");
+
+    const response = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${GROQ_API_KEY}` },
+      body: form,
+      signal: AbortSignal.timeout(60000)
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      console.error("Groq transcription failed:", response.status, data);
+      return res.status(502).json({ ok: false, error: "سرویس تبدیل گفتار فعلاً نتوانست صدا را پردازش کند. کمی بعد دوباره امتحان کن." });
+    }
+    return res.json({ ok: true, text: String(data.text || "").trim() });
+  } catch (error) {
+    console.error("JARVIS transcription error:", error.name, error.message);
+    return res.status(502).json({ ok: false, error: "ارتباط با سرویس تشخیص گفتار برقرار نشد." });
+  }
+});
+
 app.get("/health", (_req, res) => {
   res.json({
     ok: true,
