@@ -18,7 +18,7 @@ main{flex:1;padding:24px 0 150px}.welcome{text-align:center;margin:10vh auto 42p
 .messages{display:flex;flex-direction:column;gap:15px;max-width:850px;margin:auto}.msg{max-width:82%;padding:13px 17px;border-radius:19px;line-height:1.95;white-space:pre-wrap;word-break:break-word;box-shadow:0 8px 24px #0002}.user{align-self:flex-start;background:linear-gradient(135deg,#2467c9,#2453a2);border:1px solid #6ba5ff55;border-bottom-left-radius:6px}.ai{align-self:flex-end;background:linear-gradient(145deg,#172337,#111a29);border:1px solid #2b405e;border-bottom-right-radius:6px}
 .composer{position:fixed;bottom:0;left:0;right:0;z-index:10;padding:16px 18px 12px;background:linear-gradient(transparent,#080b13 24%);backdrop-filter:blur(9px)}.composer-inner{max-width:850px;margin:auto;display:flex;gap:10px;align-items:end;background:#111b2b;border:1px solid #354968;border-radius:24px;padding:9px;box-shadow:0 12px 45px #0008,0 0 25px #1a7cb322;transition:border-color .2s}.composer-inner:focus-within{border-color:#5bcdf0;box-shadow:0 12px 45px #0008,0 0 0 3px #42cfff18}
 textarea{flex:1;resize:none;min-height:46px;max-height:140px;border:0;outline:0;background:transparent;color:white;padding:11px 12px;font:inherit;font-size:14px}textarea::placeholder{color:#8292aa}
-button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;background:#1a2940;color:#eaf5ff;cursor:pointer;font-size:18px;transition:.2s}button:hover{filter:brightness(1.2);transform:translateY(-1px)}button:disabled{opacity:.5;cursor:wait;transform:none}.send{background:linear-gradient(135deg,#218de0,#385fe4);border-color:#5eabff}.on{background:#9d3545}.error{background:#35191d;border:1px solid #71343c}
+button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;background:#1a2940;color:#eaf5ff;cursor:pointer;font-size:18px;transition:.2s}button:hover{filter:brightness(1.2);transform:translateY(-1px)}button:disabled{opacity:.5;cursor:wait;transform:none}.send{background:linear-gradient(135deg,#218de0,#385fe4);border-color:#5eabff}.on{background:#9d3545}.voice-active{border-color:#65e4ff;background:#12364a;color:#9cecff}.error{background:#35191d;border:1px solid #71343c}
 .hint{text-align:center;font-size:10px;color:#71829d;margin-top:9px;letter-spacing:.3px}
 @media(max-width:600px){.app{padding:0 13px}header{margin:0 -13px;padding:13px 16px}.welcome{margin:8vh auto 30px}.welcome h1{font-size:34px}.welcome p{font-size:13px}.suggestions{grid-template-columns:1fr;gap:8px}.suggestion{min-height:48px}.msg{max-width:94%;font-size:14px}.composer{padding:12px 10px 9px}}
 </style></head>
@@ -26,10 +26,33 @@ button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;ba
 <div class="app">
 <header><div class="brand">JARVIS</div><div class="header-actions"><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status">در حال اتصال…</div></div></header>
 <main><section id="welcome" class="welcome"><h1>دستیار هوشمند شما</h1><p>اینجا شروع یک گفت‌وگوی تازه است. سؤالت را بنویس یا با میکروفون صحبت کن.</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی روبلاکس بده">🎮 ایده برای بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را ساده توضیح بده">🧠 درباره هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 حقیقت علمی جالب</button></div></section><section id="messages" class="messages"></section></main>
-<div class="composer"><div class="composer-inner"><button id="mic">🎙️</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • حالت رایگان و ساده، بدون API</div></div>
+<div class="composer"><div class="composer-inner"><button id="mic" title="شروع صحبت">🎙️</button><button id="langToggle" title="تغییر زبان تشخیص گفتار">فا</button><button id="voiceToggle" class="voice-active" title="خاموش‌کردن صدای پاسخ‌ها">🔊</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • حالت رایگان و ساده، بدون API</div></div>
 </div>
 <script>
-const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic");
+const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic"), voiceToggle=$("voiceToggle"), langToggle=$("langToggle");
+let voiceEnabled=true;
+let speechLanguage="fa-IR";
+function speakReply(text){
+ if(!voiceEnabled || !("speechSynthesis" in window))return;
+ window.speechSynthesis.cancel();
+ const clean=String(text).replace(/```[\\s\\S]*?```/g,"کد").replace(/https?:\\/\\/\\S+/g,"لینک");
+ const utterance=new SpeechSynthesisUtterance(clean);
+ utterance.lang=/[\\u0600-\\u06FF]/.test(clean)?"fa-IR":"en-US";
+ utterance.rate=1;utterance.pitch=1;
+ window.speechSynthesis.speak(utterance);
+}
+voiceToggle.onclick=()=>{
+ voiceEnabled=!voiceEnabled;
+ voiceToggle.textContent=voiceEnabled?"🔊":"🔇";
+ voiceToggle.classList.toggle("voice-active",voiceEnabled);
+ voiceToggle.title=voiceEnabled?"صدای پاسخ‌ها روشن است":"صدای پاسخ‌ها خاموش است";
+ if(!voiceEnabled && "speechSynthesis" in window)window.speechSynthesis.cancel();
+};
+langToggle.onclick=()=>{
+ speechLanguage=speechLanguage==="fa-IR"?"en-US":"fa-IR";
+ langToggle.textContent=speechLanguage==="fa-IR"?"فا":"EN";
+ langToggle.title=speechLanguage==="fa-IR"?"تشخیص گفتار فارسی":"Speech recognition: English";
+};
 const STORAGE_KEY="jarvis_ir_chat_history_v1";
 const messages=[];
 function saveHistory(){
@@ -126,7 +149,7 @@ if (!response.ok) throw new Error(data.error || "AI request failed");
 const reply = data.reply || data.answer;
 if (typeof reply !== "string" || !reply.trim()) throw new Error("پاسخ خالی از سرور دریافت شد.");
   
-   load.remove();messages.push({role:"user",content:text},{role:"assistant",content:reply});saveHistory();add("assistant",reply);
+   load.remove();messages.push({role:"user",content:text},{role:"assistant",content:reply});saveHistory();add("assistant",reply);speakReply(reply);
  }catch(e){load.className="msg ai error";load.textContent=e.message || "پاسخ آماده نشد. دوباره امتحان کن."}
  finally{send.disabled=false;input.focus()}
 }
@@ -134,7 +157,7 @@ document.querySelectorAll(".suggestion").forEach(b=>b.onclick=()=>{input.value=b
 $("clearChat").onclick=clearHistory;restoreHistory();
 send.onclick=ask;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask()}});
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(SR){const rec=new SR();rec.lang="fa-IR";rec.interimResults=false;rec.onstart=()=>mic.classList.add("on");rec.onend=()=>mic.classList.remove("on");rec.onresult=e=>{input.value=e.results[0][0].transcript;ask()};mic.onclick=()=>{try{rec.start()}catch{}}}
+if(SR){const rec=new SR();rec.lang=speechLanguage;rec.interimResults=false;rec.maxAlternatives=1;rec.onstart=()=>mic.classList.add("on");rec.onend=()=>mic.classList.remove("on");rec.onerror=e=>{mic.classList.remove("on");if(e.error==="not-allowed")alert("برای استفاده از میکروفون، اجازهٔ دسترسی را در مرورگر فعال کن.");};rec.onresult=e=>{input.value=e.results[0][0].transcript;ask()};mic.onclick=()=>{try{rec.lang=speechLanguage;rec.start()}catch{}}}
 else mic.onclick=()=>alert("تشخیص گفتار در این مرورگر پشتیبانی نمی‌شود. می‌توانی پیام را تایپ کنی.");
 health();
 if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
