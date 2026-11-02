@@ -21,10 +21,17 @@ textarea{flex:1;resize:none;min-height:46px;max-height:140px;border:0;outline:0;
 button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;background:#1a2940;color:#eaf5ff;cursor:pointer;font-size:18px;transition:.2s}button:hover{filter:brightness(1.2);transform:translateY(-1px)}button:disabled{opacity:.5;cursor:wait;transform:none}.send{background:linear-gradient(135deg,#218de0,#385fe4);border-color:#5eabff}.on{background:#9d3545}.voice-active{border-color:#65e4ff;background:#12364a;color:#9cecff}.error{background:#35191d;border:1px solid #71343c}
 .hint{text-align:center;font-size:10px;color:#71829d;margin-top:9px;letter-spacing:.3px}
 @media(max-width:600px){.app{padding:0 13px}header{margin:0 -13px;padding:13px 16px}.welcome{margin:8vh auto 30px}.welcome h1{font-size:34px}.welcome p{font-size:13px}.suggestions{grid-template-columns:1fr;gap:8px}.suggestion{min-height:48px}.msg{max-width:94%;font-size:14px}.composer{padding:12px 10px 9px}}
+
+/* Chat history sidebar */
+.sidebar-toggle{min-width:38px;width:38px;height:34px;border-radius:10px;font-size:17px}
+.sidebar{position:fixed;z-index:30;top:0;right:0;bottom:0;width:min(290px,84vw);padding:18px;background:#0d1421;border-left:1px solid #29374d;box-shadow:-12px 0 40px #0008;transform:translateX(105%);transition:transform .22s ease;display:flex;flex-direction:column;gap:12px}
+.sidebar.open{transform:translateX(0)}.sidebar-head{display:flex;align-items:center;justify-content:space-between;color:#eef5ff;font-weight:800}.sidebar-actions{display:flex;gap:8px}.new-chat{width:100%;height:42px;border-radius:12px;background:#17263a;border:1px solid #354968;color:#edf5ff;font-size:13px}.chat-list{overflow:auto;display:flex;flex-direction:column;gap:6px}.chat-item{width:100%;height:auto;min-height:42px;text-align:right;padding:9px 11px;border-radius:10px;background:transparent;border:1px solid transparent;color:#cbd8e9;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat-item.active{background:#1a2940;border-color:#3a506e;color:#fff}.sidebar-shade{display:none;position:fixed;inset:0;z-index:29;background:#0008}.sidebar-shade.show{display:block}
+@media(min-width:900px){.sidebar{width:270px}}
 </style></head>
 <body>
 <div class="app">
-<header><div class="brand">JARVIS</div><div class="header-actions"><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status">در حال اتصال…</div></div></header>
+<header><div class="brand">JARVIS</div><div class="header-actions"><button id="historyToggle" class="sidebar-toggle" type="button" title="تاریخچه گفتگوها">☰</button><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status">در حال اتصال…</div></div></header>
+<div id="sidebarShade" class="sidebar-shade"></div><aside id="historySidebar" class="sidebar" aria-label="تاریخچه گفتگوها"><div class="sidebar-head"><span>گفتگوهای قبلی</span><button id="closeHistory" type="button" aria-label="بستن">×</button></div><button id="newChat" class="new-chat" type="button">＋ گفتگوی جدید</button><div id="chatList" class="chat-list"></div></aside>
 <main><section id="welcome" class="welcome"><h1>دستیار هوشمند شما</h1><p>اینجا شروع یک گفت‌وگوی تازه است. سؤالت را بنویس یا با میکروفون صحبت کن.</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی روبلاکس بده">🎮 ایده برای بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را ساده توضیح بده">🧠 درباره هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 حقیقت علمی جالب</button></div></section><section id="messages" class="messages"></section></main>
 <div class="composer"><div class="composer-inner"><button id="mic" title="شروع صحبت">🎙️</button><button id="langToggle" title="تغییر زبان تشخیص گفتار">فا</button><button id="voiceToggle" class="voice-active" title="خاموش‌کردن صدای پاسخ‌ها">🔊</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • تشخیص گفتار از طریق سرور</div></div>
 </div>
@@ -55,32 +62,48 @@ langToggle.onclick=()=>{
 };
 const STORAGE_KEY="jarvis_ir_chat_history_v1";
 const messages=[];
+let chatSessions=[];
+let currentChatId=null;
+const historyKey=STORAGE_KEY+"_sessions";
+function makeChatId(){return "c"+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function currentSession(){return chatSessions.find(x=>x.id===currentChatId)}
 function saveHistory(){
- try{localStorage.setItem(STORAGE_KEY,JSON.stringify(messages.slice(-40)))}catch(e){console.warn("Chat history could not be saved",e)}
+ try{
+  if(messages.length){let chat=currentSession();if(!chat){chat={id:currentChatId||makeChatId(),title:"گفتگوی جدید",messages:[],updatedAt:Date.now()};currentChatId=chat.id;chatSessions.unshift(chat)}
+   chat.messages=messages.slice(-40);chat.updatedAt=Date.now();const first=chat.messages.find(x=>x.role==="user");if(first&&chat.title==="گفتگوی جدید")chat.title=first.content.slice(0,34)+(first.content.length>34?"…":"");
+  }
+  chatSessions.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));localStorage.setItem(historyKey,JSON.stringify(chatSessions.slice(0,50)));
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(messages.slice(-40)));renderChatList();
+ }catch(e){console.warn("Chat history could not be saved",e)}
+}
+function renderChatList(){
+ const host=document.getElementById("chatList");if(!host)return;host.replaceChildren();
+ for(const chat of chatSessions){const b=document.createElement("button");b.type="button";b.className="chat-item"+(chat.id===currentChatId?" active":"");b.textContent=chat.title||"گفتگوی جدید";b.title=b.textContent;b.onclick=()=>openChat(chat.id);host.appendChild(b)}
 }
 function add(role,text,scroll=true){
- welcome.style.display="none";
- const e=document.createElement("div");e.className="msg "+(role==="user"?"user":"ai");e.textContent=text;list.appendChild(e);
- if(scroll)e.scrollIntoView({behavior:"smooth"});
+ welcome.style.display="none";const e=document.createElement("div");e.className="msg "+(role==="user"?"user":"ai");e.textContent=text;list.appendChild(e);if(scroll)e.scrollIntoView({behavior:"smooth"});
 }
+function openChat(id){
+ const chat=chatSessions.find(x=>x.id===id);if(!chat)return;currentChatId=id;messages.length=0;list.replaceChildren();for(const item of chat.messages||[]){messages.push(item);add(item.role,item.content,false)}welcome.style.display=messages.length?"none":"";if(messages.length)list.lastElementChild?.scrollIntoView();renderChatList();closeSidebar();
+}
+function newChat(){
+ if(messages.length)saveHistory();currentChatId=makeChatId();messages.length=0;list.replaceChildren();welcome.style.display="";renderChatList();closeSidebar();input.focus();
+}
+function closeSidebar(){document.getElementById("historySidebar")?.classList.remove("open");document.getElementById("sidebarShade")?.classList.remove("show")}
 function restoreHistory(){
  try{
-  const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
-  if(!Array.isArray(saved))return;
-  for(const item of saved.slice(-40)){
-   if(item&&["user","assistant"].includes(item.role)&&typeof item.content==="string"&&item.content.trim()){
-    messages.push({role:item.role,content:item.content.slice(0,8000)});
-    add(item.role,item.content,false);
-   }
-  }
-  if(messages.length)list.lastElementChild?.scrollIntoView();
- }catch(e){console.warn("Saved chat history could not be loaded",e)}
+  const saved=JSON.parse(localStorage.getItem(historyKey)||"null");
+  if(Array.isArray(saved)){chatSessions=saved.filter(x=>x&&typeof x.id==="string"&&Array.isArray(x.messages)).slice(0,50)}
+  else {const old=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");if(Array.isArray(old)&&old.length)chatSessions=[{id:makeChatId(),title:old.find(x=>x.role==="user")?.content?.slice(0,34)||"گفتگوی قبلی",messages:old.slice(-40),updatedAt:Date.now()}]}
+  if(chatSessions.length){chatSessions.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));openChat(chatSessions[0].id)}else{currentChatId=makeChatId();welcome.style.display=""}
+  renderChatList();
+ }catch(e){console.warn("Saved chat history could not be loaded",e);currentChatId=makeChatId()}
 }
 function clearHistory(){
- if(!confirm("گفتگوی ذخیره‌شده پاک شود؟"))return;
- messages.length=0;list.replaceChildren();welcome.style.display="";
- try{localStorage.removeItem(STORAGE_KEY)}catch(e){}
+ if(!confirm("این گفتگو پاک شود؟"))return;chatSessions=chatSessions.filter(x=>x.id!==currentChatId);messages.length=0;list.replaceChildren();welcome.style.display="";try{localStorage.setItem(historyKey,JSON.stringify(chatSessions));localStorage.removeItem(STORAGE_KEY)}catch(e){}currentChatId=makeChatId();renderChatList();
 }
+document.getElementById("historyToggle").onclick=()=>{document.getElementById("historySidebar").classList.add("open");document.getElementById("sidebarShade").classList.add("show")};
+document.getElementById("closeHistory").onclick=closeSidebar;document.getElementById("sidebarShade").onclick=closeSidebar;document.getElementById("newChat").onclick=newChat;
 function localReply(raw){
  const s=raw.trim().toLowerCase();
  const has=(...words)=>words.some(w=>s.includes(w));
