@@ -6,23 +6,26 @@
 <link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icon.svg">
 <title>JARVIS.IR</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b0d12;color:#f4f7fb;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
-.app{max-width:980px;margin:auto;min-height:100vh;display:flex;flex-direction:column}
-header{position:sticky;top:0;z-index:5;background:#10131aee;backdrop-filter:blur(12px);border-bottom:1px solid #242936;padding:14px 18px;display:flex;justify-content:space-between}
-.brand{font-weight:800;font-size:20px}.status{font-size:12px;color:#8ee6a8}
-main{flex:1;padding:20px 14px 110px}.welcome{text-align:center;margin:14vh auto 0}.welcome h1{font-size:36px;margin:0 0 10px}.welcome p{color:#aeb7c6}
-.messages{display:flex;flex-direction:column;gap:12px}.msg{max-width:82%;padding:12px 15px;border-radius:18px;line-height:1.8;white-space:pre-wrap;word-break:break-word}
-.user{align-self:flex-start;background:#1d6fe8}.ai{align-self:flex-end;background:#171b23;border:1px solid #252b38}
-.composer{position:fixed;bottom:0;left:0;right:0;background:#0b0d12ee;backdrop-filter:blur(14px);padding:12px;z-index:10}
-.composer-inner{max-width:980px;margin:auto;display:flex;gap:8px;align-items:end;background:#171b23;border:1px solid #2a3140;border-radius:22px;padding:8px}
-textarea{flex:1;resize:none;min-height:44px;max-height:140px;border:0;outline:0;background:transparent;color:white;padding:10px;font:inherit}
-button{border:0;border-radius:15px;min-width:44px;height:44px;background:#242b38;color:white;cursor:pointer;font-size:18px}.send{background:#1d6fe8}.on{background:#b33a3a}.error{background:#35191d;border:1px solid #71343c}
-.hint{text-align:center;font-size:11px;color:#70798a;margin-top:7px}@media(max-width:600px){.welcome h1{font-size:30px}.msg{max-width:92%}}
+:root{color-scheme:dark;--bg:#080b13;--panel:#111827;--line:#27334a;--muted:#9aa9c2;--cyan:#65e4ff;--blue:#4b8cff}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#18365a 0,transparent 48%),radial-gradient(circle at 5% 70%,#10274666,transparent 28%),var(--bg);color:#f4f8ff;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(#7895bd12 1px,transparent 1px),linear-gradient(90deg,#7895bd12 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+.app{position:relative;max-width:1020px;margin:auto;min-height:100vh;display:flex;flex-direction:column;padding:0 22px}
+header{position:sticky;top:0;z-index:5;margin:0 -22px;padding:16px 26px;display:flex;align-items:center;justify-content:space-between;background:#080d18d9;backdrop-filter:blur(18px);border-bottom:1px solid #26354c}
+.brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:19px;letter-spacing:1.5px}.brand:before{content:"";width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#d9fbff 0 10%,#51dfff 13% 23%,#1765b9 28% 48%,#0c203e 53%);box-shadow:0 0 18px #42cfff99, inset 0 0 8px #b9f8ff}.status{font-size:12px;color:#91f0c0;background:#10271f;border:1px solid #24533d;padding:7px 11px;border-radius:99px}
+main{flex:1;padding:24px 0 150px}.welcome{text-align:center;margin:10vh auto 42px;max-width:680px}.welcome:before{content:"AI • PERSONAL ASSISTANT";display:inline-block;color:var(--cyan);font-size:10px;letter-spacing:3px;font-weight:800;border:1px solid #3c7c9a66;background:#10283a99;padding:8px 14px;border-radius:99px;margin-bottom:22px}.welcome h1{font-size:clamp(32px,6vw,54px);line-height:1.25;margin:0 0 14px;font-weight:850;letter-spacing:-1px;background:linear-gradient(100deg,#fff 20%,#9eeeff 60%,#7ca7ff);color:transparent;background-clip:text}.welcome p{color:var(--muted);font-size:15px;line-height:2;margin:0 auto;max-width:520px}
+.suggestions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:28px auto 0;max-width:690px}.suggestion{background:#101a2bba;border:1px solid #293b56;border-radius:16px;padding:14px 12px;color:#dceaff;font:inherit;font-size:13px;min-height:66px;cursor:pointer;transition:.2s}.suggestion:hover{border-color:#55c9f3;transform:translateY(-2px);background:#14263d}
+.messages{display:flex;flex-direction:column;gap:15px;max-width:850px;margin:auto}.msg{max-width:82%;padding:13px 17px;border-radius:19px;line-height:1.95;white-space:pre-wrap;word-break:break-word;box-shadow:0 8px 24px #0002}.user{align-self:flex-start;background:linear-gradient(135deg,#2467c9,#2453a2);border:1px solid #6ba5ff55;border-bottom-left-radius:6px}.ai{align-self:flex-end;background:linear-gradient(145deg,#172337,#111a29);border:1px solid #2b405e;border-bottom-right-radius:6px}
+.composer{position:fixed;bottom:0;left:0;right:0;z-index:10;padding:16px 18px 12px;background:linear-gradient(transparent,#080b13 24%);backdrop-filter:blur(9px)}.composer-inner{max-width:850px;margin:auto;display:flex;gap:10px;align-items:end;background:#111b2b;border:1px solid #354968;border-radius:24px;padding:9px;box-shadow:0 12px 45px #0008,0 0 25px #1a7cb322;transition:border-color .2s}.composer-inner:focus-within{border-color:#5bcdf0;box-shadow:0 12px 45px #0008,0 0 0 3px #42cfff18}
+textarea{flex:1;resize:none;min-height:46px;max-height:140px;border:0;outline:0;background:transparent;color:white;padding:11px 12px;font:inherit;font-size:14px}textarea::placeholder{color:#8292aa}
+button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;background:#1a2940;color:#eaf5ff;cursor:pointer;font-size:18px;transition:.2s}button:hover{filter:brightness(1.2);transform:translateY(-1px)}button:disabled{opacity:.5;cursor:wait;transform:none}.send{background:linear-gradient(135deg,#218de0,#385fe4);border-color:#5eabff}.on{background:#9d3545}.error{background:#35191d;border:1px solid #71343c}
+.hint{text-align:center;font-size:10px;color:#71829d;margin-top:9px;letter-spacing:.3px}
+@media(max-width:600px){.app{padding:0 13px}header{margin:0 -13px;padding:13px 16px}.welcome{margin:8vh auto 30px}.welcome h1{font-size:34px}.welcome p{font-size:13px}.suggestions{grid-template-columns:1fr;gap:8px}.suggestion{min-height:48px}.msg{max-width:94%;font-size:14px}.composer{padding:12px 10px 9px}}
 </style></head>
 <body>
 <div class="app">
 <header><div class="brand">JARVIS.IR</div><div id="status" class="status">در حال اتصال…</div></header>
-<main><section id="welcome" class="welcome"><h1>سلام، من JARVIS هستم</h1><p>سؤالت را بنویس یا با میکروفون صحبت کن. نسخهٔ رایگان با پاسخ‌های ساده.</p></section><section id="messages" class="messages"></section></main>
+<main><section id="welcome" class="welcome"><h1>دستیار هوشمند شما</h1><p>اینجا شروع یک گفت‌وگوی تازه است. سؤالت را بنویس یا با میکروفون صحبت کن.</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی روبلاکس بده">🎮 ایده برای بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را ساده توضیح بده">🧠 درباره هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 حقیقت علمی جالب</button></div></section><section id="messages" class="messages"></section></main>
 <div class="composer"><div class="composer-inner"><button id="mic">🎙️</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS.IR • حالت رایگان و ساده، بدون API</div></div>
 </div>
 <script>
@@ -110,6 +113,7 @@ if (typeof reply !== "string" || !reply.trim()) throw new Error("پاسخ خال
  }catch(e){load.className="msg ai error";load.textContent=e.message || "پاسخ آماده نشد. دوباره امتحان کن."}
  finally{send.disabled=false;input.focus()}
 }
+document.querySelectorAll(".suggestion").forEach(b=>b.onclick=()=>{input.value=b.dataset.prompt;ask()});
 send.onclick=ask;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask()}});
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 if(SR){const rec=new SR();rec.lang="fa-IR";rec.interimResults=false;rec.onstart=()=>mic.classList.add("on");rec.onend=()=>mic.classList.remove("on");rec.onresult=e=>{input.value=e.results[0][0].transcript;ask()};mic.onclick=()=>{try{rec.start()}catch{}}}
