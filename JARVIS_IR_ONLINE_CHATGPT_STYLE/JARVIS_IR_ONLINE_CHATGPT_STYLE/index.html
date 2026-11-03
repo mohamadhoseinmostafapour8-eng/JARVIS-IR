@@ -1,40 +1,46 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10131a"><meta name="description" content="JARVIS AI assistant">
+<meta name="theme-color" content="#080b18"><meta name="description" content="JARVIS AI assistant with teaching dashboard">
 <link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icon.svg">
 <title>JARVIS</title>
 <style>
 :root{color-scheme:dark;--bg:#080b13;--panel:#111827;--line:#27334a;--muted:#9aa9c2;--cyan:#65e4ff;--blue:#4b8cff}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#18365a 0,transparent 48%),radial-gradient(circle at 5% 70%,#10274666,transparent 28%),var(--bg);color:#f4f8ff;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#18365a 0,transparent 48%),radial-gradient(circle at 5% 70%,#10274666,transparent 28%),var(--bg);color:#f4f8ff;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(#7895bd12 1px,transparent 1px),linear-gradient(90deg,#7895bd12 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
 .app{position:relative;max-width:1020px;margin:auto;min-height:100vh;display:flex;flex-direction:column;padding:0 22px}
 header{position:sticky;top:0;z-index:5;margin:0 -22px;padding:16px 26px;display:flex;align-items:center;justify-content:space-between;background:#080d18d9;backdrop-filter:blur(18px);border-bottom:1px solid #26354c}
 .header-actions{display:flex;align-items:center;gap:10px}.clear-chat{height:34px;min-width:0;padding:0 11px;border-radius:11px;font-size:11px;color:#c3d5ec;background:#172337;border:1px solid #344761}.brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:19px;letter-spacing:1.5px}.brand:before{content:"";width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#d9fbff 0 10%,#51dfff 13% 23%,#1765b9 28% 48%,#0c203e 53%);box-shadow:0 0 18px #42cfff99, inset 0 0 8px #b9f8ff}.status{font-size:12px;color:#91f0c0;background:#10271f;border:1px solid #24533d;padding:7px 11px;border-radius:99px}
 main{flex:1;padding:24px 0 150px}.welcome{text-align:center;margin:10vh auto 42px;max-width:680px}.welcome:before{content:"AI • PERSONAL ASSISTANT";display:inline-block;color:var(--cyan);font-size:10px;letter-spacing:3px;font-weight:800;border:1px solid #3c7c9a66;background:#10283a99;padding:8px 14px;border-radius:99px;margin-bottom:22px}.welcome h1{font-size:clamp(32px,6vw,54px);line-height:1.25;margin:0 0 14px;font-weight:850;letter-spacing:-1px;background:linear-gradient(100deg,#fff 20%,#9eeeff 60%,#7ca7ff);color:transparent;background-clip:text}.welcome p{color:var(--muted);font-size:15px;line-height:2;margin:0 auto;max-width:520px}
 .suggestions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:28px auto 0;max-width:690px}.suggestion{background:#101a2bba;border:1px solid #293b56;border-radius:16px;padding:14px 12px;color:#dceaff;font:inherit;font-size:13px;min-height:66px;cursor:pointer;transition:.2s}.suggestion:hover{border-color:#55c9f3;transform:translateY(-2px);background:#14263d}
-.messages{display:flex;flex-direction:column;gap:15px;max-width:850px;margin:auto}.msg{max-width:82%;padding:13px 17px;border-radius:19px;line-height:1.95;white-space:pre-wrap;word-break:break-word;box-shadow:0 8px 24px #0002}.user{align-self:flex-start;background:linear-gradient(135deg,#2467c9,#2453a2);border:1px solid #6ba5ff55;border-bottom-left-radius:6px}.ai{align-self:flex-end;background:linear-gradient(145deg,#172337,#111a29);border:1px solid #2b405e;border-bottom-right-radius:6px}
-.composer{position:fixed;bottom:0;left:0;right:0;z-index:10;padding:16px 18px 12px;background:linear-gradient(transparent,#080b13 24%);backdrop-filter:blur(9px)}.composer-inner{max-width:850px;margin:auto;display:flex;gap:10px;align-items:end;background:#111b2b;border:1px solid #354968;border-radius:24px;padding:9px;box-shadow:0 12px 45px #0008,0 0 25px #1a7cb322;transition:border-color .2s}.composer-inner:focus-within{border-color:#5bcdf0;box-shadow:0 12px 45px #0008,0 0 0 3px #42cfff18}
-textarea{flex:1;resize:none;min-height:46px;max-height:140px;border:0;outline:0;background:transparent;color:white;padding:11px 12px;font:inherit;font-size:14px}textarea::placeholder{color:#8292aa}
-button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;background:#1a2940;color:#eaf5ff;cursor:pointer;font-size:18px;transition:.2s}button:hover{filter:brightness(1.2);transform:translateY(-1px)}button:disabled{opacity:.5;cursor:wait;transform:none}.send{background:linear-gradient(135deg,#218de0,#385fe4);border-color:#5eabff}.on{background:#9d3545}.voice-active{border-color:#65e4ff;background:#12364a;color:#9cecff}.error{background:#35191d;border:1px solid #71343c}
+.messages{display:flex;flex-direction:column;gap:15px;max-width:850px;margin:auto}.msg{max-width:82%;padding:13px 17px;border-radius:19px;line-height:1.95;white-space:pre-wrap;word-break:break-word;box-shadow:0 8px 24px #0002}.user{align-self:flex-start;background:#c982a4;color:#171016;border:1px solid #e5a9c4;border-bottom-left-radius:6px}.ai{align-self:flex-end;background:#3a2934;color:#fff0f7;border:1px solid #79566a;border-bottom-right-radius:6px}
+.composer{position:fixed;bottom:0;left:0;right:0;z-index:10;padding:16px 18px 12px;background:linear-gradient(transparent,#080808 24%);backdrop-filter:blur(9px)}.composer-inner{max-width:850px;margin:auto;display:flex;gap:10px;align-items:end;background:#c982a4;border:1px solid #e5a9c4;border-radius:24px;padding:9px;box-shadow:0 12px 45px #0008;transition:border-color .2s}.composer-inner:focus-within{border-color:#f0b8d0;box-shadow:0 12px 45px #0008,0 0 0 3px #c982a433}
+textarea{flex:1;resize:none;min-height:46px;max-height:140px;border:0;outline:0;background:transparent;color:#21151c;padding:11px 12px;font:inherit;font-size:14px}textarea::placeholder{color:#604653}
+button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;background:#1a2940;color:#eaf5ff;cursor:pointer;font-size:18px;transition:.2s}button:hover{filter:brightness(1.2);transform:translateY(-1px)}button:disabled{opacity:.5;cursor:wait;transform:none}.send{background:#684456;border-color:#8d6078;color:#fff0f7}.on{background:#9d3545}.voice-active{border-color:#65e4ff;background:#12364a;color:#9cecff}.error{background:#35191d;border:1px solid #71343c}
 .hint{text-align:center;font-size:10px;color:#71829d;margin-top:9px;letter-spacing:.3px}
+.attachment-bar{max-width:850px;margin:0 auto 8px;padding:7px 12px;display:flex;align-items:center;gap:10px;background:#14213d;border:1px solid #45639c;border-radius:14px;color:#dceaff;font-size:12px}.attachment-bar[hidden]{display:none}.attachment-bar img{width:46px;height:46px;object-fit:cover;border-radius:8px}.attachment-bar span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.attachment-bar button{min-width:32px;width:32px;height:32px;border-radius:9px;background:#40233a}.composer-inner #attach{min-width:40px;width:40px;height:42px;border-radius:13px;font-size:19px}.msg.user img.chat-attachment-preview{display:block;max-width:min(100%,340px);max-height:280px;object-fit:contain;margin-top:9px;border-radius:12px;border:1px solid #ffffff55}
 @media(max-width:600px){.app{padding:0 13px}header{margin:0 -13px;padding:13px 16px}.welcome{margin:8vh auto 30px}.welcome h1{font-size:34px}.welcome p{font-size:13px}.suggestions{grid-template-columns:1fr;gap:8px}.suggestion{min-height:48px}.msg{max-width:94%;font-size:14px}.composer{padding:12px 10px 9px}}
 
 /* Chat history sidebar */
 .sidebar-toggle{min-width:38px;width:38px;height:34px;border-radius:10px;font-size:17px}
-.sidebar{position:fixed;z-index:30;top:0;right:0;bottom:0;width:min(290px,84vw);padding:18px;background:#0d1421;border-left:1px solid #29374d;box-shadow:-12px 0 40px #0008;transform:translateX(105%);transition:transform .22s ease;display:flex;flex-direction:column;gap:12px}
-.sidebar.open{transform:translateX(0)}.sidebar-head{display:flex;align-items:center;justify-content:space-between;color:#eef5ff;font-weight:800}.sidebar-actions{display:flex;gap:8px}.new-chat{width:100%;height:42px;border-radius:12px;background:#17263a;border:1px solid #354968;color:#edf5ff;font-size:13px}.chat-list{overflow:auto;display:flex;flex-direction:column;gap:6px}.chat-item{width:100%;height:auto;min-height:42px;text-align:right;padding:9px 11px;border-radius:10px;background:transparent;border:1px solid transparent;color:#cbd8e9;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat-item.active{background:#1a2940;border-color:#3a506e;color:#fff}.sidebar-shade{display:none;position:fixed;inset:0;z-index:29;background:#0008}.sidebar-shade.show{display:block}
+.sidebar{position:fixed;z-index:30;top:0;left:0;right:auto;bottom:0;width:min(290px,84vw);padding:18px;background:#0d1421;border-left:1px solid #29374d;box-shadow:-12px 0 40px #0008;transform:translateX(-105%);transition:transform .22s ease;display:flex;flex-direction:column;gap:12px}
+.sidebar.open{transform:translateX(0)}.sidebar-head{display:flex;align-items:center;justify-content:space-between;color:#eef5ff;font-weight:800}.sidebar-actions{display:flex;gap:8px}.new-chat{width:100%;height:42px;border-radius:12px;background:#17263a;border:1px solid #354968;color:#edf5ff;font-size:13px}.chat-list{overflow:auto;display:flex;flex-direction:column;gap:6px}.chat-item{width:100%;height:auto;min-height:42px;text-align:left;padding:9px 11px;border-radius:10px;background:transparent;border:1px solid transparent;color:#cbd8e9;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat-item.active{background:#1a2940;border-color:#3a506e;color:#fff}.sidebar-shade{display:none;position:fixed;inset:0;z-index:29;background:#0008}.sidebar-shade.show{display:block}
 @media(min-width:900px){.sidebar{width:270px}}
-.image-open{background:#123d66!important;border:1px solid #4b8cff!important;color:#e5f7ff!important}
-.image-lab{display:none;position:fixed;inset:0;z-index:80;overflow:auto;padding:20px;background:radial-gradient(ellipse at top,#123b62,#070b14 70%)}
-.image-lab.open{display:block}.lab-shell{max-width:950px;margin:3vh auto;background:#0b1422;border:1px solid #315b83;border-radius:24px;overflow:hidden;box-shadow:0 25px 90px #000b}
-.lab-head{display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid #23425f}.lab-head strong{font-size:22px;color:#dff7ff}.lab-head button{background:#17283c;color:white;border:1px solid #365675;border-radius:10px;padding:8px 14px}
-.lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:22px}.lab-controls{display:flex;flex-direction:column;gap:12px}.lab-controls label{color:#ccecff;font-weight:700;font-size:13px}.lab-controls textarea,.lab-controls select{width:100%;padding:13px;border-radius:12px;border:1px solid #355675;background:#070d17;color:white;font:inherit}.lab-controls textarea{min-height:150px;resize:vertical}.lab-controls button{padding:14px;border:0;border-radius:13px;background:linear-gradient(100deg,#0ea5e9,#2563eb);color:white;font-weight:900;font:inherit}.lab-controls button:disabled{opacity:.5}.lab-preview{min-height:300px;border:1px dashed #426c91;border-radius:17px;background:#08101c;display:flex;align-items:center;justify-content:center;color:#a8c6df;text-align:center;overflow:hidden;padding:10px}.lab-preview img{max-width:100%;max-height:560px;border-radius:12px}.lab-status{color:#9fe7ff;font-size:13px;min-height:24px}
-@media(max-width:700px){.lab-grid{grid-template-columns:1fr;padding:14px}.image-lab{padding:7px}.lab-preview{min-height:230px}}
+/* WORKSHEET STUDIO */
+.worksheet-open{background:linear-gradient(120deg,#075985,#164e63)!important;border:1px solid #38bdf8!important;color:#e0f2fe!important}
+.worksheet-lab{display:none;position:fixed;inset:0;z-index:85;overflow:auto;padding:18px;background:radial-gradient(ellipse at 50% 0%,#164e63 0%,#0b1725 55%,#070609 100%)}
+.worksheet-lab.open{display:block}.worksheet-shell{max-width:1100px;margin:2vh auto;background:#101b2b;border:1px solid #28708a;border-radius:22px;overflow:hidden;box-shadow:0 25px 90px #000b}.worksheet-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid #29465f}.worksheet-head strong{font-size:22px;color:#b8efff}.worksheet-body{display:grid;grid-template-columns:minmax(250px,.75fr) minmax(0,1.25fr);gap:18px;padding:20px}.worksheet-controls{display:flex;flex-direction:column;gap:12px}.worksheet-controls label{font-size:13px;color:#c7eaff;font-weight:800}.worksheet-controls textarea,.worksheet-controls select{width:100%;padding:12px;border-radius:12px;border:1px solid #35536e;background:#091321;color:#fff;font:inherit}.worksheet-controls textarea{min-height:180px;line-height:1.8;resize:vertical}.worksheet-controls button{background:linear-gradient(100deg,#0e7490,#2563eb);border:0;color:white;font-weight:800}.worksheet-result{min-height:420px;background:#e8eef5;border-radius:14px;overflow:hidden}.worksheet-result iframe{width:100%;height:820px;border:0;background:white}.worksheet-status{font-size:12px;color:#a9d9ee;min-height:22px;line-height:1.8}@media(max-width:760px){.worksheet-body{grid-template-columns:1fr;padding:12px}.worksheet-lab{padding:6px}.worksheet-result iframe{height:700px}}
+/* JARVIS ULTRA IMAGE STUDIO */
+.image-open{background:linear-gradient(120deg,#5b1748,#241020)!important;border:1px solid #e85aa8!important;color:#ffe1f2!important;box-shadow:0 0 20px #ec489955}
+.image-lab{display:none;position:fixed;inset:0;z-index:80;overflow:auto;padding:18px;background:radial-gradient(ellipse at 50% 0%,#6b1d50 0%,#1c0b1b 48%,#070609 100%)}
+.image-lab.open{display:block}.lab-shell{max-width:1080px;margin:2vh auto;background:linear-gradient(145deg,#1a0d1bfa,#100b14fa);border:1px solid #a83275;border-radius:26px;overflow:hidden;box-shadow:0 25px 110px #000d,0 0 65px #ec489944}
+.lab-head{display:flex;justify-content:space-between;align-items:center;padding:22px 25px;border-bottom:1px solid #542342;background:linear-gradient(90deg,#35112b,#160d19)}.lab-head strong{font-size:clamp(19px,4vw,27px);font-weight:950;letter-spacing:1px;background:linear-gradient(90deg,#fff,#ff83c9,#d8a7ff);color:transparent;background-clip:text}.lab-head small{display:block;color:#d7a8c8;margin-top:6px}.lab-head button{background:#35172d;color:#ffd7ee;border:1px solid #74345e;border-radius:12px;padding:8px 14px;font-size:21px}
+.lab-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;padding:24px}.lab-controls{display:flex;flex-direction:column;gap:13px}.lab-controls label{color:#ffd2ea;font-weight:850;font-size:13px}.lab-controls textarea,.lab-controls select{width:100%;padding:14px;border-radius:14px;border:1px solid #74345e;background:#09070b;color:white;font:inherit;outline:none}.lab-controls textarea{min-height:170px;resize:vertical;line-height:1.9}.lab-controls textarea:focus,.lab-controls select:focus{border-color:#ff70bd;box-shadow:0 0 0 3px #e83e9b22}.lab-controls button{padding:16px;border:0;border-radius:15px;background:linear-gradient(100deg,#ec4899,#a21caf,#7c3aed);color:white;font-weight:950;font:inherit;cursor:pointer;box-shadow:0 10px 30px #ec489955;transition:transform .2s}.lab-controls button:hover{transform:translateY(-2px)}.lab-controls button:disabled{opacity:.5;cursor:wait}
+.lab-preview{min-height:390px;border:1px dashed #a34a83;border-radius:21px;background:radial-gradient(circle at 50% 35%,#421631,#100b12 75%);display:flex;align-items:center;justify-content:center;color:#e5a9ce;text-align:center;overflow:hidden;padding:13px;box-shadow:inset 0 0 45px #e83e9b12}.lab-preview img{width:100%;height:auto;max-height:620px;object-fit:contain;border-radius:15px;box-shadow:0 12px 45px #0009}.lab-status{color:#ffb4dc;font-size:13px;min-height:24px}.lab-note{font-size:11px;color:#bd94b1;line-height:1.8}
+@media(max-width:720px){.lab-grid{grid-template-columns:1fr;padding:14px}.image-lab{padding:6px}.lab-preview{min-height:260px}.lab-head{padding:15px}}
 
-/* MINMON-INSPIRED THEME */
 /* CAT THEME — unified premium interface for chat, image and worksheet tools */
 :root{color-scheme:dark;--bg:#070b1b;--panel:#101a33;--line:#293d68;--muted:#a9b9d8;--cyan:#62dcff;--blue:#397bff;--violet:#a56bff}
 body{background:radial-gradient(ellipse at 50% -12%,#173a78 0,transparent 48%),radial-gradient(circle at 90% 75%,#381d68aa,transparent 30%),#070b1b;color:#f4f7ff}
@@ -42,7 +48,7 @@ body:before{opacity:.22;background-image:linear-gradient(#8db8ff12 1px,transpare
 .app{max-width:1180px}
 header{background:#080e20eF;border-bottom:1px solid #304675;box-shadow:0 10px 35px #0005;gap:16px}
 .brand{gap:12px;font-size:21px;letter-spacing:1.3px;color:#eaf5ff}
-.brand:before{content:"J";display:grid;place-items:center;width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#263d83,#171c45);border:1px solid #6e91ff;box-shadow:0 0 24px #527dff88,inset 0 0 14px #9e79ff44;color:#dff7ff;font-size:25px;font-weight:950}
+.cat-mark{display:grid;place-items:center;width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#263d83,#171c45);border:1px solid #6e91ff;box-shadow:0 0 24px #527dff88;font-size:29px}
 .brand-sub{display:block;font-size:10px;letter-spacing:0;color:#9db4df;font-weight:500;margin-top:2px}
 .header-actions{gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .header-actions button{height:39px;border-radius:13px;font-size:12px;padding:0 13px}
@@ -53,7 +59,7 @@ header{background:#080e20eF;border-bottom:1px solid #304675;box-shadow:0 10px 35
 .welcome{margin:8vh auto 42px;max-width:760px}
 .hero-cat{width:116px;height:116px;margin:0 auto 20px;display:grid;place-items:center;border-radius:34px;background:linear-gradient(145deg,#1d3470,#281b59);border:1px solid #718cff;box-shadow:0 0 55px #477dff66,inset 0 0 28px #9e79ff33;font-size:70px;animation:catGlow 4s ease-in-out infinite}
 @keyframes catGlow{50%{box-shadow:0 0 70px #477dff99,inset 0 0 32px #9e79ff55;transform:translateY(-3px)}}
-.welcome:before{content:"✦  JARVIS • YOUR SMART AI ASSISTANT";color:#8beaff;border-color:#3976b6;background:#10294dcc}
+.welcome:before{content:"🐾  YOUR SMART AI COMPANION";color:#8beaff;border-color:#3976b6;background:#10294dcc}
 .welcome h1{background:linear-gradient(100deg,#fff 15%,#8deaff 55%,#b59aff);color:transparent;background-clip:text}
 .welcome p{color:#adbfdf}
 .suggestion{background:linear-gradient(145deg,#121f3b,#11172e);border-color:#344b79;border-radius:18px;box-shadow:0 9px 25px #0003}
@@ -91,25 +97,242 @@ button{background:#1b2d53;border-color:#3c568b;color:#edf5ff}
 .lab-controls button{background:linear-gradient(100deg,#287ee8,#6545d8);box-shadow:0 10px 30px #376dff55}
 .lab-preview{border-color:#536eb1;background:radial-gradient(circle at 50% 35%,#25366e,#0c1125 75%);color:#c8d9ff}
 .lab-note{color:#91a8d4}
-@media(max-width:600px){header{align-items:flex-start}.brand{font-size:17px}.brand:before{width:40px;height:40px;font-size:22px}.header-actions button{font-size:10px;padding:0 9px}}
+@media(max-width:600px){header{align-items:flex-start}.brand{font-size:17px}.cat-mark{width:40px;height:40px;font-size:24px}.header-actions button{font-size:10px;padding:0 9px}.hero-cat{width:94px;height:94px;font-size:58px}}
+
+/* TEACHER STUDIO */
+.teacher-open{background:linear-gradient(110deg,#087e78,#2563a8)!important;border:1px solid #5eead4!important;color:#ecfeff!important}
+.teacher-lab{display:none;position:fixed;inset:0;z-index:95;overflow:auto;padding:16px;background:radial-gradient(ellipse at 50% 0%,#164e63,#0b1530 58%,#070b1b)}
+.teacher-lab.open{display:block}.teacher-shell{max-width:1120px;margin:2vh auto;background:#101b32;border:1px solid #4777a9;border-radius:22px;overflow:hidden;box-shadow:0 25px 90px #000b}
+.teacher-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid #304b70}.teacher-head strong{font-size:22px;color:#b9f4ff}
+.teacher-head button{min-width:38px}.teacher-tabs{display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid #293e60}
+.teacher-tabs button{height:38px;padding:0 13px;border-radius:11px;font-size:12px}.teacher-tabs button.active{background:#176b80;border-color:#62d8e9;color:white}
+.teacher-content{padding:20px}.teacher-pane{display:none}.teacher-pane.active{display:block}
+.teacher-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.teacher-card{background:#0c1730;border:1px solid #304b70;border-radius:15px;padding:15px;min-width:0}
+.teacher-card h3{margin:0 0 12px;color:#bdeaff;font-size:16px}
+.teacher-card label{display:block;margin:10px 0 5px;color:#c6d9f4;font-size:12px}
+.teacher-card input,.teacher-card select,.teacher-card textarea{width:100%;padding:11px;border-radius:10px;border:1px solid #3b5680;background:#080f22;color:#fff;font:inherit;font-size:13px}
+.teacher-card textarea{min-height:105px;resize:vertical;line-height:1.8}
+.teacher-card button,.teacher-action{margin-top:10px;padding:0 14px;height:39px;border:0;border-radius:10px;background:linear-gradient(100deg,#0e7490,#2563eb);color:#fff;font-weight:800;font-size:12px}
+.teacher-list{display:flex;flex-direction:column;gap:7px;margin-top:12px}.teacher-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px;border:1px solid #2d4568;border-radius:10px;color:#dceaff;font-size:12px}.teacher-row button{height:30px;min-width:35px;margin:0;padding:0 8px;background:#452536}
+.teacher-output{white-space:pre-wrap;line-height:1.9;background:#f8fafc;color:#172033;padding:16px;border-radius:12px;min-height:100px;margin-top:12px;direction:rtl}
+.teacher-hint{color:#9eb6d9;font-size:11px;line-height:1.8;margin-top:9px}
+.teacher-attendance{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.teacher-attendance label{display:flex;align-items:center;gap:8px;margin:0;padding:9px;border:1px solid #304b70;border-radius:9px}
+@media(max-width:700px){.teacher-lab{padding:5px}.teacher-content{padding:10px}.teacher-grid{grid-template-columns:1fr}.teacher-head{padding:13px}.teacher-tabs{padding:10px}.teacher-tabs button{flex:1;padding:0 7px}.teacher-attendance{grid-template-columns:1fr}}
+
+/* QUESTION LAB — assessment-focused premium workspace */
+.teacher-question-hero{padding:22px 24px;margin:0 0 16px;border:1px solid #4969a5;border-radius:20px;background:radial-gradient(circle at 95% 0%,#344b8b88,transparent 42%),linear-gradient(120deg,#14284d,#17203e);box-shadow:inset 0 1px #ffffff12,0 15px 35px #0003}
+.teacher-question-hero h2{margin:4px 0 8px;color:#eff5ff;font-size:clamp(20px,3vw,28px)}
+.teacher-question-hero p{max-width:760px;margin:0;color:#b8c9e9;font-size:13px;line-height:1.8}
+.teacher-question-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.teacher-question-pills span{padding:7px 11px;border:1px solid #506da5;border-radius:99px;background:#101d3c;color:#cfe7ff;font-size:11px}
+.teacher-question-grid{grid-template-columns:minmax(300px,.9fr) minmax(0,1.1fr)}
+.teacher-question-grid .teacher-card{padding:20px}
+.teacher-question-preview{min-height:100%;display:flex;flex-direction:column}
+.teacher-output-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.teacher-output-head h3{margin-bottom:0}
+.teacher-live-dot{font-size:10px;letter-spacing:1px;color:#8ef0c5}
+.teacher-question-preview .teacher-output{flex:1;min-height:500px;direction:ltr;text-align:left;white-space:pre-wrap;overflow:auto;font-family:Inter,Arial,sans-serif}
+.teacher-question-grid .teacher-card textarea{min-height:82px}
+.teacher-question-grid .teacher-action{width:100%;height:48px;font-size:13px;background:linear-gradient(105deg,#187baf,#6356d7);box-shadow:0 8px 24px #315fbd55}
+.teacher-mic{flex:0 0 40px;width:40px;height:40px!important;border-radius:13px!important;background:linear-gradient(145deg,#1c4778,#5143a0)!important;border:1px solid #8db7ff!important;box-shadow:0 0 18px #628dff44}
+.teacher-mic.listening{background:linear-gradient(145deg,#a52c55,#6d245f)!important;box-shadow:0 0 0 5px #ef476f25,0 0 24px #ef476f66}
+.teacher-mic-status{direction:ltr;text-align:left}
+@media(max-width:760px){.teacher-question-grid{grid-template-columns:1fr}.teacher-question-hero{padding:17px}.teacher-question-preview .teacher-output{min-height:320px}}
+/* PREMIUM ENGLISH TEACHER STUDIO */
+.teacher-lab{background:radial-gradient(ellipse at 12% 0%,#263c72 0,#111a35 42%,#080d1d 100%);backdrop-filter:blur(18px);padding:clamp(6px,2vw,24px)}
+.teacher-shell{max-width:1240px;background:linear-gradient(145deg,#121e38,#0b1429);border:1px solid #526b9b;border-radius:26px;box-shadow:0 30px 100px #020617cc}
+.teacher-head{background:linear-gradient(100deg,#17294b,#17243c);padding:22px 26px}
+.teacher-head strong{font-size:clamp(19px,2vw,26px);letter-spacing:.2px;color:#e2eaff}
+.teacher-head .small{color:#a9bddf;margin-top:5px}
+.teacher-head button{border-radius:12px;background:#263a5f;color:white;font-size:24px}
+.teacher-tabs{padding:15px 20px;background:#0d1830;gap:9px}
+.teacher-tabs button{height:42px;padding:0 16px;border:1px solid #344a72;border-radius:12px;background:#162544;color:#c7d6f2;font-weight:700;transition:.2s}
+.teacher-tabs button:hover,.teacher-tabs button.active{background:linear-gradient(110deg,#246b9d,#6752b8);border-color:#8eb7ff;color:white;box-shadow:0 6px 22px #3865a455}
+.teacher-content{padding:clamp(12px,2vw,24px)}
+.teacher-card{background:linear-gradient(155deg,#172746,#101b33);border:1px solid #344b73;border-radius:19px;padding:20px;box-shadow:0 12px 28px #02061740}
+.teacher-card h3{color:#dce9ff;font-size:16px;letter-spacing:.15px}
+.teacher-card label{color:#b9cbed;font-weight:650;font-size:12px;letter-spacing:.2px}
+.teacher-card input,.teacher-card select,.teacher-card textarea{background:#0a1429;border:1px solid #40577f;color:#f2f6ff;border-radius:12px;padding:12px;outline:none;transition:.2s}
+.teacher-card input:focus,.teacher-card select:focus,.teacher-card textarea:focus{border-color:#8b9cff;box-shadow:0 0 0 3px #6478ff22}
+.teacher-card button,.teacher-action{height:43px;border-radius:12px;background:linear-gradient(105deg,#2877b8,#6958c8);font-size:12px;letter-spacing:.2px;box-shadow:0 7px 18px #244d9b35}
+.teacher-card button:hover{filter:brightness(1.13);transform:translateY(-1px)}
+.teacher-row{background:#111e37;border-color:#354c72;border-radius:12px;padding:12px}
+.teacher-output{direction:ltr;text-align:left;font-family:Inter,Arial,sans-serif;line-height:1.8;border:1px solid #dbe5f3;min-height:180px;border-radius:14px}
+.teacher-hint{color:#a8bbdc}
+.teacher-attendance label{background:#111e37}
+.teacher-mic{width:38px;height:36px!important;min-width:38px;margin:7px 0 0 7px!important;padding:0!important;border:1px solid #5873a8!important;border-radius:50%!important;background:linear-gradient(145deg,#253d69,#394b86)!important;color:#fff;font-size:17px!important;box-shadow:0 4px 14px #0003}
+.teacher-mic.listening{background:#a83258!important;animation:teacherPulse 1s infinite}
+@keyframes teacherPulse{50%{box-shadow:0 0 0 7px #ef476f30}}
+.teacher-mic-row{display:flex;align-items:center;gap:8px}.teacher-mic-row textarea,.teacher-mic-row input{flex:1}
+.teacher-mic-status{font-size:11px;color:#9db4dc;margin-top:4px;min-height:16px}
+.teacher-kicker{color:#9eb8e9;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px}
+@media(max-width:700px){.teacher-tabs button{font-size:10px;padding:0 9px}.teacher-card{padding:14px}.teacher-head{padding:15px}}
+
+/* JARVIS GLASS DASHBOARD — faithful dashboard layout */
+#jarvisDashboard{display:none;min-height:100vh;padding:18px;gap:18px;grid-template-columns:250px minmax(0,1fr);background:radial-gradient(ellipse at 72% 0%,#172d70 0,transparent 38%),radial-gradient(ellipse at 8% 90%,#39136b88 0,transparent 34%),#05091b;color:#f6f8ff}
+body.dashboard-mode .app{max-width:none;padding:0}
+body.dashboard-mode #jarvisDashboard{display:grid}
+body.dashboard-mode header,body.dashboard-mode main,body.dashboard-mode .composer{display:none!important}
+.dash-glass{background:linear-gradient(145deg,#142653bb,#101633bb);border:1px solid #668cff88;border-radius:22px;box-shadow:inset 0 1px #ffffff22,0 15px 40px #0008,0 0 24px #477bff22;backdrop-filter:blur(18px)}
+.dash-side{display:flex;flex-direction:column;gap:12px;padding:14px;min-height:calc(100vh - 36px)}
+.dash-brand{display:flex;align-items:center;gap:12px;padding:8px 6px 20px}
+.dash-cat{width:54px;height:54px;display:grid;place-items:center;border-radius:18px;font-size:34px;background:linear-gradient(145deg,#153f91,#24145e);border:1px solid #75dfff;box-shadow:0 0 25px #20bfff88}
+.dash-brand strong{font-size:27px;letter-spacing:1.5px;background:linear-gradient(90deg,#fff,#73eaff,#c39aff);color:transparent;background-clip:text}
+.dash-brand small{display:block;color:#a9c6f4;font-size:11px;margin-top:3px}
+.dash-nav{display:flex;flex-direction:column;gap:8px}
+.dash-nav button,.dash-quick button{width:100%;height:48px;text-align:left;padding:0 14px;border-radius:14px;background:#111d43a8;border:1px solid #425a9a88;color:#e7efff;font-size:13px}
+.dash-nav button:hover,.dash-nav button.active{background:linear-gradient(100deg,#087ee8,#6b2be0);border-color:#8cecff;box-shadow:0 0 22px #4b7eff77}
+.dash-side-note{margin-top:auto;padding:18px 12px;text-align:center;color:#a9eaff;line-height:1.7}
+.dash-main{min-width:0;display:flex;flex-direction:column;gap:16px}
+.dash-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 6px}
+.dash-tag{padding:10px 18px;border-radius:99px;color:#d8f4ff;font-size:13px;letter-spacing:.5px}
+.dash-profile{padding:10px 18px;border-radius:99px;color:#fff;background:linear-gradient(110deg,#3b267c,#142e68);border:1px solid #9a83ff;box-shadow:0 0 20px #7555ff55;font-weight:800}
+.dash-hero{display:grid;grid-template-columns:minmax(220px,.75fr) minmax(0,1.25fr);align-items:center;gap:18px;padding:22px 26px;min-height:250px;background:radial-gradient(circle at 16% 50%,#2859a8aa,transparent 38%),linear-gradient(120deg,#14244fdd,#111535dd)}
+.dash-mascot{font-size:clamp(90px,12vw,150px);text-align:center;filter:drop-shadow(0 0 25px #38bfff)}
+.dash-hero h1{font-size:clamp(28px,4vw,48px);margin:0 0 12px;background:linear-gradient(90deg,#65eaff,#d7a4ff);color:transparent;background-clip:text}
+.dash-hero p{color:#d1defb;font-size:16px;line-height:1.7;margin:0;max-width:580px}
+.dash-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.dash-stat{padding:17px;text-align:center;color:#dceaff;font-weight:750}
+.dash-stat b{display:block;font-size:18px;color:#8cecff;margin-bottom:4px}
+.dash-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.dash-card{padding:19px;min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
+.dash-card .dash-icon{font-size:38px;filter:drop-shadow(0 0 12px #52dfff)}
+.dash-card h3{font-size:18px;margin:8px 0;color:#f4f6ff}
+.dash-card p{font-size:12px;line-height:1.6;color:#b9c9eb;margin:0 0 12px}
+.dash-action{width:100%;height:43px;border:1px solid #9b9aff;border-radius:99px;background:linear-gradient(100deg,#196fe3,#812ee7);box-shadow:0 0 20px #604cff66;color:#fff;font-weight:800;font-size:12px}
+.dash-bottom{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,.8fr);gap:14px}
+.dash-quick{padding:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.dash-quick button{height:54px;text-align:center;padding:4px;font-size:11px}
+.dash-quote{padding:20px;display:grid;place-items:center;text-align:center;color:#d7c7ff;font-style:italic;line-height:1.8}
+.dash-gochat{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;max-width:178px;min-width:0;box-sizing:border-box;padding:7px 9px;border-radius:13px;border:1px solid #e1a0ff;background:linear-gradient(110deg,#8c16dc,#294fe1);box-shadow:0 0 18px #923eff55;color:#fff;text-align:left;font-weight:800;font-size:11px;line-height:1.2;margin-inline:auto}
+.dash-gochat span:first-child{font-size:18px;flex:0 0 auto}.dash-gochat span:nth-child(2){min-width:0}.dash-gochat small{display:block;font-size:9px;font-weight:500;margin-top:2px}
+.dash-profile{display:flex;align-items:center;gap:9px}.dash-profile img{width:34px;height:34px;flex:0 0 34px;object-fit:cover;object-position:50% 16%;border-radius:50%;border:1.5px solid #a9d7ff;box-shadow:0 0 13px #8c7bff88}
+@media(max-width:900px){#jarvisDashboard{grid-template-columns:190px minmax(0,1fr);padding:10px;gap:10px}.dash-cards{grid-template-columns:1fr 1fr}.dash-hero{grid-template-columns:1fr;min-height:0}.dash-mascot{font-size:90px}.dash-bottom{grid-template-columns:1fr}}
+@media(max-width:620px){#jarvisDashboard{grid-template-columns:1fr}.dash-side{min-height:0;padding:10px}.dash-brand{padding:0 4px 8px}.dash-brand strong{font-size:22px}.dash-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.dash-nav button{height:40px;font-size:11px;padding:0 8px}.dash-side-note{display:none}.dash-top{flex-wrap:wrap}.dash-tag{font-size:10px;padding:8px 12px}.dash-hero{padding:18px}.dash-hero p{font-size:13px}.dash-stats{gap:7px}.dash-stat{padding:12px 5px;font-size:11px}.dash-stat b{font-size:14px}.dash-cards{grid-template-columns:1fr}.dash-card{min-height:170px}.dash-quick{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* JARVIS robot-cat identity and dashboard return control */
+.jarvis-cat-svg{display:block;width:78%;height:78%;overflow:visible;filter:drop-shadow(0 3px 8px #42dfff55)}
+.dash-cat .jarvis-cat-svg{width:48px;height:48px}
+.dash-mascot .jarvis-cat-svg{width:100px;height:100px}
+.cat-mark .jarvis-cat-svg{width:38px;height:38px}
+.hero-cat .jarvis-cat-svg{width:88px;height:88px}
+.home-dashboard{background:linear-gradient(110deg,#174a83,#34308b)!important;border:1px solid #6b9fff!important;color:#eaf6ff!important}
+@media(max-width:600px){.dash-mascot .jarvis-cat-svg{width:76px;height:76px}.hero-cat .jarvis-cat-svg{width:70px;height:70px}.home-dashboard{height:34px!important;padding:0 9px!important}}
+
+/* Dashboard utility pages: Reports, Settings and Help */
+#dashboardUtilityPage{position:fixed;inset:0;z-index:120;display:none;overflow:auto;padding:clamp(14px,3vw,34px);background:radial-gradient(ellipse at 80% 0%,#243b83 0,transparent 42%),linear-gradient(145deg,#080e25,#111b39 65%,#090d20);color:#f4f7ff}
+#dashboardUtilityPage.open{display:block}
+.utility-shell{max-width:980px;margin:0 auto}
+.utility-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:28px}
+.utility-top h1{margin:0;color:#eaf5ff;font-size:clamp(24px,4vw,34px)}
+.utility-subtitle{color:#a9bddf;margin:8px 0 0;font-size:14px;line-height:1.7}
+.utility-back,.utility-action{border:1px solid #526da8;border-radius:12px;padding:11px 16px;background:#17294d;color:#eff6ff;font-weight:700;cursor:pointer}
+.utility-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.utility-card{padding:22px;border-radius:18px;border:1px solid #3c548c;background:linear-gradient(145deg,#18294cdd,#111b36dd);box-shadow:0 14px 35px #0003}
+.utility-card h2{margin:0 0 10px;font-size:17px;color:#c7edff}
+.utility-card p,.utility-card li{color:#bdcbe5;line-height:1.8;font-size:13px}
+.utility-card label{display:block;color:#dceaff;font-size:13px;margin:12px 0 7px}
+.utility-card select{width:100%;padding:12px;border-radius:10px;border:1px solid #526da8;background:#0c1730;color:#fff}
+.utility-card .utility-action{margin-top:12px;background:linear-gradient(100deg,#087ee8,#6944dc);border:0}
+.utility-note{color:#8fa8d1;font-size:11px;line-height:1.7;margin-top:12px}
+@media(max-width:650px){.utility-grid{grid-template-columns:1fr}.utility-top{align-items:flex-start;flex-direction:column}}
+.utility-card input,.utility-card textarea{width:100%;box-sizing:border-box;padding:11px 12px;border-radius:10px;border:1px solid #526da8;background:#0c1730;color:#fff;font:inherit;font-size:13px;resize:vertical}
+.utility-card input:focus,.utility-card textarea:focus,.utility-card select:focus{outline:2px solid #70dfff;outline-offset:1px}
+.tool-output{white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto;margin-top:14px;padding:14px;border:1px solid #354b7d;border-radius:12px;background:#0b142c;color:#e5edff;font-size:13px;line-height:1.8;min-height:64px}
+.certificate-preview{margin-top:14px;padding:10px;background:#e9eefb;border-radius:12px;color:#17264b;overflow:auto}
+.certificate-sheet{min-width:260px;text-align:center;border:5px double #4768a7;padding:25px 16px;background:#fff;font-family:Georgia,serif}
+.certificate-kicker{font:700 9px Arial;letter-spacing:2px;color:#526ba2}
+.certificate-sheet h2{font-size:22px;margin:14px 0}.certificate-sheet h3{font-size:24px;color:#344f92;border-bottom:1px solid #9cadd0;padding-bottom:8px;margin:12px auto}
+.certificate-sheet p{font-size:12px;line-height:1.6}.certificate-sheet strong{font-size:14px}.certificate-date{font:11px Arial;margin-top:18px}.certificate-sign{font:11px Arial;border-top:1px solid #6b7896;width:100px;margin:20px auto 0;padding-top:5px}
+@media print{body *{visibility:hidden}#tkCertPreview,#tkCertPreview *{visibility:visible}#tkCertPreview{position:absolute;inset:0;background:#fff!important;padding:20mm!important}#tkCertPreview .certificate-sheet{min-width:0;border:8px double #4768a7;padding:30mm 20mm}}
 
 
 </style></head>
-<body>
+<body style="direction:ltr">
 <div class="app">
-<header><div class="brand">JARVIS</div><div class="header-actions"><button id="imageOpen" class="clear-chat image-open" type="button">🎨 ساخت تصویر</button><button id="historyToggle" class="sidebar-toggle" type="button" title="تاریخچه گفتگوها">☰</button><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status">در حال اتصال…</div></div></header>
-<div id="sidebarShade" class="sidebar-shade"></div><aside id="historySidebar" class="sidebar" aria-label="تاریخچه گفتگوها"><div class="sidebar-head"><span>گفتگوهای قبلی</span><button id="closeHistory" type="button" aria-label="بستن">×</button></div><button id="newChat" class="new-chat" type="button">＋ گفتگوی جدید</button><div id="chatList" class="chat-list"></div></aside>
-<main><section id="welcome" class="welcome"><h1>دستیار هوشمند شما</h1><p>اینجا شروع یک گفت‌وگوی تازه است. سؤالت را بنویس یا با میکروفون صحبت کن.</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی روبلاکس بده">🎮 ایده برای بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را ساده توضیح بده">🧠 درباره هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 حقیقت علمی جالب</button></div></section><section id="messages" class="messages"></section></main><div id="imageLab" class="image-lab"><div class="lab-shell"><div class="lab-head"><strong>JARVIS • IMAGE GENERATOR</strong><button id="imageClose" type="button">×</button></div><div class="lab-grid"><div class="lab-controls"><label for="imagePrompt">توضیح تصویر</label><textarea id="imagePrompt" maxlength="1800" placeholder="تصویر موردنظرت را با جزئیات توصیف کن..."></textarea><label for="imageStyle">سبک</label><select id="imageStyle"><option value="cinematic">سینمایی</option><option value="realistic">واقع‌گرایانه</option><option value="anime">انیمه</option><option value="fantasy">فانتزی</option><option value="comic">کمیک</option><option value="3d">سه‌بعدی</option></select><label for="imageRatio">نسبت تصویر</label><select id="imageRatio"><option value="square">مربع ۱:۱</option><option value="landscape">افقی ۴:۳</option><option value="portrait">عمودی ۳:۴</option></select><button id="imageGenerate" type="button">✨ ساخت تصویر</button><div id="imageStatus" class="lab-status"></div><small>مدل FLUX.1 schnell • سهمیه رایگان محدود است.</small></div><div id="imagePreview" class="lab-preview">تصویر ساخته‌شده اینجا نمایش داده می‌شود.</div></div></div></div>
-<div class="composer"><div class="composer-inner"><button id="mic" title="شروع صحبت">🎙️</button><button id="langToggle" title="تغییر زبان تشخیص گفتار">فا</button><button id="voiceToggle" class="voice-active" title="خاموش‌کردن صدای پاسخ‌ها">🔊</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • تشخیص گفتار از طریق سرور</div></div>
+<section id="jarvisDashboard" aria-label="JARVIS Dashboard">
+ <aside class="dash-side dash-glass">
+  <div class="dash-brand"><div class="dash-cat"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS robot cat"><defs><linearGradient id="mcFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d9f7ff"/><stop offset=".48" stop-color="#7bbcff"/><stop offset="1" stop-color="#8b69ef"/></linearGradient><linearGradient id="mcEar" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#72e8ff"/><stop offset="1" stop-color="#916cff"/></linearGradient></defs><path d="M17 39 13 12q-1-7 6-3l22 16h18L81 9q7-4 6 4l-4 27" fill="url(#mcEar)" stroke="#c5f5ff" stroke-width="3" stroke-linejoin="round"/><path d="M24 29 20 18l14 10m42 0 14-11-4 14" fill="#172a64"/><rect x="12" y="25" width="76" height="66" rx="27" fill="url(#mcFace)" stroke="#d6f7ff" stroke-width="3"/><path d="M22 56q8-12 19 0M59 56q10-12 19 0" fill="none" stroke="#18356f" stroke-width="4" stroke-linecap="round"/><ellipse cx="34" cy="52" rx="7" ry="9" fill="#06244c"/><ellipse cx="67" cy="52" rx="7" ry="9" fill="#06244c"/><circle cx="36" cy="49" r="2.5" fill="#9ff7ff"/><circle cx="69" cy="49" r="2.5" fill="#9ff7ff"/><path d="m47 65 6 0-3 4z" fill="#6c3dba"/><path d="M50 69q-7 8-13 1m13-1q7 8 13 1" fill="none" stroke="#18356f" stroke-width="2.5" stroke-linecap="round"/><path d="M12 62H4m9 8H5m83-8h8m-9 8h8" stroke="#8ff2ff" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="10" r="4" fill="#b9f8ff"/><path d="M50 14v7" stroke="#b9f8ff" stroke-width="3" stroke-linecap="round"/></svg></div><div><strong>JARVIS</strong><small>Your Smart English Teaching Assistant</small></div></div>
+  <nav class="dash-nav">
+   <button class="active" data-dash="home">⌂ &nbsp; Dashboard</button>
+   <button data-dash="questions">▤ &nbsp; Question Lab</button>
+   <button data-dash="classes">♧ &nbsp; My Classes</button>
+   <button data-dash="students">♙ &nbsp; Students</button>
+   <button data-dash="toolkit">✦ &nbsp; Teacher Toolkit</button>
+   <button data-dash="reports">▥ &nbsp; Reports</button>
+   <button data-dash="settings">⚙ &nbsp; Settings</button>
+   <button data-dash="help">ⓘ &nbsp; Help & Support</button>
+  </nav>
+  <button class="dash-gochat" data-dash="chat"><span>▣</span><span>Go to Chat<small>Talk with JARVIS</small></span><span>›</span></button>
+  <div class="dash-side-note">JARVIS<br><b>Smarter Teaching,<br>Brighter Future</b> ♡</div>
+ </aside>
+ <div class="dash-main">
+  <div class="dash-top"><div class="dash-tag dash-glass">✦ &nbsp; Teach · Create · Inspire</div><div class="dash-profile"><img src="https://cdn.pixabay.com/photo/2023/09/19/16/11/anime-8262988_1280.png" alt="Mona anime avatar"> <span>Mona</span> <span aria-hidden="true">⌄</span></div></div>
+  <section class="dash-hero dash-glass"><div class="dash-mascot"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS robot cat"><defs><linearGradient id="mcFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d9f7ff"/><stop offset=".48" stop-color="#7bbcff"/><stop offset="1" stop-color="#8b69ef"/></linearGradient><linearGradient id="mcEar" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#72e8ff"/><stop offset="1" stop-color="#916cff"/></linearGradient></defs><path d="M17 39 13 12q-1-7 6-3l22 16h18L81 9q7-4 6 4l-4 27" fill="url(#mcEar)" stroke="#c5f5ff" stroke-width="3" stroke-linejoin="round"/><path d="M24 29 20 18l14 10m42 0 14-11-4 14" fill="#172a64"/><rect x="12" y="25" width="76" height="66" rx="27" fill="url(#mcFace)" stroke="#d6f7ff" stroke-width="3"/><path d="M22 56q8-12 19 0M59 56q10-12 19 0" fill="none" stroke="#18356f" stroke-width="4" stroke-linecap="round"/><ellipse cx="34" cy="52" rx="7" ry="9" fill="#06244c"/><ellipse cx="67" cy="52" rx="7" ry="9" fill="#06244c"/><circle cx="36" cy="49" r="2.5" fill="#9ff7ff"/><circle cx="69" cy="49" r="2.5" fill="#9ff7ff"/><path d="m47 65 6 0-3 4z" fill="#6c3dba"/><path d="M50 69q-7 8-13 1m13-1q7 8 13 1" fill="none" stroke="#18356f" stroke-width="2.5" stroke-linecap="round"/><path d="M12 62H4m9 8H5m83-8h8m-9 8h8" stroke="#8ff2ff" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="10" r="4" fill="#b9f8ff"/><path d="M50 14v7" stroke="#b9f8ff" stroke-width="3" stroke-linecap="round"/></svg></div><div><div class="dash-tag">YOUR ENGLISH TEACHING SPACE</div><h1>Hello, Mona! ♡</h1><p>Ready to create amazing English lessons together?</p></div></section>
+  <div class="dash-stats"><div class="dash-stat dash-glass"><b>✦ CEFR</b>Level-aligned learning</div><div class="dash-stat dash-glass"><b>♧ Teacher Studio</b>Classes & student tools</div><div class="dash-stat dash-glass"><b>98% Focus</b>Quality-first question design</div></div>
+  <div class="dash-cards">
+   <article class="dash-card dash-glass"><div><div class="dash-icon">✧</div><h3>Question Lab</h3><p>Create carefully checked English questions, assessments and answer keys.</p></div><button class="dash-action" data-dash="questions">Start Creating &nbsp; →</button></article>
+   <article class="dash-card dash-glass"><div><div class="dash-icon">🎙</div><h3>Voice Input</h3><p>Speak naturally and choose English, Persian or automatic language detection.</p></div><button class="dash-action" data-dash="chat">Open Voice Chat &nbsp; →</button></article>
+   <article class="dash-card dash-glass"><div><div class="dash-icon">♧</div><h3>My Classes</h3><p>Manage your English classes, students and lesson information.</p></div><button class="dash-action" data-dash="classes">Open Classes &nbsp; →</button></article>
+  <article class="dash-card dash-glass"><div><div class="dash-icon">🧰</div><h3>Teacher Toolkit</h3><p>Create vocabulary cards, weekly lesson plans, parent messages and printable certificates.</p></div><button class="dash-action" data-dash="toolkit">Open Teacher Toolkit →</button></article>
+  </div>
+  <div class="dash-bottom"><div class="dash-glass dash-quick"><button data-dash="questions">▤<br>New Question</button><button data-dash="classes">♧<br>New Class</button><button data-dash="reports">▥<br>View Reports</button><button data-dash="settings">⚙<br>Settings</button></div><div class="dash-quote dash-glass">“Great teachers change the world!” ♡<br><button class="dash-gochat" data-dash="chat"><span>▣</span><span>Go to Chat<small>Talk with JARVIS</small></span><span>›</span></button></div></div>
+ </div>
+</section>
+<header><div class="brand"><span class="cat-mark" aria-hidden="true"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS robot cat"><defs><linearGradient id="mcFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d9f7ff"/><stop offset=".48" stop-color="#7bbcff"/><stop offset="1" stop-color="#8b69ef"/></linearGradient><linearGradient id="mcEar" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#72e8ff"/><stop offset="1" stop-color="#916cff"/></linearGradient></defs><path d="M17 39 13 12q-1-7 6-3l22 16h18L81 9q7-4 6 4l-4 27" fill="url(#mcEar)" stroke="#c5f5ff" stroke-width="3" stroke-linejoin="round"/><path d="M24 29 20 18l14 10m42 0 14-11-4 14" fill="#172a64"/><rect x="12" y="25" width="76" height="66" rx="27" fill="url(#mcFace)" stroke="#d6f7ff" stroke-width="3"/><path d="M22 56q8-12 19 0M59 56q10-12 19 0" fill="none" stroke="#18356f" stroke-width="4" stroke-linecap="round"/><ellipse cx="34" cy="52" rx="7" ry="9" fill="#06244c"/><ellipse cx="67" cy="52" rx="7" ry="9" fill="#06244c"/><circle cx="36" cy="49" r="2.5" fill="#9ff7ff"/><circle cx="69" cy="49" r="2.5" fill="#9ff7ff"/><path d="m47 65 6 0-3 4z" fill="#6c3dba"/><path d="M50 69q-7 8-13 1m13-1q7 8 13 1" fill="none" stroke="#18356f" stroke-width="2.5" stroke-linecap="round"/><path d="M12 62H4m9 8H5m83-8h8m-9 8h8" stroke="#8ff2ff" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="10" r="4" fill="#b9f8ff"/><path d="M50 14v7" stroke="#b9f8ff" stroke-width="3" stroke-linecap="round"/></svg></span><span><b>JARVIS</b><small class="brand-sub">Your AI assistant</small></span></div><div class="header-actions"><button id="homeDashboard" class="clear-chat home-dashboard" type="button" title="Back to dashboard">⌂ Home</button><button id="teacherOpen" class="clear-chat teacher-open" type="button">🎓 Teacher Studio</button><button id="worksheetOpen" class="clear-chat worksheet-open" type="button">▤ Worksheet Builder</button><button id="imageOpen" class="clear-chat image-open" type="button">✦ Image Studio</button><button id="historyToggle" class="sidebar-toggle" type="button" title="Chat history">☰</button><button id="clearChat" class="clear-chat" type="button">Clear chat</button><div id="status" class="status" role="status" aria-live="polite">● Ready</div></div></header>
+<div id="sidebarShade" class="sidebar-shade"></div><aside id="historySidebar" class="sidebar" aria-label="Chat history"><div class="sidebar-head"><span>Previous chats</span><button id="closeHistory" type="button" aria-label="Close">×</button></div><button id="newChat" class="new-chat" type="button">＋ New chat</button><div id="chatList" class="chat-list"></div></aside>
+<main><section id="welcome" class="welcome"><div class="hero-cat" aria-hidden="true"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS robot cat"><defs><linearGradient id="mcFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d9f7ff"/><stop offset=".48" stop-color="#7bbcff"/><stop offset="1" stop-color="#8b69ef"/></linearGradient><linearGradient id="mcEar" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#72e8ff"/><stop offset="1" stop-color="#916cff"/></linearGradient></defs><path d="M17 39 13 12q-1-7 6-3l22 16h18L81 9q7-4 6 4l-4 27" fill="url(#mcEar)" stroke="#c5f5ff" stroke-width="3" stroke-linejoin="round"/><path d="M24 29 20 18l14 10m42 0 14-11-4 14" fill="#172a64"/><rect x="12" y="25" width="76" height="66" rx="27" fill="url(#mcFace)" stroke="#d6f7ff" stroke-width="3"/><path d="M22 56q8-12 19 0M59 56q10-12 19 0" fill="none" stroke="#18356f" stroke-width="4" stroke-linecap="round"/><ellipse cx="34" cy="52" rx="7" ry="9" fill="#06244c"/><ellipse cx="67" cy="52" rx="7" ry="9" fill="#06244c"/><circle cx="36" cy="49" r="2.5" fill="#9ff7ff"/><circle cx="69" cy="49" r="2.5" fill="#9ff7ff"/><path d="m47 65 6 0-3 4z" fill="#6c3dba"/><path d="M50 69q-7 8-13 1m13-1q7 8 13 1" fill="none" stroke="#18356f" stroke-width="2.5" stroke-linecap="round"/><path d="M12 62H4m9 8H5m83-8h8m-9 8h8" stroke="#8ff2ff" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="10" r="4" fill="#b9f8ff"/><path d="M50 14v7" stroke="#b9f8ff" stroke-width="3" stroke-linecap="round"/></svg></div><h1>Hello! I’m JARVIS</h1><p>Your smart, creative AI companion. Let’s chat, create images, and build learning worksheets.</p><div class="suggestions"><button class="suggestion" data-prompt="Give me creative ideas for a Roblox game">🎮 Game ideas</button><button class="suggestion" data-prompt="Explain artificial intelligence simply">🧠 About AI</button><button class="suggestion" data-prompt="Tell me an interesting science fact">🚀 Science fact</button></div></section><section id="messages" class="messages"></section></main><div id="imageLab" class="image-lab"><div class="lab-shell"><div class="lab-head"><div><strong>✦ JARVIS • Image Studio</strong><small>AI image creation studio • POWERED BY FLUX</small></div><button id="imageClose" type="button">×</button></div><div class="lab-grid"><div class="lab-controls"><label for="imagePrompt">✦ Turn your idea into an image</label><textarea id="imagePrompt" maxlength="1800" placeholder="e.g. A futuristic city at night, a starry sky, pink and purple neon lights, stunning architecture, cinematic composition..."></textarea><label for="imageStyle">Art style</label><select id="imageStyle"><option value="cinematic">🎬 Cinematic</option><option value="realistic">📷 Photorealistic</option><option value="anime">🌸 Anime</option><option value="fantasy">🪄 Fantasy</option><option value="comic">💥 Comic book</option><option value="3d">🧊 3D</option></select><label for="imageRatio">Aspect ratio</label><select id="imageRatio"><option value="square">Square 1:1</option><option value="landscape">Landscape 4:3</option><option value="portrait">Portrait 3:4</option></select><button id="imageGenerate" type="button">✧ Generate Image</button><div id="imageStatus" class="lab-status" aria-live="polite"></div><div class="lab-note">FLUX.1 schnell engine • Free Cloudflare usage is limited. Your image stays here until you close this window.</div></div><div id="imagePreview" class="lab-preview">✧<br>Your JARVIS magic happens here<br>Create an image and see the result!</div></div></div></div>
+<div id="worksheetLab" class="worksheet-lab"><div class="worksheet-shell"><div class="worksheet-head"><div><strong>🐱 JARVIS • AI Worksheet Builder</strong><div class="small">Create real, print-ready educational worksheets</div></div><button id="worksheetClose" type="button" aria-label="Close">×</button></div><div class="worksheet-body"><div class="worksheet-controls"><label for="worksheetPrompt">Worksheet topic or instructions</label><textarea id="worksheetPrompt" maxlength="4000" placeholder="e.g. Create a beginner-level English worksheet about colours and animals. Enter your instructions in English."></textarea><label for="worksheetLevel">Language level</label><select id="worksheetLevel"><option value="Pre-A1 starter">Pre-A1 — Starter</option><option value="A1.1 beginner">A1.1 — Beginner</option><option value="A1.2 beginner">A1.2 — Beginner</option><option value="A2.1 elementary">A2.1 — Elementary</option><option value="A2.2 elementary">A2.2 — Elementary</option><option value="B1.1 intermediate">B1.1 — Intermediate</option><option value="B1.2 intermediate">B1.2 — Intermediate</option><option value="B2.1 upper-intermediate">B2.1 — Upper-intermediate</option><option value="B2.2 upper-intermediate">B2.2 — Upper-intermediate</option><option value="C1 advanced">C1 — Advanced</option><option value="C2 proficiency">C2 — Proficiency</option><option value="Mixed CEFR levels">Mixed levels</option></select><label for="worksheetGrade">Grade or age group</label><select id="worksheetGrade"><option>Children</option><option>Teenagers</option><option>Adults</option><option>Grades 5–6</option><option>Grades 7–8</option><option>Grades 9–10</option></select><label for="worksheetFocus">Main exercise type</label><select id="worksheetFocus"><option>Mixed: vocabulary, grammar, reading and writing</option><option>Grammar and sentence structure</option><option>Vocabulary and spelling</option><option>Speaking and everyday situations</option><option>Reading comprehension</option><option>Test and lesson review</option></select><button id="worksheetCreate" type="button">Create Professional Worksheet</button><div id="worksheetStatus" class="worksheet-status" aria-live="polite">Questions are written by AI and displayed in a properly formatted worksheet—not generated as an image.</div></div><div id="worksheetResult" class="worksheet-result">Your worksheet preview will appear here.</div></div></div></div>
+<div id="teacherLab" class="teacher-lab"><div class="teacher-shell">
+ <div class="teacher-head"><div><strong>🎓 JARVIS · TEACHER STUDIO</strong><div class="small">Your all-in-one English teaching workspace</div></div><button id="teacherClose" type="button" aria-label="Close">×</button></div>
+ <nav class="teacher-tabs"><button type="button" data-teacher-tab="classes" class="active">🏫 Classes & Students</button><button type="button" data-teacher-tab="attendance">✓ Attendance</button><button type="button" data-teacher-tab="planner">📚 Lesson Planner</button><button type="button" data-teacher-tab="homework">📝 Homework</button><button type="button" data-teacher-tab="questions">✨ Question Lab</button><button type="button" data-teacher-tab="reports">✉ Parent Reports</button></nav>
+ <div class="teacher-content">
+  <section class="teacher-pane active" data-teacher-pane="classes"><div class="teacher-grid">
+   <div class="teacher-card"><h3>Create a Class</h3><label>Class Name</label><input id="tcName" placeholder="e.g. Family and Friends 3"><label>Schedule</label><input id="tcSchedule" placeholder="e.g. Mon & Wed, 5:00 PM"><label>Coursebook / Level</label><input id="tcBook" placeholder="e.g. Family and Friends 3"><label>Current Unit / Lesson</label><input id="tcLesson" placeholder="e.g. Unit 2 · Lesson 1"><button id="tcSave">Save Class</button></div>
+   <div class="teacher-card"><h3>Add a Student</h3><label>Student Name</label><input id="tsName" placeholder="Student first name"><label>Class</label><select id="tsClass"></select><button id="tsSave">Add Student</button><div class="teacher-hint">Class and student records are saved in this browser only. They are not synced across devices yet.</div></div>
+  </div><div class="teacher-grid" style="margin-top:14px"><div class="teacher-card"><h3>Your Classes</h3><div id="tcList" class="teacher-list"></div></div><div class="teacher-card"><h3>Your Students</h3><div id="tsList" class="teacher-list"></div></div></div></section>
+  <section class="teacher-pane" data-teacher-pane="attendance"><div class="teacher-card"><h3>Take Attendance</h3><label>Select a class</label><select id="taClass"></select><label>Lesson Date</label><input id="taDate" type="date"><div id="taStudents" class="teacher-attendance"></div><button id="taSave">Save Attendance</button><div id="taStatus" class="teacher-hint"></div></div></section>
+  <section class="teacher-pane" data-teacher-pane="planner"><div class="teacher-grid"><div class="teacher-card"><h3>Build a Lesson Plan</h3><label>Class</label><select id="tpClass"></select><label>Lesson Topic</label><input id="tpTopic" placeholder="e.g. Present Simple · Daily Routines"><label>Lesson Length (minutes)</label><select id="tpDuration"><option>45</option><option selected>60</option><option>75</option><option>90</option></select><label>Learning Goals & Notes</label><textarea id="tpGoals" placeholder="Review, vocabulary practice, group game, speaking…"></textarea><button id="tpGenerate">Generate Lesson Plan</button></div><div class="teacher-card"><h3>Your Lesson Plan</h3><div id="tpOutput" class="teacher-output">Your lesson plan will appear here.</div><button id="tpCopy">Copy Plan</button></div></div></section>
+  
+  <section class="teacher-pane" data-teacher-pane="homework"><div class="teacher-grid"><div class="teacher-card"><h3>Create English Homework</h3><label>Class</label><select id="thClass"></select><label>Topic / Language Focus</label><input id="thTopic" placeholder="e.g. There is / There are · Food"><label>Homework Type</label><select id="thType"><option>Mixed practice with answer key</option><option>Grammar practice</option><option>Vocabulary and spelling</option><option>Reading comprehension</option><option>Writing and sentence building</option><option>Speaking and conversation</option><option>Creative at-home activity</option></select><label>Instructions & Requirements</label><textarea id="thNotes" placeholder="e.g. 10 minutes, beginner level, no printing."></textarea><button id="thGenerate">Generate Homework + Answer Key</button><hr><h3>📎 Check Submitted Homework</h3><p class="teacher-hint">Upload homework as PDF, DOCX, TXT, MD, CSV or a photo (JPG, PNG, WEBP). JARVIS extracts the answers and reviews them. Scanned PDFs and photos are read with English OCR.</p><label for="thReviewTask">Original Homework / Answer Key (optional)</label><textarea id="thReviewTask" placeholder="Paste the original homework, expected answers or marking criteria here."></textarea><label for="thReviewFile">Student Submission File</label><input id="thReviewFile" type="file" accept=".pdf,.docx,.txt,.md,.csv,.jpg,.jpeg,.png,.webp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/markdown,text/csv,image/jpeg,image/png,image/webp"><label for="thReviewLevel">Learner Level</label><select id="thReviewLevel"><option>Pre-A1 — Starter</option><option>A1.1 — Beginner</option><option>A1.2 — Beginner</option><option>A2.1 — Elementary</option><option>A2.2 — Elementary</option><option>B1.1 — Intermediate</option><option>B1.2 — Intermediate</option><option>B2.1 — Upper-intermediate</option><option>B2.2 — Upper-intermediate</option><option>C1 — Advanced</option><option>C2 — Proficiency</option></select><label for="thReviewNotes">Teacher Notes (optional)</label><textarea id="thReviewNotes" placeholder="Focus on grammar, vocabulary, spelling, writing criteria..."></textarea><button id="thReviewBtn" type="button">Review Student File</button><div id="thReviewOutput" class="teacher-output">Upload a student file to begin the review.</div><button id="thReviewCopy" type="button">Copy Review</button></div><div class="teacher-card"><h3>Homework Preview</h3><div id="thOutput" class="teacher-output">Your homework and answer key will appear here.</div><button id="thCopy">Copy Homework</button></div></div></section>
+  <section class="teacher-pane" data-teacher-pane="questions">
+   <div class="teacher-question-hero"><div class="teacher-kicker">ASSESSMENT DESIGN WORKSPACE</div><h2>✨ Professional English Question Lab</h2><p>Create accurate, level-aligned English assessments with carefully checked questions, plausible distractors and a complete answer key.</p><div class="teacher-question-pills"><span>CEFR aligned</span><span>One clear answer</span><span>Teacher-ready output</span><span>English voice input 🎙</span></div></div>
+   <div class="teacher-grid teacher-question-grid">
+    <div class="teacher-card"><h3>🎯 Assessment Brief</h3>
+     <label for="qClass">Class</label><select id="qClass"></select>
+     <label for="qLevel">CEFR Level</label><select id="qLevel"><option>Pre-A1 — Starter</option><option>A1.1 — Beginner</option><option>A1.2 — Beginner</option><option>A2.1 — Elementary</option><option>A2.2 — Elementary</option><option selected>B1.1 — Intermediate</option><option>B1.2 — Intermediate</option><option>B2.1 — Upper-intermediate</option><option>B2.2 — Upper-intermediate</option><option>C1 — Advanced</option><option>C2 — Proficiency</option><option>Mixed / Not specified</option></select>
+     <label for="qAge">Learner Group</label><select id="qAge"><option>Young learners (6–9)</option><option selected>Pre-teens (10–12)</option><option>Teenagers (13–17)</option><option>Adults (18+)</option></select>
+     <label for="qType">Question Format</label><select id="qType"><option>Mixed assessment</option><option>Multiple choice (4 options)</option><option>Gap-fill / Cloze</option><option>Error correction</option><option>Sentence transformation</option><option>Matching</option><option>Reading comprehension</option><option>Vocabulary in context</option><option>Grammar in context</option><option>Writing prompts</option><option>Speaking prompts</option></select>
+     <label for="qCount">Number of Questions</label><select id="qCount"><option>5</option><option>10</option><option selected>15</option><option>20</option><option>25</option><option>30</option></select>
+     <label for="qFocus">Skill / Language Focus</label><select id="qFocus"><option>Grammar</option><option>Vocabulary</option><option>Reading</option><option>Listening transcript questions</option><option>Writing</option><option>Speaking</option><option>Use of English</option><option>Integrated skills</option></select>
+     <label for="qTopic">Topic, Unit or Target Language</label><textarea id="qTopic" placeholder="e.g. Present simple, daily routines, Unit 4 vocabulary…"></textarea>
+     <label for="qSource">Reading Text / Source Material (optional)</label><textarea id="qSource" placeholder="Paste a passage or source text here. Reading questions must be based only on this text."></textarea>
+     <label for="qInstructions">Teacher Requirements</label><textarea id="qInstructions" placeholder="e.g. Avoid tricky questions; include real-life contexts; use British English…"></textarea>
+     <button id="qGenerate" class="teacher-action" type="button">✦ Generate & Quality-Check Questions</button><div id="qStatus" class="teacher-hint" aria-live="polite">The AI will draft, review and check every item before presenting the assessment.</div>
+    </div>
+    <div class="teacher-card teacher-question-preview"><div class="teacher-output-head"><h3>📋 Assessment Preview</h3><span class="teacher-live-dot">● READY</span></div><div id="qOutput" class="teacher-output">Your questions, instructions and answer key will appear here.</div><button id="qCopy" class="teacher-action" type="button">Copy Assessment</button></div>
+   </div>
+  </section>
+  <section class="teacher-pane" data-teacher-pane="reports"><div class="teacher-grid"><div class="teacher-card"><h3>Create a Parent Report</h3><label>Class</label><select id="trClass"></select><label>Lesson Date</label><input id="trDate" type="date"><label>Lesson Content & Activities</label><textarea id="trContent" placeholder="What was taught? Which activities did learners complete?"></textarea><label>Homework for Next Lesson</label><textarea id="trHomework" placeholder="Describe the homework clearly."></textarea><button id="trGenerate">Generate Parent Report</button></div><div class="teacher-card"><h3>Ready-to-Send Report</h3><div id="trOutput" class="teacher-output">Your parent report will appear here.</div><button id="trCopy">Copy Report</button></div></div></section>
+ </div></div></div><div class="composer"><div id="attachmentBar" class="attachment-bar" hidden><img id="attachmentThumb" alt="Selected image preview"><span id="attachmentName"></span><button id="removeAttachment" type="button" title="Remove attachment">×</button></div><div class="composer-inner"><button id="attach" type="button" title="Attach an image">📎</button><input id="attachmentInput" type="file" accept="image/*" hidden><button id="mic" title="Start speaking">🎙️</button><select id="speechLangSelect" aria-label="Speech input language" title="Choose microphone language" class="speech-language-select"><option value="en-US" selected>🎙 English</option><option value="fa-IR">🎙 فارسی</option><option value="auto">🌐 Auto detect</option></select><button id="voiceToggle" class="voice-active" title="Turn reply audio off">🔊</button><textarea id="input" rows="1" placeholder="Type your message…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • Speech recognition powered by the server</div></div>
 </div>
 <script>
-const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic"), voiceToggle=$("voiceToggle"), langToggle=$("langToggle");
+const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic"), voiceToggle=$("voiceToggle"), speechLangSelect=$("speechLangSelect");
+status.textContent="● Ready";
+status.title="JARVIS interface loaded.";
+window.addEventListener("error",event=>{status.textContent="● UI error";status.title=event.message||"A JavaScript error occurred on this page.";});
+window.addEventListener("unhandledrejection",event=>{status.textContent="● Connection error";status.title=String(event.reason?.message||event.reason||"Request error");});
 let voiceEnabled=true;
-let speechLanguage="fa-IR";
+let speechLanguage="en-US";
+speechLangSelect.value=speechLanguage;
+speechLangSelect.onchange=()=>{speechLanguage=speechLangSelect.value;};
 function speakReply(text){
  if(!voiceEnabled || !("speechSynthesis" in window))return;
  window.speechSynthesis.cancel();
- const clean=String(text).replace(/```[\s\S]*?```/g,"کد").replace(/https?:\/\/\S+/g,"لینک");
+ const clean=String(text).replace(/```[\s\S]*?```/g,"code").replace(/https?:\/\/\S+/g,"link");
  const utterance=new SpeechSynthesisUtterance(clean);
  utterance.lang=/[\u0600-\u06FF]/.test(clean)?"fa-IR":"en-US";
  utterance.rate=1;utterance.pitch=1;
@@ -119,15 +342,11 @@ voiceToggle.onclick=()=>{
  voiceEnabled=!voiceEnabled;
  voiceToggle.textContent=voiceEnabled?"🔊":"🔇";
  voiceToggle.classList.toggle("voice-active",voiceEnabled);
- voiceToggle.title=voiceEnabled?"صدای پاسخ‌ها روشن است":"صدای پاسخ‌ها خاموش است";
+ voiceToggle.title=voiceEnabled?"Reply audio is on":"Reply audio is off";
  if(!voiceEnabled && "speechSynthesis" in window)window.speechSynthesis.cancel();
 };
-langToggle.onclick=()=>{
- speechLanguage=speechLanguage==="fa-IR"?"en-US":"fa-IR";
- langToggle.textContent=speechLanguage==="fa-IR"?"فا":"EN";
- langToggle.title=speechLanguage==="fa-IR"?"تشخیص گفتار فارسی":"Speech recognition: English";
-};
-const STORAGE_KEY="jarvis_ir_chat_history_v1";
+
+const STORAGE_KEY="jarvis_chat_history_v1";
 const messages=[];
 let chatSessions=[];
 let currentChatId=null;
@@ -136,8 +355,8 @@ function makeChatId(){return "c"+Date.now().toString(36)+Math.random().toString(
 function currentSession(){return chatSessions.find(x=>x.id===currentChatId)}
 function saveHistory(){
  try{
-  if(messages.length){let chat=currentSession();if(!chat){chat={id:currentChatId||makeChatId(),title:"گفتگوی جدید",messages:[],updatedAt:Date.now()};currentChatId=chat.id;chatSessions.unshift(chat)}
-   chat.messages=messages.slice(-40);chat.updatedAt=Date.now();const first=chat.messages.find(x=>x.role==="user");if(first&&chat.title==="گفتگوی جدید")chat.title=first.content.slice(0,34)+(first.content.length>34?"…":"");
+  if(messages.length){let chat=currentSession();if(!chat){chat={id:currentChatId||makeChatId(),title:"New chat",messages:[],updatedAt:Date.now()};currentChatId=chat.id;chatSessions.unshift(chat)}
+   chat.messages=messages.slice(-40);chat.updatedAt=Date.now();const first=chat.messages.find(x=>x.role==="user");if(first&&chat.title==="New chat")chat.title=first.content.slice(0,34)+(first.content.length>34?"…":"");
   }
   chatSessions.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));localStorage.setItem(historyKey,JSON.stringify(chatSessions.slice(0,50)));
   localStorage.setItem(STORAGE_KEY,JSON.stringify(messages.slice(-40)));renderChatList();
@@ -145,7 +364,7 @@ function saveHistory(){
 }
 function renderChatList(){
  const host=document.getElementById("chatList");if(!host)return;host.replaceChildren();
- for(const chat of chatSessions){const b=document.createElement("button");b.type="button";b.className="chat-item"+(chat.id===currentChatId?" active":"");b.textContent=chat.title||"گفتگوی جدید";b.title=b.textContent;b.onclick=()=>openChat(chat.id);host.appendChild(b)}
+ for(const chat of chatSessions){const b=document.createElement("button");b.type="button";b.className="chat-item"+(chat.id===currentChatId?" active":"");b.textContent=chat.title||"New chat";b.title=b.textContent;b.onclick=()=>openChat(chat.id);host.appendChild(b)}
 }
 function add(role,text,scroll=true){
  welcome.style.display="none";const e=document.createElement("div");e.className="msg "+(role==="user"?"user":"ai");e.textContent=text;list.appendChild(e);if(scroll)e.scrollIntoView({behavior:"smooth"});
@@ -161,85 +380,177 @@ function restoreHistory(){
  try{
   const saved=JSON.parse(localStorage.getItem(historyKey)||"null");
   if(Array.isArray(saved)){chatSessions=saved.filter(x=>x&&typeof x.id==="string"&&Array.isArray(x.messages)).slice(0,50)}
-  else {const old=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");if(Array.isArray(old)&&old.length)chatSessions=[{id:makeChatId(),title:old.find(x=>x.role==="user")?.content?.slice(0,34)||"گفتگوی قبلی",messages:old.slice(-40),updatedAt:Date.now()}]}
+  else {const old=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");if(Array.isArray(old)&&old.length)chatSessions=[{id:makeChatId(),title:old.find(x=>x.role==="user")?.content?.slice(0,34)||"Previous chat",messages:old.slice(-40),updatedAt:Date.now()}]}
   if(chatSessions.length){chatSessions.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));openChat(chatSessions[0].id)}else{currentChatId=makeChatId();welcome.style.display=""}
   renderChatList();
  }catch(e){console.warn("Saved chat history could not be loaded",e);currentChatId=makeChatId()}
 }
 function clearHistory(){
- if(!confirm("این گفتگو پاک شود؟"))return;chatSessions=chatSessions.filter(x=>x.id!==currentChatId);messages.length=0;list.replaceChildren();welcome.style.display="";try{localStorage.setItem(historyKey,JSON.stringify(chatSessions));localStorage.removeItem(STORAGE_KEY)}catch(e){}currentChatId=makeChatId();renderChatList();
+ if(!confirm("Delete this conversation?"))return;chatSessions=chatSessions.filter(x=>x.id!==currentChatId);messages.length=0;list.replaceChildren();welcome.style.display="";try{localStorage.setItem(historyKey,JSON.stringify(chatSessions));localStorage.removeItem(STORAGE_KEY)}catch(e){}currentChatId=makeChatId();renderChatList();
 }
 document.getElementById("historyToggle").onclick=()=>{document.getElementById("historySidebar").classList.add("open");document.getElementById("sidebarShade").classList.add("show")};
 document.getElementById("closeHistory").onclick=closeSidebar;document.getElementById("sidebarShade").onclick=closeSidebar;document.getElementById("newChat").onclick=newChat;
 function localReply(raw){
  const s=raw.trim().toLowerCase();
  const has=(...words)=>words.some(w=>s.includes(w));
- if(/^(hi|hello|hey|سلام|درود|سلام جارویس|سلام جارويس)[!.؟? ]*$/.test(s) || has("سلام جارویس","سلام جارويس"))
-   return has("hello","hi","hey") && !has("سلام") ? "Hello! I'm JARVIS. I can answer simple questions locally without an API key." : "سلام! من جارویس هستم 🤖 فعلاً در حالت رایگان و ساده کار می‌کنم. چه کمکی از دستم برمیاد؟";
- if(has("اسم تو چیه","اسمت چیه","تو کی هستی","who are you","your name"))
-   return "من JARVIS هستم؛ دستیار ساده‌ای که بدون کلید API کار می‌کنه.";
- if(has("چه کار","چیکار","چه کمکی","help","قابلیت"))
-   return "می‌تونم به سلام و احوال‌پرسی، چند سؤال عمومی و محاسبات ساده جواب بدم. این نسخه از مدل هوش مصنوعی پیشرفته استفاده نمی‌کنه و جواب‌هام محدوده.";
- if(has("ممنون","مرسی","تشکر","thank you","thanks"))
-   return "خواهش می‌کنم! هر وقت خواستی من اینجام. 🤖";
- if(has("خداحافظ","بای","فعلا","خدافظ","goodbye","bye"))
-   return "خداحافظ! تا گفت‌وگوی بعدی. 👋";
- if(has("ساعت چنده","ساعت الان","what time is it","current time")){
-   return "ساعت دستگاه شما: "+new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
+ if(/^(hi|hello|hey|سلام|درود|سلام مین‌مان|سلام جارويس)[!.؟? ]*$/.test(s) || has("سلام مین‌مان","سلام جارويس"))
+   return has("hello","hi","hey") && !has("سلام") ? "Hello! I'm JARVIS. I can answer simple questions locally without an API key." : "Hello! I’m JARVIS 🤖 How can I help you today?";
+ if(has("What is your name?","What is your name?","Who are you?","who are you","your name"))
+   return "I’m JARVIS, your AI assistant.";
+ if(has("What can you do?","What can you do?","How can you help?","help","What features do you have?"))
+   return "I can help with general questions, simple calculations, learning, writing, and more.";
+ if(has("Thank you","Thanks","تشکر","thank you","thanks"))
+   return "You’re welcome! I’m here whenever you need help. 🤖";
+ if(has("Goodbye","Bye","See you","Goodbye","goodbye","bye"))
+   return "Goodbye! See you next time. 👋";
+ if(has("What time is it?","Current time","what time is it","current time")){
+   return "Your device time: "+new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
  }
- if(has("امروز چندمه","تاریخ امروز","what is today's date","today's date")){
-   return "تاریخ دستگاه شما: "+new Date().toLocaleDateString();
+ if(has("What is today’s date?","Today’s date","what is today's date","today's date")){
+   return "Your device date: "+new Date().toLocaleDateString();
  }
- if(has("هوا چطوره","آب و هوا","weather"))
-   return "در این نسخه به اینترنت و اطلاعات زندهٔ آب‌وهوا وصل نیستم؛ برای پیش‌بینی دقیق، برنامهٔ آب‌وهوا را بررسی کن.";
- if(has("جوک","joke"))
-   return "چرا کامپیوتر خسته شد؟ چون تمام روز کار می‌کرد و هیچ‌وقت استراحت نمی‌گرفت! 😄";
- if(has("پایتخت ایران","capital of iran"))
-   return "پایتخت ایران تهران است.";
- if(has("پایتخت فرانسه","capital of france"))
-   return "پایتخت فرانسه پاریس است.";
- if(has("چطوری","حالت چطوره","خوبی","how are you"))
-   return "ممنون که پرسیدی! من آماده‌ام کمکت کنم. تو چطوری؟";
+ if(has("What is the weather like?","Weather","weather"))
+   return "Live weather information is not available in this version. Please check a weather app for the latest forecast.";
+ if(has("Tell me a joke","joke"))
+   return "Why was the computer tired? It had a hard drive! 😄";
+ if(has("What is the capital of Iran?","capital of iran"))
+   return "The capital of Iran is Tehran.";
+ if(has("What is the capital of France?","capital of france"))
+   return "The capital of France is Paris.";
+ if(has("How are you?","How are you doing?","Are you well?","how are you"))
+   return "Thanks for asking! I’m ready to help. How are you?";
  // Simple arithmetic: numbers and one arithmetic operator only.
  const m=s.match(/^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/×÷])\s*(-?\d+(?:\.\d+)?)\s*[=?؟]?\s*$/);
  if(m){
    const a=Number(m[1]), b=Number(m[3]), op=m[2];
-   if((op==="/"||op==="÷")&&b===0) return "تقسیم بر صفر تعریف نشده است.";
+   if((op==="/"||op==="÷")&&b===0) return "Division by zero is undefined.";
    const result=op==="+"?a+b:op==="-"?a-b:(op==="*"||op==="×")?a*b:a/b;
-   return "جواب: "+result;
+   return "Answer: "+result;
  }
  if(has("hello","hi","good morning","good evening"))
    return "Hello! I'm JARVIS. This is the free basic mode, so I can answer only a limited set of questions.";
  if(has("capital of spain")) return "The capital of Spain is Madrid.";
  if(has("capital of usa","capital of the united states")) return "The capital of the United States is Washington, D.C.";
- return "هنوز جواب این سؤال رو بلد نیستم. 🧠 این نسخهٔ رایگان و ساده است و از مدل هوش مصنوعی پیشرفته استفاده نمی‌کنه. می‌تونی سؤال ساده‌تری بپرسی یا یک محاسبه مثل 12 * 4 بنویسی.";
+ return "I’m not sure about that yet. 🧠 Please try rephrasing your question or give me a little more context.";
 }
 async function health(){
- status.textContent="● حالت رایگان";
- status.title="پاسخ‌های ساده در همین مرورگر تولید می‌شوند؛ API لازم نیست.";
+ status.textContent="● Basic mode";
+ status.title="Basic replies are generated in this browser. No API key is required.";
 }
+let selectedImageData=null, selectedImageName="";
+const attachmentInput=$("attachmentInput"),attachmentBar=$("attachmentBar"),attachmentThumb=$("attachmentThumb"),attachmentName=$("attachmentName");
+function clearAttachment(){selectedImageData=null;selectedImageName="";attachmentInput.value="";attachmentThumb.removeAttribute("src");attachmentName.textContent="";attachmentBar.hidden=true}
+$("attach").onclick=()=>attachmentInput.click();
+$("removeAttachment").onclick=clearAttachment;
+function compressImageFile(file){
+ return new Promise((resolve,reject)=>{
+  if(!file||!file.type.startsWith("image/"))return reject(new Error("Please choose an image file."));
+  if(file.size>10*1024*1024)return reject(new Error("The image is too large. Please choose an image under 10 MB."));
+  const reader=new FileReader();
+  reader.onerror=()=>reject(new Error("The image could not be read."));
+  reader.onload=()=>{
+   const image=new Image();
+   image.onerror=()=>reject(new Error("This image format could not be opened. Try JPG or PNG."));
+   image.onload=()=>{
+    const scale=Math.min(1,1280/Math.max(image.naturalWidth,image.naturalHeight));
+    const canvas=document.createElement("canvas");canvas.width=Math.max(1,Math.round(image.naturalWidth*scale));canvas.height=Math.max(1,Math.round(image.naturalHeight*scale));
+    const context=canvas.getContext("2d");context.drawImage(image,0,0,canvas.width,canvas.height);
+    const data=canvas.toDataURL("image/jpeg",0.82);
+    if(data.length>1700000)return reject(new Error("The compressed image is still too large. Please choose a smaller image."));
+    resolve(data);
+   };
+   image.src=reader.result;
+  };
+  reader.readAsDataURL(file);
+ });
+}
+attachmentInput.onchange=async()=>{
+ const file=attachmentInput.files?.[0];if(!file)return;
+ attachmentName.textContent="Preparing image…";attachmentBar.hidden=false;$("attach").disabled=true;
+ try{selectedImageData=await compressImageFile(file);selectedImageName=file.name||"Image";attachmentThumb.src=selectedImageData;attachmentName.textContent=selectedImageName+" · ready to send"}
+ catch(error){clearAttachment();alert(error.message||"Could not attach this image.")}
+ finally{$("attach").disabled=false}
+};
 async function ask(){
- const text=input.value.trim();if(!text)return;
- input.value="";add("user",text);send.disabled=true;
- const load=document.createElement("div");load.className="msg ai";load.textContent="یک لحظه…";list.appendChild(load);
+ const text=input.value.trim(), attachedImage=selectedImageData, attachedName=selectedImageName;
+ if(!text&&!attachedImage)return;
+ const userText=attachedImage?(text||"Please describe and analyse this image.")+"\n[Image attached: "+attachedName+"]":text;
+ input.value="";add("user",userText);
+ if(attachedImage){const preview=document.createElement("img");preview.className="chat-attachment-preview";preview.src=attachedImage;preview.alt="Attached image";list.lastElementChild?.appendChild(preview)}
+ send.disabled=true;
+ const load=document.createElement("div");load.className="msg ai";load.textContent="One moment…";list.appendChild(load);
  try{
- const response = await fetch("/api/chat", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    message: text,
-    history: messages.slice(0, -1).slice(-10)
-  })
-});
-
-const data = await response.json().catch(() => ({}));
-if (!response.ok) throw new Error(data.error || "AI request failed");
-
-const reply = data.reply || data.answer;
-if (typeof reply !== "string" || !reply.trim()) throw new Error("پاسخ خالی از سرور دریافت شد.");
-  
-   load.remove();messages.push({role:"user",content:text},{role:"assistant",content:reply});saveHistory();add("assistant",reply);speakReply(reply);
- }catch(e){load.className="msg ai error";load.textContent=e.message || "پاسخ آماده نشد. دوباره امتحان کن."}
+   const normalizedRequest = text.normalize("NFKC");
+   const wantsWorksheet = /worksheet|work\s?sheet|english\s+exercise|language\s+practice/i.test(normalizedRequest);
+    const wantsImage = /(?:image|picture|illustration|artwork).*(?:generate|create|draw)|(?:generate|create|draw).*(?:image|picture|illustration|artwork)/i.test(normalizedRequest);
+   if(wantsWorksheet&&!attachedImage){
+     load.textContent="Designing questions and formatting your worksheet…";
+     const worksheetResponse=await fetch("/api/worksheet",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:text}),signal:AbortSignal.timeout(70000)});
+     const worksheetData=await worksheetResponse.json().catch(()=>({}));
+     if(!worksheetResponse.ok||!worksheetData.ok||!worksheetData.html)throw new Error(worksheetData.error||"Worksheet generation failed.");
+     load.remove();
+     messages.push({role:"user",content:text},{role:"assistant",content:"Worksheet ready: "+(worksheetData.title||"English Worksheet")});
+     saveHistory();
+     const card=document.createElement("div");card.className="msg ai";card.style.cssText="max-width:100%;width:100%;padding:12px";
+     const caption=document.createElement("div");caption.textContent="Your worksheet is ready. Use the button inside the worksheet to print or save it as a PDF.";caption.style.marginBottom="10px";
+     const download=document.createElement("a");download.textContent="Download worksheet HTML";download.download="JARVIS-worksheet.html";download.href=URL.createObjectURL(new Blob([worksheetData.html],{type:"text/html;charset=utf-8"}));download.style.cssText="display:inline-block;margin:0 0 10px;padding:8px 12px;border-radius:8px;background:#164e63;color:white;text-decoration:none";
+     const frame=document.createElement("iframe");frame.title="Worksheet preview";frame.sandbox="allow-scripts allow-modals";frame.srcdoc=worksheetData.html;frame.style.cssText="display:block;width:100%;height:850px;border:1px solid #8aa4bd;border-radius:10px;background:white";
+     card.append(caption,download,frame);list.appendChild(card);card.scrollIntoView({behavior:"smooth"});speakReply("Your worksheet is ready.");
+    } else if(wantsImage&&!attachedImage){
+      load.textContent="Understanding your prompt and generating the image…";
+      const imageData=await createImage(text,"cinematic","square");
+      load.remove();
+      messages.push({role:"user",content:text},{role:"assistant",content:"Image generated successfully."});
+      saveHistory();
+      const card=document.createElement("div");
+      card.className="msg ai";
+      card.style.maxWidth="min(92%,680px)";
+      const caption=document.createElement("div");
+      caption.textContent="Image generated successfully.";
+      caption.style.marginBottom="10px";
+      const img=document.createElement("img");
+      img.src=imageData;img.alt=text;
+      img.style.cssText="display:block;width:100%;height:auto;max-height:650px;object-fit:contain;border-radius:13px";
+      const download=document.createElement("a");
+      download.href=imageData;download.download="JARVIS-image.png";download.textContent="Download image";
+      download.style.cssText="display:inline-block;margin-top:10px;padding:8px 12px;border-radius:8px;background:#164e63;color:white;text-decoration:none";
+      card.append(caption,img,download);
+      list.appendChild(card);card.scrollIntoView({behavior:"smooth"});
+      speakReply("Your image is ready.");
+   } else if(attachedImage){
+      load.textContent="Looking at your image…";
+      const response=await fetch("/api/vision-chat",{
+        method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({message:text, image:attachedImage, history:messages.slice(-8)}),
+        signal:AbortSignal.timeout(75000)
+      });
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok)throw new Error(data.error||"Image analysis failed.");
+      const reply=data.reply||data.answer;
+      if(typeof reply!=="string"||!reply.trim())throw new Error("The image model returned an empty response.");
+      load.remove();
+      messages.push({role:"user",content:userText},{role:"assistant",content:reply});
+      saveHistory();clearAttachment();add("assistant",reply);speakReply(reply);
+    } else {
+     const response = await fetch("/api/chat", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({
+         message: text,
+         history: messages.slice(0, -1).slice(-10)
+       })
+     });
+     const data = await response.json().catch(() => ({}));
+     if (!response.ok) throw new Error(data.error || "AI request failed");
+     const reply = data.reply || data.answer;
+     if (typeof reply !== "string" || !reply.trim()) throw new Error("The server returned an empty response.");
+     load.remove();
+     messages.push({role:"user",content:text},{role:"assistant",content:reply});
+     saveHistory();
+     add("assistant",reply);
+     speakReply(reply);
+   }
+ }catch(e){load.className="msg ai error";load.textContent=e.message || "Could not generate a response. Please try again."}
  finally{send.disabled=false;input.focus()}
 }
 document.querySelectorAll(".suggestion").forEach(b=>b.onclick=()=>{input.value=b.dataset.prompt;ask()});
@@ -248,7 +559,7 @@ send.onclick=ask;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shi
 let mediaRecorder=null, audioChunks=[];
 async function startRecording(){
  if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){
-  alert("ضبط صدا در این مرورگر در دسترس نیست. مطمئن شو سایت با HTTPS باز شده است.");return;
+  alert("Audio recording is unavailable in this browser. Make sure the site is opened over HTTPS.");return;
  }
  try{
   const stream=await navigator.mediaDevices.getUserMedia({audio:true});
@@ -258,28 +569,28 @@ async function startRecording(){
   mediaRecorder=new MediaRecorder(stream,mimeType?{mimeType}:undefined);
   audioChunks=[];
   mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size)audioChunks.push(e.data)};
-  mediaRecorder.onerror=()=>{stream.getTracks().forEach(t=>t.stop());mic.classList.remove("on");mic.textContent="🎙️";alert("هنگام ضبط صدا خطایی رخ داد.")};
+  mediaRecorder.onerror=()=>{stream.getTracks().forEach(t=>t.stop());mic.classList.remove("on");mic.textContent="🎙️";alert("An error occurred while recording audio.")};
   mediaRecorder.onstop=async()=>{
    stream.getTracks().forEach(t=>t.stop());
    mic.classList.remove("on");mic.textContent="🎙️";mic.disabled=true;
    const blob=new Blob(audioChunks,{type:mediaRecorder.mimeType||"audio/webm"});
    if(!blob.size){mic.disabled=false;return}
-   const previous=mic.title;mic.title="در حال تبدیل صدا به متن…";status.textContent="● در حال تشخیص گفتار…";
+   const previous=mic.title;mic.title="Transcribing audio…";status.textContent="● Recognizing speech…";
    try{
-    const lang=speechLanguage==="fa-IR"?"fa":"en";
+    const lang=speechLanguage==="fa-IR"?"fa":speechLanguage==="en-US"?"en":"auto";
     const response=await fetch("/transcribe?language="+lang,{method:"POST",headers:{"Content-Type":blob.type||"audio/webm"},body:blob,signal:AbortSignal.timeout(40000)});
     const data=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(data.error||"تبدیل صدا به متن ناموفق بود.");
-    if(!data.text)throw new Error("صدای واضحی تشخیص داده نشد؛ دوباره صحبت کن.");
+    if(!response.ok)throw new Error(data.error||"Audio transcription failed.");
+    if(!data.text)throw new Error("No clear speech was detected. Please try again.");
     input.value=data.text;await ask();
-   }catch(error){alert(error.name==="TimeoutError"||error.name==="AbortError"?"زمان پاسخ‌گویی تشخیص گفتار تمام شد. دوباره با یک پیام کوتاه امتحان کن.":(error.message||"تشخیص گفتار ناموفق بود."))}
-   finally{mic.disabled=false;mic.title=previous;status.textContent="● متصل"}
+   }catch(error){alert(error.name==="TimeoutError"||error.name==="AbortError"?"Speech recognition timed out. Please try again with a shorter message.":(error.message||"Speech recognition failed."))}
+   finally{mic.disabled=false;mic.title=previous;status.textContent="● Connected"}
   };
   mediaRecorder.start();
-  mic.classList.add("on");mic.textContent="⏹️";mic.title="پایان ضبط و تبدیل گفتار";
+  mic.classList.add("on");mic.textContent="⏹️";mic.title="Stop recording and transcribe";
  }catch(error){
-  if(error.name==="NotAllowedError"||error.name==="PermissionDeniedError")alert("اجازهٔ استفاده از میکروفون داده نشده است. دسترسی میکروفون را برای این سایت فعال کن.");
-  else alert("میکروفون در دسترس نیست: "+error.message);
+  if(error.name==="NotAllowedError"||error.name==="PermissionDeniedError")alert("Microphone permission was denied. Allow microphone access for this website.");
+  else alert("Microphone unavailable: "+error.message);
  }
 }
 mic.onclick=()=>{
@@ -290,8 +601,373 @@ const imageLab=document.getElementById("imageLab"),imagePrompt=document.getEleme
 document.getElementById("imageOpen").onclick=()=>{imageLab.classList.add("open");closeSidebar();imagePrompt.focus()};
 document.getElementById("imageClose").onclick=()=>imageLab.classList.remove("open");
 imageLab.addEventListener("click",e=>{if(e.target===imageLab)imageLab.classList.remove("open")});
-imageGenerate.onclick=async()=>{const prompt=imagePrompt.value.trim();if(!prompt){imageStatus.textContent="اول توضیح تصویر را بنویس.";return}imageGenerate.disabled=true;imageStatus.textContent="در حال ساخت تصویر...";imagePreview.textContent="⏳ لطفاً صبر کن";
-try{const response=await fetch("/api/image",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt,style:document.getElementById("imageStyle").value,ratio:document.getElementById("imageRatio").value}),signal:AbortSignal.timeout(100000)});const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"ساخت تصویر ناموفق بود.");const img=document.createElement("img");img.src=data.image;img.alt=prompt;imagePreview.replaceChildren(img);imageStatus.textContent="تصویر آماده شد! ✨"}catch(e){imagePreview.textContent="تصویر ساخته نشد.";imageStatus.textContent=e.message||"خطا در ساخت تصویر."}finally{imageGenerate.disabled=false}};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")imageLab.classList.remove("open")});
+async function createImage(prompt,style,ratio){
+ const response=await fetch("/api/image",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({prompt,style,ratio}),
+  signal:AbortSignal.timeout(125000)
+ });
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok||!data.ok||typeof data.image!=="string")throw new Error(data.error||"Image generation failed.");
+ return data.image;
+}
+const worksheetLab=$("worksheetLab"),worksheetPrompt=$("worksheetPrompt"),worksheetStatus=$("worksheetStatus"),worksheetResult=$("worksheetResult"),worksheetCreate=$("worksheetCreate");
+$("worksheetOpen").onclick=()=>{worksheetLab.classList.add("open");closeSidebar();worksheetPrompt.focus()};
+$("worksheetClose").onclick=()=>worksheetLab.classList.remove("open");
+worksheetLab.addEventListener("click",e=>{if(e.target===worksheetLab)worksheetLab.classList.remove("open")});
+async function generateWorksheet(){
+ const prompt=worksheetPrompt.value.trim();if(!prompt){worksheetStatus.textContent="Please enter a worksheet topic first.";worksheetPrompt.focus();return}
+ worksheetCreate.disabled=true;worksheetCreate.textContent="Generating…";worksheetStatus.textContent="Generating educational questions and answers…";worksheetResult.textContent="Please wait…";
+ try{
+  const response=await fetch("/api/worksheet",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:prompt+"\nRequested level: "+$("worksheetLevel").value+"\nTarget learners: "+$("worksheetGrade").value+"\nMain exercise focus: "+$("worksheetFocus").value+"\nCreate a polished, classroom-ready English worksheet appropriate for this group and focus."}),signal:AbortSignal.timeout(75000)});
+  const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok||typeof data.html!=="string")throw new Error(data.error||"Worksheet generation failed.");
+  const frame=document.createElement("iframe");frame.title="Worksheet preview";frame.sandbox="allow-scripts allow-modals";frame.srcdoc=data.html;worksheetResult.replaceChildren(frame);worksheetStatus.textContent="Your worksheet is ready. Use the Print / Save PDF button inside the worksheet.";
+ }catch(error){worksheetStatus.textContent=error.name==="TimeoutError"?"Worksheet generation timed out. Please try again.":(error.message||"Error generating worksheet.");worksheetResult.textContent="The worksheet could not be generated."}
+ finally{worksheetCreate.disabled=false;worksheetCreate.textContent="Create Professional Worksheet"}
+}
+worksheetCreate.onclick=generateWorksheet;
+imageGenerate.onclick=async()=>{
+ const prompt=imagePrompt.value.trim();
+ if(!prompt){imageStatus.textContent="Please describe the image you want to create.";imagePrompt.focus();return}
+ imageGenerate.disabled=true;
+ imageGenerate.textContent="Generating image…";
+ imageStatus.textContent="Step 1 of 2: Understanding your prompt…";
+ imagePreview.textContent="✧ Your prompt will be processed first, then your image will be generated.";
+ try{
+  const image=await createImage(prompt,document.getElementById("imageStyle").value,document.getElementById("imageRatio").value);
+  const img=document.createElement("img");
+  img.src=image;img.alt=prompt;img.loading="eager";
+  img.style.cssText="display:block;max-width:100%;max-height:620px;width:auto;height:auto;object-fit:contain;border-radius:12px;margin:auto";
+  const download=document.createElement("a");
+  download.href=image;download.download="JARVIS-image.png";download.textContent="⬇ Download image";
+  download.style.cssText="display:inline-block;margin:12px auto 0;padding:9px 16px;border-radius:9px;background:#0e7490;color:white;text-decoration:none;font-weight:700";
+  const result=document.createElement("div");
+  result.style.cssText="display:flex;flex-direction:column;align-items:center;width:100%";
+  result.append(img,download);imagePreview.replaceChildren(result);
+  imageStatus.textContent="Image generated successfully. You can download it now.";
+ }catch(error){
+  imagePreview.textContent="No image was generated.";
+  imageStatus.textContent=error.message||"An unknown error occurred while generating the image.";
+ }finally{
+  imageGenerate.disabled=false;
+  imageGenerate.textContent="✧ Generate Image";
+ }
+};
+
+/* Teacher dashboard: local class records + AI-generated teaching materials */
+(()=>{
+ const $t=id=>document.getElementById(id), lab=$t("teacherLab");
+ if(!lab)return;
+ const KEY="jarvis_teacher_workspace_v1";
+ let db={classes:[],students:[],attendance:[]};
+ try{const saved=JSON.parse(localStorage.getItem(KEY)||"null");if(saved&&typeof saved==="object")db={...db,...saved}}catch{}
+ const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(db))}catch{alert("Not enough browser storage is available.")}};
+ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const className=id=>db.classes.find(x=>x.id===id)?.name||"Deleted class";
+ const fillSelect=(id,placeholder)=>{const el=$t(id),old=el.value;el.replaceChildren(new Option(placeholder,""));db.classes.forEach(c=>el.add(new Option(c.name,c.id)));if(db.classes.some(c=>c.id===old))el.value=old};
+ function render(){
+  $t("tcList").innerHTML=db.classes.length?db.classes.map(c=>'<div class="teacher-row"><span><b>'+esc(c.name)+'</b><br><small>'+esc([c.schedule,c.book,c.lesson].filter(Boolean).join(" • "))+'</small></span><button data-del-class="'+c.id+'">Delete</button></div>').join(""):'<div class="teacher-hint">No classes have been added yet.</div>';
+  $t("tsList").innerHTML=db.students.length?db.students.map(s=>'<div class="teacher-row"><span>'+esc(s.name)+' <small>— '+esc(className(s.classId))+'</small></span><button data-del-student="'+s.id+'">Delete</button></div>').join(""):'<div class="teacher-hint">No students have been added yet.</div>';
+  ["tsClass","taClass","tpClass","trClass","thClass","qClass"].forEach(id=>fillSelect(id,"Select a class"));
+  renderAttendance();
+ }
+ function renderAttendance(){
+  const cid=$t("taClass").value, host=$t("taStudents"), people=db.students.filter(s=>s.classId===cid);
+  host.innerHTML=people.length?people.map(s=>'<label><input type="checkbox" data-att="'+s.id+'" checked> '+esc(s.name)+'</label>').join(""):'<div class="teacher-hint">No students are registered in this class yet.</div>';
+ }
+ $t("teacherOpen").onclick=()=>{lab.classList.add("open");render()};
+ const closeTeacherAndReturnHome=()=>{lab.classList.remove("open");document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.add("dashboard-mode");window.scrollTo({top:0,behavior:"smooth"});};
+ $t("teacherClose").onclick=closeTeacherAndReturnHome;
+ lab.addEventListener("click",e=>{if(e.target===lab)closeTeacherAndReturnHome()});
+ lab.querySelectorAll("[data-teacher-tab]").forEach(b=>b.onclick=()=>{lab.querySelectorAll("[data-teacher-tab]").forEach(x=>x.classList.toggle("active",x===b));lab.querySelectorAll("[data-teacher-pane]").forEach(x=>x.classList.toggle("active",x.dataset.teacherPane===b.dataset.teacherTab));if(b.dataset.teacherTab==="attendance")renderAttendance()});
+
+ // English voice dictation buttons for teacher inputs and text areas.
+ const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ lab.querySelectorAll(".teacher-card textarea,.teacher-card input:not([type=date])").forEach((field)=>{
+   if(field.dataset.voiceReady)return;field.dataset.voiceReady="1";
+   const parent=field.parentNode;
+   const row=document.createElement("div");row.className="teacher-mic-row";parent.insertBefore(row,field);row.appendChild(field);
+   const button=document.createElement("button");button.type="button";button.className="teacher-mic";button.title="Dictate using the selected language";button.setAttribute("aria-label","Start voice dictation");button.textContent="🎙";row.appendChild(button);
+   const status=document.createElement("div");status.className="teacher-mic-status";parent.insertBefore(status,row.nextSibling);
+   if(!SpeechRecognition){
+     if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){button.disabled=true;button.title="This browser does not support microphone recording";button.style.opacity=".4";status.textContent="Microphone recording is not supported in this browser.";return}
+     let recorder=null,stream=null,chunks=[];
+     button.onclick=async()=>{
+      if(recorder&&recorder.state==="recording"){recorder.stop();button.textContent="…";button.classList.remove("listening");status.textContent="Processing voice recording…";return}
+      try{
+       status.textContent="Requesting microphone permission…";
+       stream=await navigator.mediaDevices.getUserMedia({audio:true});
+       const mimeType=MediaRecorder.isTypeSupported("audio/webm;codecs=opus")?"audio/webm;codecs=opus":undefined;
+       recorder=new MediaRecorder(stream,mimeType?{mimeType}:{});
+       chunks=[];
+       recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+       recorder.onerror=()=>{status.textContent="Recording failed. Please try again.";stream?.getTracks().forEach(t=>t.stop());button.textContent="🎙";button.classList.remove("listening")};
+       recorder.onstop=async()=>{
+        stream?.getTracks().forEach(t=>t.stop());
+        const blob=new Blob(chunks,{type:recorder.mimeType||"audio/webm"});
+        if(!blob.size){status.textContent="No audio was recorded.";button.textContent="🎙";return}
+        try{
+         const selectedLang=speechLanguage==="fa-IR"?"fa":speechLanguage==="en-US"?"en":"auto";
+         const response=await fetch("/transcribe?language="+selectedLang,{method:"POST",headers:{"Content-Type":blob.type},body:blob,signal:AbortSignal.timeout(65000)});
+         const data=await response.json().catch(()=>({}));
+         if(!response.ok||!data.ok||!data.text)throw new Error(data.error||"English transcription failed.");
+         field.value=(field.value.trim()?field.value.trim()+" ":"")+data.text;
+         field.dispatchEvent(new Event("input",{bubbles:true}));
+         status.textContent="English voice text added. You can edit it.";
+        }catch(error){status.textContent=error.message||"Could not transcribe the recording."}
+        finally{button.textContent="🎙";button.classList.remove("listening")}
+       };
+       recorder.start();button.textContent="■";button.classList.add("listening");status.textContent="Recording… Tap ■ to finish.";
+      }catch(error){status.textContent=error.name==="NotAllowedError"?"Microphone permission was denied. Allow microphone access in your browser.":(error.message||"Could not access the microphone.");button.textContent="🎙"}
+     };
+     status.textContent="Choose a language above, then tap 🎙 to record.";
+     return;
+   }
+   let recognition=null,listening=false;
+   button.onclick=()=>{
+    if(listening){recognition?.stop();return}
+    recognition=new SpeechRecognition();recognition.lang=speechLanguage==="auto"?"en-US":speechLanguage;recognition.interimResults=true;recognition.continuous=true;
+    let finalText="";
+    recognition.onstart=()=>{listening=true;button.classList.add("listening");button.textContent="■";status.textContent="Listening in English…"};
+    recognition.onresult=e=>{let interim="";for(let i=e.resultIndex;i<e.results.length;i++){const part=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=part+" ";else interim+=part}field.value=(field.value.trim()?field.value.trim()+" ":"")+finalText+interim;field.dispatchEvent(new Event("input",{bubbles:true}))};
+    recognition.onerror=e=>{status.textContent=e.error==="not-allowed"?"Microphone permission was denied.":"Voice input error: "+e.error};
+    recognition.onend=()=>{listening=false;button.classList.remove("listening");button.textContent="🎙";if(finalText.trim())status.textContent="Voice text added. You can edit it.";else if(!status.textContent.startsWith("Microphone"))status.textContent="Tap the microphone to dictate in English."};
+    try{recognition.start()}catch(e){status.textContent="Could not start microphone. Try again."}
+   };
+   status.textContent="Choose a language above, then tap 🎙 to dictate.";
+ });
+
+ $t("tcSave").onclick=()=>{const name=$t("tcName").value.trim();if(!name){alert("Class Name Please enter a value.");return}db.classes.push({id:crypto.randomUUID?.()||String(Date.now()),name,schedule:$t("tcSchedule").value.trim(),book:$t("tcBook").value.trim(),lesson:$t("tcLesson").value.trim()});["tcName","tcSchedule","tcBook","tcLesson"].forEach(id=>$t(id).value="");persist();render()};
+ $t("tsSave").onclick=()=>{const name=$t("tsName").value.trim(),classId=$t("tsClass").value;if(!name||!classId){alert("Enter the student name and select a class.");return}db.students.push({id:crypto.randomUUID?.()||String(Date.now()),name,classId});$t("tsName").value="";persist();render()};
+ $t("tcList").onclick=e=>{const b=e.target.closest("[data-del-class]");if(!b)return;if(!confirm("Delete this class and its student associations?"))return;db.classes=db.classes.filter(c=>c.id!==b.dataset.delClass);db.students=db.students.filter(s=>s.classId!==b.dataset.delClass);persist();render()};
+ $t("tsList").onclick=e=>{const b=e.target.closest("[data-del-student]");if(!b)return;db.students=db.students.filter(s=>s.id!==b.dataset.delStudent);persist();render()};
+ $t("taClass").onchange=renderAttendance;
+ $t("taSave").onclick=()=>{const classId=$t("taClass").value,date=$t("taDate").value||new Date().toISOString().slice(0,10);if(!classId){alert("Please select a class first.");return}const present=[...lab.querySelectorAll("[data-att]:checked")].map(x=>x.dataset.att);const record={classId,date,present,studentIds:db.students.filter(s=>s.classId===classId).map(s=>s.id),savedAt:Date.now()};db.attendance=db.attendance.filter(x=>!(x.classId===classId&&x.date===date));db.attendance.push(record);persist();$t("taStatus").textContent="Attendance saved: "+present.length+" students present out of "+record.studentIds.length+" students."};
+ async function generate(prompt,button,output,success){
+  if(!prompt.trim()){alert("Please enter the required information.");return}
+  const old=button.textContent;button.disabled=true;button.textContent="Preparing…";output.textContent="AI is preparing your teaching material…";
+  try{const r=await fetch("/api/teacher-assist",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt}),signal:AbortSignal.timeout(70000)});const d=await r.json().catch(()=>({}));if(!r.ok||!d.ok)throw new Error(d.error||"The request could not be completed.");output.textContent=d.text;success?.()}catch(e){output.textContent=e.message||"Error generating content."}finally{button.disabled=false;button.textContent=old}
+ }
+ $t("tpGenerate").onclick=()=>{
+  const c=db.classes.find(x=>x.id===$t("tpClass").value);
+  const prompt="Act as an experienced English language teaching specialist. Create a practical, well-structured lesson plan in English. Class name: "+(c?.name||"Not specified")+"; Coursebook / level: "+(c?.book||"Not specified")+"; Current unit / lesson: "+(c?.lesson||"Not specified")+"; Topic: "+$t("tpTopic").value+"; Duration: "+$t("tpDuration").value+" minutes; Objectives and notes: "+$t("tpGoals").value+". Ensure the total timing matches the lesson duration exactly. Include each activity’s objective, materials, sample English language, and a way to check learning. Make activities practical for a real class and appropriate for the learners’ age and level.";
+  generate(prompt,$t("tpGenerate"),$t("tpOutput"));
+ };
+
+ const loadHomeworkScript=(src,globalName)=>new Promise((resolve,reject)=>{
+  if(window[globalName]){resolve(window[globalName]);return}
+  const existing=document.querySelector('script[data-homework-lib="'+globalName+'"]');
+  if(existing){existing.addEventListener("load",()=>resolve(window[globalName]),{once:true});existing.addEventListener("error",()=>reject(new Error("Could not load the "+globalName+" document reader.")),{once:true});return}
+  const script=document.createElement("script");script.src=src;script.async=true;script.dataset.homeworkLib=globalName;
+  script.onload=()=>window[globalName]?resolve(window[globalName]):reject(new Error("The "+globalName+" reader did not initialise."));
+  script.onerror=()=>reject(new Error("Could not load the "+globalName+" reader. Check your internet connection and try again."));
+  document.head.appendChild(script);
+ });
+ const extractHomeworkText=async(file,progress)=>{
+  const name=file.name.toLowerCase(),maxChars=25000;
+  if(/[.](txt|md|csv)$/i.test(name))return (await file.text()).slice(0,maxChars);
+  if(/[.]docx$/i.test(name)){
+   const mammoth=await loadHomeworkScript("https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.9.0/mammoth.browser.min.js","mammoth");
+   const result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});return String(result.value||"").slice(0,maxChars);
+  }
+  const runOcr=async(source,label)=>{
+   const Tesseract=await loadHomeworkScript("https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js","Tesseract");
+   progress("Reading "+label+" with English OCR…");
+   const result=await Tesseract.recognize(source,"eng",{logger:m=>{if(m.status==="recognizing text")progress("Reading "+label+" with English OCR… "+Math.round((m.progress||0)*100)+"%")}});
+   return result.data?.text||"";
+  };
+  if(/[.](jpg|jpeg|png|webp)$/i.test(name)||file.type.startsWith("image/"))return (await runOcr(file,"photo")).slice(0,maxChars);
+  if(/[.]pdf$/i.test(name)||file.type==="application/pdf"){
+   const pdfjs=await loadHomeworkScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js","pdfjsLib");
+   pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+   const pdf=await pdfjs.getDocument({data:await file.arrayBuffer()}).promise;
+   if(pdf.numPages>30)throw new Error("This PDF has more than 30 pages. Please upload a shorter file.");
+   let pages=[],total="";
+   for(let n=1;n<=pdf.numPages;n++){
+    progress("Extracting PDF text — page "+n+" of "+pdf.numPages+"…");
+    const page=await pdf.getPage(n),content=await page.getTextContent();
+    let text=content.items.map(item=>item.str||"").join(" ");
+    if(text.trim().length<25&&n<=8){
+     const viewport=page.getViewport({scale:1.5}),canvas=document.createElement("canvas"),ctx=canvas.getContext("2d");
+     canvas.width=viewport.width;canvas.height=viewport.height;
+     await page.render({canvasContext:ctx,viewport}).promise;
+     text=await runOcr(canvas,"PDF page "+n);
+     canvas.width=canvas.height=1;
+    }
+    if(text.trim())pages.push("[Page "+n+"]\n"+text.trim());
+    total=pages.join("\n\n");if(total.length>=maxChars)break;
+   }
+   return total.slice(0,maxChars);
+  }
+  throw new Error("Unsupported file type. Please use PDF, DOCX, TXT, MD, CSV, JPG, PNG or WEBP.");
+ };
+ $t("thReviewBtn").onclick=async()=>{
+  const file=$t("thReviewFile").files?.[0],output=$t("thReviewOutput"),button=$t("thReviewBtn");
+  if(!file){output.textContent="Please choose a student submission file first.";return}
+  if(file.size>10*1024*1024){output.textContent="This file is larger than 10 MB. Please choose a smaller file.";return}
+  const supported=/[.](pdf|docx|txt|md|csv|jpg|jpeg|png|webp)$/i.test(file.name);
+  if(!supported){output.textContent="Unsupported file type. Use PDF, DOCX, TXT, MD, CSV, JPG, PNG or WEBP.";return}
+  const original=button.textContent;button.disabled=true;button.textContent="Reading file…";output.textContent="Preparing your student's submission…";
+  try{
+   const content=await extractHomeworkText(file,message=>{output.textContent=message});
+   if(!content.trim())throw new Error("No readable text was found. Check that the file contains text or a clear English photo.");
+   const task=$t("thReviewTask").value.trim(),notes=$t("thReviewNotes").value.trim(),level=$t("thReviewLevel").value;
+   button.textContent="Reviewing…";output.textContent="The file has been read. JARVIS is checking the answers…";
+   const prompt="Act as a fair, experienced English-language teacher reviewing a student's submitted homework. Student level: "+level+". Original task, rubric or answer key (if provided): "+(task||"Not provided; infer cautiously and state limitations.")+". Teacher notes: "+(notes||"None")+". File: "+file.name+". Extracted student submission (up to 25,000 characters):\n--- START ---\n"+content.slice(0,25000)+"\n--- END ---\nReview carefully. Do not invent missing answers or claim certainty where the original task is unavailable. Provide an overall summary, item-by-item corrections, corrected versions, brief level-appropriate explanations, a suggested score only if the task and marking basis are clear, and practical next steps. Be encouraging, specific and fair. Keep student-facing feedback in clear English. If OCR appears uncertain or words are unclear, flag them rather than guessing.";
+   const response=await fetch("/api/teacher-assist",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt}),signal:AbortSignal.timeout(90000)});
+   const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"The review could not be completed.");
+   output.textContent=data.text||"No review was returned.";
+  }catch(error){output.textContent=error.message||"Could not review this file."}
+  finally{button.disabled=false;button.textContent=original}
+ };
+ $t("thReviewCopy").onclick=()=>{const text=$t("thReviewOutput").textContent||"";if(!text||text.startsWith("Upload a student"))return;navigator.clipboard?.writeText(text).then(()=>alert("Review copied.")).catch(()=>alert("Clipboard access is unavailable."))};
+ $t("thGenerate").onclick=()=>{
+  const c=db.classes.find(x=>x.id===$t("thClass").value);
+  const prompt="Act as an English language teaching specialist. Design a complete, classroom-ready homework assignment in English. Class: "+(c?.name||"Not specified")+"; Coursebook / level: "+(c?.book||"Not specified")+"; Topic: "+$t("thTopic").value+"; Homework type: "+$t("thType").value+"; Notes: "+$t("thNotes").value+". Write clear instructions, create varied level-appropriate exercises, and provide a separate complete answer key. If the level is unknown, do not guess it; choose beginner level and clearly state this assumption.";
+  generate(prompt,$t("thGenerate"),$t("thOutput"));
+ };
+ $t("trGenerate").onclick=()=>{
+  const c=db.classes.find(x=>x.id===$t("trClass").value);
+  const prompt="Write an English lesson report for parents. Use a warm, professional, respectful and clear tone. Avoid exaggeration or invented details; use only the information below. Class: "+(c?.name||"Not specified")+"; Coursebook / level: "+(c?.book||"Not specified")+"; Date: "+$t("trDate").value+"; Lesson content and activities: "+$t("trContent").value+"; Homework for next lesson: "+$t("trHomework").value+". Use a suitable heading and clear, readable sections.";
+  generate(prompt,$t("trGenerate"),$t("trOutput"));
+ };
+ $t("qGenerate").onclick=()=>{
+  const c=db.classes.find(x=>x.id===$t("qClass").value);
+  const level=$t("qLevel").value,age=$t("qAge").value,type=$t("qType").value,count=Number($t("qCount").value),focus=$t("qFocus").value;
+  const topic=$t("qTopic").value.trim(),source=$t("qSource").value.trim(),notes=$t("qInstructions").value.trim();
+  if(!topic&&!source){$t("qStatus").textContent="Please enter a topic, target language or source text first.";return}
+  $t("qStatus").textContent="Building and reviewing "+count+" assessment items…";
+  const prompt=[
+   "Act as a senior ELT assessment specialist, Cambridge-style item writer and rigorous proofreader.",
+   "Create exactly "+count+" original English-language assessment questions.",
+   "Class context: "+(c?.name||"Not specified")+"; coursebook: "+(c?.book||"Not specified")+"; unit: "+(c?.lesson||"Not specified")+".",
+   "CEFR level: "+level+". Learner group: "+age+". Format: "+type+". Main skill/focus: "+focus+".",
+   "Topic / target language: "+(topic||"Use only the supplied source text")+".",
+   "Source text (if supplied): "+(source||"No source text supplied")+".",
+   "Teacher requirements: "+(notes||"Use natural British English, unless a different variety is explicitly requested.")+".",
+   "OUTPUT LANGUAGE: All questions, options, instructions, passages and answer keys must be in clear, natural English. Do not translate the questions into Persian.",
+   "COUNT AND FORMAT: Produce exactly "+count+" numbered questions. Follow the selected question format. For multiple choice, every item must have exactly four labelled options A-D and exactly one defensibly correct answer.",
+   "QUALITY CONTROL: Align every item with the CEFR level and learner age. Use authentic classroom or real-life contexts. Distractors must be plausible, grammatically parallel, mutually exclusive and clearly wrong. No trick questions, ambiguity, hidden assumptions, answer clues, repeated templates or duplicate targets. Each gap-fill must have one clear expected answer. Reading questions must be answerable from the supplied passage only; do not invent facts. Avoid testing content not taught or specified.",
+   "ASSESSMENT DESIGN: Balance recall, understanding and application. Vary sentence structures and contexts. Keep instructions concise. For writing/speaking prompts, give a clear communicative purpose and suitable expected length or speaking time.",
+   "ANSWER KEY: Add a separate complete answer key with the correct answer for every numbered question. Explain briefly why the correct answer is right and, for multiple choice, why distractors are unsuitable when useful. Include accepted alternatives where appropriate.",
+   "FINAL REVIEW: Before responding, silently check the exact item count, grammar, spelling, level, answer uniqueness and that every answer key entry matches its question. If information is missing, state the assumption briefly rather than inventing a textbook page or passage.",
+   "Use clear section headings and classroom-ready formatting."
+  ].join("\n");
+  generate(prompt,$t("qGenerate"),$t("qOutput"),()=>$t("qStatus").textContent="Complete — "+count+" questions generated. Review the answer key before using the assessment.");
+ };
+ $t("qCopy").onclick=()=>{const v=$t("qOutput").textContent;if(!v||v.startsWith("Your questions"))return;navigator.clipboard?.writeText(v).then(()=>$t("qStatus").textContent="Assessment copied to clipboard.").catch(()=>$t("qStatus").textContent="Clipboard access is unavailable in this browser.")};
+ $t("thCopy").onclick=()=>copy("thOutput");
+ $t("trGenerate").onclick=()=>{const c=db.classes.find(x=>x.id===$t("trClass").value);const prompt="Write an English lesson report for parents. Use a warm, professional, respectful and clear tone. Avoid exaggeration or invented details; use only the information below. Class: "+(c?.name||"Not specified")+" ; Coursebook / level: "+(c?.book||"Not specified")+" ; Date: "+$t("trDate").value+" ; Lesson content and activities: "+$t("trContent").value+" ; Homework for next lesson: "+$t("trHomework").value+". Use a suitable heading and clear, readable sections.";generate(prompt,$t("trGenerate"),$t("trOutput"))};
+ const copy=id=>{const v=$t(id).textContent;if(!v||v.startsWith("Your lesson plan")||v.startsWith("Your parent report"))return;navigator.clipboard?.writeText(v).then(()=>alert("Text copied.")).catch(()=>alert("Clipboard access is unavailable in this browser."))};
+ $t("tpCopy").onclick=()=>copy("tpOutput");$t("trCopy").onclick=()=>copy("trOutput");
+ const today=new Date().toISOString().slice(0,10);["taDate","trDate"].forEach(id=>$t(id).value=today);
+ render();
+})();
+
+
+/* Return from chat to the JARVIS dashboard */
+(()=>{
+ const home=document.getElementById("homeDashboard");
+ if(!home)return;
+ home.addEventListener("click",()=>{
+  document.body.classList.add("dashboard-mode");
+  document.getElementById("historySidebar")?.classList.remove("open");
+  document.getElementById("sidebarShade")?.classList.remove("show");
+  ["teacherLab","imageLab","worksheetLab"].forEach(id=>document.getElementById(id)?.classList.remove("open"));
+  window.scrollTo({top:0,behavior:"smooth"});
+ });
+})();
+
 health();
 if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
+
+/* Dashboard navigation: every sidebar item opens its own destination */
+(()=>{
+ const dashboard=document.getElementById("jarvisDashboard");
+ if(!dashboard)return;
+ document.body.classList.add("dashboard-mode");
+ const showChat=()=>{document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.remove("dashboard-mode");window.scrollTo({top:0,behavior:"smooth"});};
+ const openTeacher=(tab)=>{document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.remove("dashboard-mode");document.getElementById("teacherOpen")?.click();setTimeout(()=>{document.querySelector('[data-teacher-tab="'+tab+'"]')?.click()},180);};
+ let page=document.getElementById("dashboardUtilityPage");
+ if(!page){page=document.createElement("section");page.id="dashboardUtilityPage";page.setAttribute("aria-live","polite");document.body.appendChild(page);}
+ const openPage=(kind)=>{
+  const pages={
+   reports:{title:"Reports",subtitle:"Create clear, professional lesson updates for parents.",content:'<div class="utility-grid"><article class="utility-card"><h2>✉ Parent Reports</h2><p>Generate a polished report using the class, lesson activities and homework details you provide. JARVIS will not invent classroom information.</p><button class="utility-action" data-page-action="parent-reports">Open Parent Reports →</button></article><article class="utility-card"><h2>📚 Where reports are created</h2><p>Your report workspace is inside Teacher Studio. Choose a class, enter the lesson details, and generate a ready-to-send parent message.</p></article></div>'},
+   toolkit:{title:"Teacher Toolkit",subtitle:"Practical tools for the everyday work of an English language teacher.",content:"<div class=\"utility-grid\">\n<article class=\"utility-card\"><h2>🗂 Vocabulary Flashcard Maker</h2><p>Create vocabulary cards with simple meanings and natural examples.</p><label for=\"tkFlashTopic\">Topic</label><input id=\"tkFlashTopic\" placeholder=\"e.g. Food, daily routines, travel\"><label for=\"tkFlashLevel\">CEFR level</label><select id=\"tkFlashLevel\"><option>Pre-A1</option><option>A1</option><option selected>A2</option><option>B1</option><option>B2</option><option>C1</option></select><label for=\"tkFlashCount\">Number of cards</label><select id=\"tkFlashCount\"><option>8</option><option selected>12</option><option>16</option><option>20</option></select><button class=\"utility-action\" data-page-action=\"flashcards\">Create Flashcards</button><div id=\"tkFlashOutput\" class=\"tool-output\">Your flashcards will appear here.</div><button class=\"utility-action\" data-page-action=\"copy-flash\">Copy Flashcards</button></article>\n<article class=\"utility-card\"><h2>📅 Weekly Teaching Planner</h2><p>Build a realistic weekly plan from the information you provide.</p><label for=\"tkWeek\">Week starting</label><input id=\"tkWeek\" type=\"date\"><label for=\"tkPlanClass\">Class / course</label><input id=\"tkPlanClass\" placeholder=\"e.g. Family and Friends 3\"><label for=\"tkPlanSchedule\">Class days and times</label><input id=\"tkPlanSchedule\" placeholder=\"e.g. Monday and Wednesday, 5 PM\"><label for=\"tkPlanFocus\">Units, goals and priorities</label><textarea id=\"tkPlanFocus\" rows=\"3\" placeholder=\"Vocabulary review, speaking practice, Unit 4...\"></textarea><button class=\"utility-action\" data-page-action=\"weekly-plan\">Build Weekly Plan</button><div id=\"tkPlanOutput\" class=\"tool-output\">Your weekly plan will appear here.</div><button class=\"utility-action\" data-page-action=\"copy-plan\">Copy Weekly Plan</button></article>\n<article class=\"utility-card\"><h2>✉ Parent Message Writer</h2><p>Draft warm, professional messages using only the facts you enter.</p><label for=\"tkParentStudent\">Student or class</label><input id=\"tkParentStudent\" placeholder=\"Name or class\"><label for=\"tkParentPurpose\">Purpose</label><select id=\"tkParentPurpose\"><option>Weekly lesson update</option><option>Positive progress note</option><option>Homework reminder</option><option>Absence follow-up</option><option>Meeting request</option><option>General announcement</option></select><label for=\"tkParentFacts\">Facts to include</label><textarea id=\"tkParentFacts\" rows=\"4\" placeholder=\"Lesson content, progress observed, homework...\"></textarea><label for=\"tkParentTone\">Tone</label><select id=\"tkParentTone\"><option>Warm and professional</option><option>Friendly and encouraging</option><option>Formal and concise</option></select><button class=\"utility-action\" data-page-action=\"parent-message\">Write Parent Message</button><div id=\"tkParentOutput\" class=\"tool-output\">Your parent message will appear here.</div><button class=\"utility-action\" data-page-action=\"copy-parent\">Copy Message</button></article>\n<article class=\"utility-card\"><h2>🏅 Printable Certificate Maker</h2><p>Create a simple certificate for a learner and print it from your browser.</p><label for=\"tkCertName\">Student name</label><input id=\"tkCertName\" placeholder=\"Student full name\"><label for=\"tkCertCourse\">Course / class</label><input id=\"tkCertCourse\" placeholder=\"e.g. English A2 · Term 2\"><label for=\"tkCertAchievement\">Achievement</label><input id=\"tkCertAchievement\" value=\"For completing the course\"><label for=\"tkCertDate\">Date</label><input id=\"tkCertDate\" type=\"date\"><button class=\"utility-action\" data-page-action=\"certificate\">Create Certificate Preview</button><div id=\"tkCertPreview\" class=\"certificate-preview\">Your certificate preview will appear here.</div><button class=\"utility-action\" data-page-action=\"print-certificate\">Print Certificate</button></article>\n</div>"},
+   settings:{title:"Settings",subtitle:"Manage JARVIS's voice and speech preferences.",content:'<div class="utility-grid"><article class="utility-card"><h2>🎙 Speech input language</h2><p>Choose the language JARVIS should listen for when you use the microphone.</p><label for="utilitySpeechLanguage">Microphone language</label><select id="utilitySpeechLanguage"><option value="en-US">English</option><option value="fa-IR">Persian</option><option value="auto">Auto detect</option></select><p class="utility-note">This setting is shared with the language selector in the chat composer.</p></article><article class="utility-card"><h2>🔊 Assistant voice</h2><p>Turn spoken AI replies on or off.</p><button class="utility-action" data-page-action="toggle-voice">Toggle voice replies</button><p id="utilityVoiceState" class="utility-note"></p></article></div>'},
+   help:{title:"Help & Support",subtitle:"Quick guidance for using your English teaching workspace.",content:'<div class="utility-grid"><article class="utility-card"><h2>💬 Chat with JARVIS</h2><p>Ask JARVIS to explain a feature, help prepare a lesson, or troubleshoot a problem.</p><button class="utility-action" data-page-action="open-chat">Open JARVIS Chat →</button></article><article class="utility-card"><h2>🎓 Teacher Studio</h2><p>Use Classes & Students, Attendance, Lesson Planner, Homework, Question Lab and Parent Reports from one workspace.</p><button class="utility-action" data-page-action="open-teacher">Open Teacher Studio →</button></article><article class="utility-card"><h2>🎙 Microphone not working?</h2><p>Check browser microphone permission, make sure the correct input device is selected, and try Chrome or Edge if speech recognition is unavailable in your browser.</p></article><article class="utility-card"><h2>💾 Your teaching data</h2><p>Class, student and attendance records are currently saved in this browser. They are not automatically synchronised to other devices.</p></article></div>'}
+  };
+  const p=pages[kind];if(!p)return;
+  page.innerHTML='<div class="utility-shell"><div class="utility-top"><div><h1>'+p.title+'</h1><p class="utility-subtitle">'+p.subtitle+'</p></div><button class="utility-back" data-page-action="back">← Dashboard</button></div>'+p.content+'</div>';
+  page.dataset.currentPage=kind;page.classList.add("open");
+  if(kind==="toolkit"){const today=new Date().toISOString().slice(0,10);const week=document.getElementById("tkWeek"),cert=document.getElementById("tkCertDate");if(week&&!week.value)week.value=today;if(cert&&!cert.value)cert.value=today;}
+  if(kind==="settings"){
+   const speech=document.getElementById("speechLangSelect"),sel=document.getElementById("utilitySpeechLanguage");
+   if(speech&&sel)sel.value=speech.value;
+   const voice=document.getElementById("voiceToggle"),state=document.getElementById("utilityVoiceState");
+   if(state)state.textContent=voice?.title?.includes("off")?"Voice replies are currently ON.":"Voice replies are currently OFF.";
+  }
+ };
+ dashboard.addEventListener("click",e=>{
+  const b=e.target.closest("[data-dash]");if(!b)return;
+  const action=b.dataset.dash;
+  if(action==="chat"){showChat();return}
+  if(action==="questions"){openTeacher("questions");return}
+  if(action==="classes"||action==="students"){openTeacher("classes");return}
+  if(action==="reports"||action==="settings"||action==="help"||action==="toolkit"){openPage(action);return}
+ });
+
+ const toolkitGenerate=async(prompt,button,outputId)=>{
+  const output=document.getElementById(outputId);if(!output)return;
+  const original=button.textContent;button.disabled=true;button.textContent="Preparing…";output.textContent="JARVIS is preparing your teaching material…";
+  try{const response=await fetch("/api/teacher-assist",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt}),signal:AbortSignal.timeout(70000)});const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"The request could not be completed.");output.textContent=data.text||"No content was returned."}
+  catch(error){output.textContent=error.message||"Something went wrong. Please try again."}
+  finally{button.disabled=false;button.textContent=original}
+ };
+ const copyToolkitText=id=>{const el=document.getElementById(id),value=el?.textContent||"";if(!value||value.startsWith("Your "))return;navigator.clipboard?.writeText(value).then(()=>alert("Copied to clipboard.")).catch(()=>alert("Clipboard access is unavailable in this browser."))};
+ const escapeCertificate=value=>String(value||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ page.addEventListener("change",e=>{
+  if(e.target.id==="utilitySpeechLanguage"){const sel=document.getElementById("speechLangSelect");if(sel){sel.value=e.target.value;sel.dispatchEvent(new Event("change",{bubbles:true}));}}
+ });
+ page.addEventListener("click",e=>{
+  const b=e.target.closest("[data-page-action]");if(!b)return;
+  const action=b.dataset.pageAction;
+
+  if(action==="flashcards"){
+   const topic=document.getElementById("tkFlashTopic").value.trim(),level=document.getElementById("tkFlashLevel").value,count=document.getElementById("tkFlashCount").value;
+   if(!topic){alert("Please enter a vocabulary topic first.");return}
+   toolkitGenerate("Act as an experienced English language teacher. Create exactly "+count+" vocabulary flashcards about "+topic+" for CEFR "+level+". For each card include the target word or phrase, a simple accurate meaning, a natural example sentence and a learner-friendly practice question. Avoid duplicates, keep the level consistent and format as a numbered table. Do not invent IPA or claim audio is included.",b,"tkFlashOutput");return;
+  }
+  if(action==="weekly-plan"){
+   const week=document.getElementById("tkWeek").value,course=document.getElementById("tkPlanClass").value.trim(),schedule=document.getElementById("tkPlanSchedule").value.trim(),focus=document.getElementById("tkPlanFocus").value.trim();
+   if(!course||!focus){alert("Please enter the class/course and at least one teaching priority.");return}
+   toolkitGenerate("Act as an experienced English language teaching coordinator. Create a practical weekly teaching plan. Week starting: "+(week||"Not specified")+". Class/course: "+course+". Schedule: "+(schedule||"Not specified")+". Teaching priorities and syllabus details: "+focus+". Organise by actual class days if provided; otherwise label any suggested structure clearly. Include objectives, stages, timing, materials, homework and a quick learning check. Do not invent textbook page numbers or student results.",b,"tkPlanOutput");return;
+  }
+  if(action==="parent-message"){
+   const who=document.getElementById("tkParentStudent").value.trim(),purpose=document.getElementById("tkParentPurpose").value,facts=document.getElementById("tkParentFacts").value.trim(),tone=document.getElementById("tkParentTone").value;
+   if(!facts){alert("Please enter the real lesson or student details first.");return}
+   toolkitGenerate("Write a ready-to-send message to a student's parent. Student/class: "+(who||"Not specified")+". Purpose: "+purpose+". Tone: "+tone+". Use only these supplied facts: "+facts+". Do not invent grades, behaviour, attendance, achievements, promises or homework. Omit missing details instead of guessing. Use polished English with a suitable greeting and sign-off.",b,"tkParentOutput");return;
+  }
+  if(action==="copy-flash"){copyToolkitText("tkFlashOutput");return}
+  if(action==="copy-plan"){copyToolkitText("tkPlanOutput");return}
+  if(action==="copy-parent"){copyToolkitText("tkParentOutput");return}
+  if(action==="certificate"){
+   const name=document.getElementById("tkCertName").value.trim(),course=document.getElementById("tkCertCourse").value.trim(),achievement=document.getElementById("tkCertAchievement").value.trim(),date=document.getElementById("tkCertDate").value;
+   if(!name||!course){alert("Please enter the student's name and course.");return}
+   document.getElementById("tkCertPreview").innerHTML='<div class="certificate-sheet"><div class="certificate-kicker">JARVIS · ENGLISH LEARNING</div><h2>Certificate of Achievement</h2><p>This certificate is proudly presented to</p><h3>'+escapeCertificate(name)+'</h3><p>'+escapeCertificate(achievement||"For completing the course")+'</p><strong>'+escapeCertificate(course)+'</strong><div class="certificate-date">'+escapeCertificate(date||new Date().toISOString().slice(0,10))+'</div><div class="certificate-sign">Teacher</div></div>';return;
+  }
+  if(action==="print-certificate"){
+   if(!document.querySelector("#tkCertPreview .certificate-sheet")){alert("Create the certificate preview first.");return}
+   window.print();return;
+  }
+  if(action==="back"){page.classList.remove("open");return}
+  if(action==="parent-reports"){openTeacher("reports");return}
+  if(action==="open-chat"){showChat();return}
+  if(action==="open-teacher"){openTeacher("classes");return}
+  if(action==="toggle-voice"){document.getElementById("voiceToggle")?.click();const state=document.getElementById("utilityVoiceState"),voice=document.getElementById("voiceToggle");if(state)state.textContent=voice?.title?.includes("off")?"Voice replies are currently ON.":"Voice replies are currently OFF.";}
+ });
+})();
+
 </script></body></html>
