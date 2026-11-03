@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10131a"><meta name="description" content="JARVIS AI assistant">
+<link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icon.svg">
+<title>JARVIS</title>
+<style>
+:root{color-scheme:dark;--bg:#080b13;--panel:#111827;--line:#27334a;--muted:#9aa9c2;--cyan:#65e4ff;--blue:#4b8cff}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#18365a 0,transparent 48%),radial-gradient(circle at 5% 70%,#10274666,transparent 28%),var(--bg);color:#f4f8ff;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(#7895bd12 1px,transparent 1px),linear-gradient(90deg,#7895bd12 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+.app{position:relative;max-width:1020px;margin:auto;min-height:100vh;display:flex;flex-direction:column;padding:0 22px}
+header{position:sticky;top:0;z-index:5;margin:0 -22px;padding:16px 26px;display:flex;align-items:center;justify-content:space-between;background:#080d18d9;backdrop-filter:blur(18px);border-bottom:1px solid #26354c}
+.header-actions{display:flex;align-items:center;gap:10px}.clear-chat{height:34px;min-width:0;padding:0 11px;border-radius:11px;font-size:11px;color:#c3d5ec;background:#172337;border:1px solid #344761}.brand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:19px;letter-spacing:1.5px}.brand:before{content:"";width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#d9fbff 0 10%,#51dfff 13% 23%,#1765b9 28% 48%,#0c203e 53%);box-shadow:0 0 18px #42cfff99, inset 0 0 8px #b9f8ff}.status{font-size:12px;color:#91f0c0;background:#10271f;border:1px solid #24533d;padding:7px 11px;border-radius:99px}
+main{flex:1;padding:24px 0 150px}.welcome{text-align:center;margin:10vh auto 42px;max-width:680px}.welcome:before{content:"AI • PERSONAL ASSISTANT";display:inline-block;color:var(--cyan);font-size:10px;letter-spacing:3px;font-weight:800;border:1px solid #3c7c9a66;background:#10283a99;padding:8px 14px;border-radius:99px;margin-bottom:22px}.welcome h1{font-size:clamp(32px,6vw,54px);line-height:1.25;margin:0 0 14px;font-weight:850;letter-spacing:-1px;background:linear-gradient(100deg,#fff 20%,#9eeeff 60%,#7ca7ff);color:transparent;background-clip:text}.welcome p{color:var(--muted);font-size:15px;line-height:2;margin:0 auto;max-width:520px}
+.suggestions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:28px auto 0;max-width:690px}.suggestion{background:#101a2bba;border:1px solid #293b56;border-radius:16px;padding:14px 12px;color:#dceaff;font:inherit;font-size:13px;min-height:66px;cursor:pointer;transition:.2s}.suggestion:hover{border-color:#55c9f3;transform:translateY(-2px);background:#14263d}
+.messages{display:flex;flex-direction:column;gap:15px;max-width:850px;margin:auto}.msg{max-width:82%;padding:13px 17px;border-radius:19px;line-height:1.95;white-space:pre-wrap;word-break:break-word;box-shadow:0 8px 24px #0002}.user{align-self:flex-start;background:linear-gradient(135deg,#2467c9,#2453a2);border:1px solid #6ba5ff55;border-bottom-left-radius:6px}.ai{align-self:flex-end;background:linear-gradient(145deg,#172337,#111a29);border:1px solid #2b405e;border-bottom-right-radius:6px}
+.composer{position:fixed;bottom:0;left:0;right:0;z-index:10;padding:16px 18px 12px;background:linear-gradient(transparent,#080b13 24%);backdrop-filter:blur(9px)}.composer-inner{max-width:850px;margin:auto;display:flex;gap:10px;align-items:end;background:#111b2b;border:1px solid #354968;border-radius:24px;padding:9px;box-shadow:0 12px 45px #0008,0 0 25px #1a7cb322;transition:border-color .2s}.composer-inner:focus-within{border-color:#5bcdf0;box-shadow:0 12px 45px #0008,0 0 0 3px #42cfff18}
+textarea{flex:1;resize:none;min-height:46px;max-height:140px;border:0;outline:0;background:transparent;color:white;padding:11px 12px;font:inherit;font-size:14px}textarea::placeholder{color:#8292aa}
+button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;background:#1a2940;color:#eaf5ff;cursor:pointer;font-size:18px;transition:.2s}button:hover{filter:brightness(1.2);transform:translateY(-1px)}button:disabled{opacity:.5;cursor:wait;transform:none}.send{background:linear-gradient(135deg,#218de0,#385fe4);border-color:#5eabff}.on{background:#9d3545}.voice-active{border-color:#65e4ff;background:#12364a;color:#9cecff}.error{background:#35191d;border:1px solid #71343c}
+.hint{text-align:center;font-size:10px;color:#71829d;margin-top:9px;letter-spacing:.3px}
+@media(max-width:600px){.app{padding:0 13px}header{margin:0 -13px;padding:13px 16px}.welcome{margin:8vh auto 30px}.welcome h1{font-size:34px}.welcome p{font-size:13px}.suggestions{grid-template-columns:1fr;gap:8px}.suggestion{min-height:48px}.msg{max-width:94%;font-size:14px}.composer{padding:12px 10px 9px}}
+
+/* Chat history sidebar */
+.sidebar-toggle{min-width:38px;width:38px;height:34px;border-radius:10px;font-size:17px}
+.sidebar{position:fixed;z-index:30;top:0;right:0;bottom:0;width:min(290px,84vw);padding:18px;background:#0d1421;border-left:1px solid #29374d;box-shadow:-12px 0 40px #0008;transform:translateX(105%);transition:transform .22s ease;display:flex;flex-direction:column;gap:12px}
+.sidebar.open{transform:translateX(0)}.sidebar-head{display:flex;align-items:center;justify-content:space-between;color:#eef5ff;font-weight:800}.sidebar-actions{display:flex;gap:8px}.new-chat{width:100%;height:42px;border-radius:12px;background:#17263a;border:1px solid #354968;color:#edf5ff;font-size:13px}.chat-list{overflow:auto;display:flex;flex-direction:column;gap:6px}.chat-item{width:100%;height:auto;min-height:42px;text-align:right;padding:9px 11px;border-radius:10px;background:transparent;border:1px solid transparent;color:#cbd8e9;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat-item.active{background:#1a2940;border-color:#3a506e;color:#fff}.sidebar-shade{display:none;position:fixed;inset:0;z-index:29;background:#0008}.sidebar-shade.show{display:block}
+@media(min-width:900px){.sidebar{width:270px}}
+.image-open{background:#123d66!important;border:1px solid #4b8cff!important;color:#e5f7ff!important}
+.image-lab{display:none;position:fixed;inset:0;z-index:80;overflow:auto;padding:20px;background:radial-gradient(ellipse at top,#123b62,#070b14 70%)}
+.image-lab.open{display:block}.lab-shell{max-width:950px;margin:3vh auto;background:#0b1422;border:1px solid #315b83;border-radius:24px;overflow:hidden;box-shadow:0 25px 90px #000b}
+.lab-head{display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid #23425f}.lab-head strong{font-size:22px;color:#dff7ff}.lab-head button{background:#17283c;color:white;border:1px solid #365675;border-radius:10px;padding:8px 14px}
+.lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:22px}.lab-controls{display:flex;flex-direction:column;gap:12px}.lab-controls label{color:#ccecff;font-weight:700;font-size:13px}.lab-controls textarea,.lab-controls select{width:100%;padding:13px;border-radius:12px;border:1px solid #355675;background:#070d17;color:white;font:inherit}.lab-controls textarea{min-height:150px;resize:vertical}.lab-controls button{padding:14px;border:0;border-radius:13px;background:linear-gradient(100deg,#0ea5e9,#2563eb);color:white;font-weight:900;font:inherit}.lab-controls button:disabled{opacity:.5}.lab-preview{min-height:300px;border:1px dashed #426c91;border-radius:17px;background:#08101c;display:flex;align-items:center;justify-content:center;color:#a8c6df;text-align:center;overflow:hidden;padding:10px}.lab-preview img{max-width:100%;max-height:560px;border-radius:12px}.lab-status{color:#9fe7ff;font-size:13px;min-height:24px}
+@media(max-width:700px){.lab-grid{grid-template-columns:1fr;padding:14px}.image-lab{padding:7px}.lab-preview{min-height:230px}}
+
+/* MINMON-INSPIRED THEME */
+/* CAT THEME — unified premium interface for chat, image and worksheet tools */
+:root{color-scheme:dark;--bg:#070b1b;--panel:#101a33;--line:#293d68;--muted:#a9b9d8;--cyan:#62dcff;--blue:#397bff;--violet:#a56bff}
+body{background:radial-gradient(ellipse at 50% -12%,#173a78 0,transparent 48%),radial-gradient(circle at 90% 75%,#381d68aa,transparent 30%),#070b1b;color:#f4f7ff}
+body:before{opacity:.22;background-image:linear-gradient(#8db8ff12 1px,transparent 1px),linear-gradient(90deg,#8db8ff12 1px,transparent 1px)}
+.app{max-width:1180px}
+header{background:#080e20eF;border-bottom:1px solid #304675;box-shadow:0 10px 35px #0005;gap:16px}
+.brand{gap:12px;font-size:21px;letter-spacing:1.3px;color:#eaf5ff}
+.brand:before{content:"J";display:grid;place-items:center;width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#263d83,#171c45);border:1px solid #6e91ff;box-shadow:0 0 24px #527dff88,inset 0 0 14px #9e79ff44;color:#dff7ff;font-size:25px;font-weight:950}
+.brand-sub{display:block;font-size:10px;letter-spacing:0;color:#9db4df;font-weight:500;margin-top:2px}
+.header-actions{gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.header-actions button{height:39px;border-radius:13px;font-size:12px;padding:0 13px}
+.clear-chat{background:#121f3c;border-color:#344c7d;color:#d9e8ff}
+.worksheet-open{background:linear-gradient(110deg,#6237c9,#285cce)!important;border:1px solid #9c80ff!important;color:white!important;box-shadow:0 0 18px #744cff55}
+.image-open{background:linear-gradient(110deg,#174c91,#382c9d)!important;border:1px solid #5e9dff!important;color:white!important;box-shadow:0 0 18px #398cff55}
+.status{background:#102c36;border-color:#286277;color:#8ef0d1}
+.welcome{margin:8vh auto 42px;max-width:760px}
+.hero-cat{width:116px;height:116px;margin:0 auto 20px;display:grid;place-items:center;border-radius:34px;background:linear-gradient(145deg,#1d3470,#281b59);border:1px solid #718cff;box-shadow:0 0 55px #477dff66,inset 0 0 28px #9e79ff33;font-size:70px;animation:catGlow 4s ease-in-out infinite}
+@keyframes catGlow{50%{box-shadow:0 0 70px #477dff99,inset 0 0 32px #9e79ff55;transform:translateY(-3px)}}
+.welcome:before{content:"✦  JARVIS • YOUR SMART AI ASSISTANT";color:#8beaff;border-color:#3976b6;background:#10294dcc}
+.welcome h1{background:linear-gradient(100deg,#fff 15%,#8deaff 55%,#b59aff);color:transparent;background-clip:text}
+.welcome p{color:#adbfdf}
+.suggestion{background:linear-gradient(145deg,#121f3b,#11172e);border-color:#344b79;border-radius:18px;box-shadow:0 9px 25px #0003}
+.suggestion:hover{border-color:#65dfff;box-shadow:0 0 22px #438cff44}
+.messages{max-width:900px}
+.msg{box-shadow:0 10px 28px #0004;border-radius:20px}
+.user{background:linear-gradient(120deg,#2458a7,#3447a0);color:#fff;border-color:#648fff;border-bottom-left-radius:7px}
+.ai{background:linear-gradient(135deg,#182849,#24234d);color:#f2f5ff;border:1px solid #5369a3;border-bottom-right-radius:7px}
+.ai:before{content:"✦";display:inline-grid;place-items:center;width:27px;height:27px;margin-left:8px;border-radius:9px;background:#293d78;vertical-align:middle;font-size:17px}
+.composer{background:linear-gradient(transparent,#070b1b 24%);backdrop-filter:blur(14px)}
+.composer-inner{background:#111d38;border:1px solid #5572b5;border-radius:23px;box-shadow:0 12px 45px #0009,0 0 25px #367bff22}
+.composer-inner:focus-within{border-color:#65dfff;box-shadow:0 12px 45px #0009,0 0 0 3px #65dfff22}
+textarea{color:#f4f7ff}textarea::placeholder{color:#8297c2}
+button{background:#1b2d53;border-color:#3c568b;color:#edf5ff}
+.send{background:linear-gradient(135deg,#2376e8,#6944dc);border-color:#7d9fff;color:white}
+.voice-active{background:#123b55;border-color:#58dfff;color:#a7f2ff}
+.sidebar{background:#0d1730;border-color:#304675}
+.new-chat,.chat-item.active{background:#17294d;border-color:#4869a8}
+.worksheet-lab{background:radial-gradient(ellipse at 50% 0%,#263e8b 0%,#0b1530 55%,#070b1b 100%)}
+.worksheet-shell{background:linear-gradient(145deg,#111e3c,#0c142b);border-color:#5578c5;box-shadow:0 25px 90px #000b,0 0 50px #426fff33}
+.worksheet-head{border-color:#304675}.worksheet-head strong{color:#a8eaff}
+.worksheet-controls label{color:#c8d9ff}
+.worksheet-controls textarea,.worksheet-controls select{background:#0a1228;border-color:#3c568b;color:#f5f7ff}
+.worksheet-controls button{background:linear-gradient(100deg,#7043dd,#267be5);box-shadow:0 8px 24px #456cff55}
+.worksheet-result{box-shadow:0 12px 35px #0004}
+.image-lab{background:radial-gradient(ellipse at 50% 0%,#253e89 0%,#101333 48%,#070b1b 100%)}
+.lab-shell{background:linear-gradient(145deg,#111d3bfa,#0c1128fa);border-color:#5578c5;box-shadow:0 25px 110px #000d,0 0 65px #477cff33}
+.lab-head{background:linear-gradient(90deg,#1c2c5b,#11142e);border-color:#344b7b}
+.lab-head strong{background:linear-gradient(90deg,#fff,#8deaff,#b99cff);color:transparent;background-clip:text}
+.lab-head small,.lab-status{color:#a9caff}
+.lab-head button{background:#18284d;color:#dceaff;border-color:#5875b5}
+.lab-controls label{color:#cbdcff}
+.lab-controls textarea,.lab-controls select{background:#090f22;border-color:#405a92;color:#fff}
+.lab-controls textarea:focus,.lab-controls select:focus{border-color:#6bdfff;box-shadow:0 0 0 3px #4daaff22}
+.lab-controls button{background:linear-gradient(100deg,#287ee8,#6545d8);box-shadow:0 10px 30px #376dff55}
+.lab-preview{border-color:#536eb1;background:radial-gradient(circle at 50% 35%,#25366e,#0c1125 75%);color:#c8d9ff}
+.lab-note{color:#91a8d4}
+@media(max-width:600px){header{align-items:flex-start}.brand{font-size:17px}.brand:before{width:40px;height:40px;font-size:22px}.header-actions button{font-size:10px;padding:0 9px}}
+
+
+</style></head>
+<body>
+<div class="app">
+<header><div class="brand">JARVIS</div><div class="header-actions"><button id="imageOpen" class="clear-chat image-open" type="button">🎨 ساخت تصویر</button><button id="historyToggle" class="sidebar-toggle" type="button" title="تاریخچه گفتگوها">☰</button><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status">در حال اتصال…</div></div></header>
+<div id="sidebarShade" class="sidebar-shade"></div><aside id="historySidebar" class="sidebar" aria-label="تاریخچه گفتگوها"><div class="sidebar-head"><span>گفتگوهای قبلی</span><button id="closeHistory" type="button" aria-label="بستن">×</button></div><button id="newChat" class="new-chat" type="button">＋ گفتگوی جدید</button><div id="chatList" class="chat-list"></div></aside>
+<main><section id="welcome" class="welcome"><h1>دستیار هوشمند شما</h1><p>اینجا شروع یک گفت‌وگوی تازه است. سؤالت را بنویس یا با میکروفون صحبت کن.</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی روبلاکس بده">🎮 ایده برای بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را ساده توضیح بده">🧠 درباره هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 حقیقت علمی جالب</button></div></section><section id="messages" class="messages"></section></main><div id="imageLab" class="image-lab"><div class="lab-shell"><div class="lab-head"><strong>JARVIS • IMAGE GENERATOR</strong><button id="imageClose" type="button">×</button></div><div class="lab-grid"><div class="lab-controls"><label for="imagePrompt">توضیح تصویر</label><textarea id="imagePrompt" maxlength="1800" placeholder="تصویر موردنظرت را با جزئیات توصیف کن..."></textarea><label for="imageStyle">سبک</label><select id="imageStyle"><option value="cinematic">سینمایی</option><option value="realistic">واقع‌گرایانه</option><option value="anime">انیمه</option><option value="fantasy">فانتزی</option><option value="comic">کمیک</option><option value="3d">سه‌بعدی</option></select><label for="imageRatio">نسبت تصویر</label><select id="imageRatio"><option value="square">مربع ۱:۱</option><option value="landscape">افقی ۴:۳</option><option value="portrait">عمودی ۳:۴</option></select><button id="imageGenerate" type="button">✨ ساخت تصویر</button><div id="imageStatus" class="lab-status"></div><small>مدل FLUX.1 schnell • سهمیه رایگان محدود است.</small></div><div id="imagePreview" class="lab-preview">تصویر ساخته‌شده اینجا نمایش داده می‌شود.</div></div></div></div>
+<div class="composer"><div class="composer-inner"><button id="mic" title="شروع صحبت">🎙️</button><button id="langToggle" title="تغییر زبان تشخیص گفتار">فا</button><button id="voiceToggle" class="voice-active" title="خاموش‌کردن صدای پاسخ‌ها">🔊</button><textarea id="input" rows="1" placeholder="پیامت را بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • تشخیص گفتار از طریق سرور</div></div>
+</div>
+<script>
+const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic"), voiceToggle=$("voiceToggle"), langToggle=$("langToggle");
+let voiceEnabled=true;
+let speechLanguage="fa-IR";
+function speakReply(text){
+ if(!voiceEnabled || !("speechSynthesis" in window))return;
+ window.speechSynthesis.cancel();
+ const clean=String(text).replace(/```[\s\S]*?```/g,"کد").replace(/https?:\/\/\S+/g,"لینک");
+ const utterance=new SpeechSynthesisUtterance(clean);
+ utterance.lang=/[\u0600-\u06FF]/.test(clean)?"fa-IR":"en-US";
+ utterance.rate=1;utterance.pitch=1;
+ window.speechSynthesis.speak(utterance);
+}
+voiceToggle.onclick=()=>{
+ voiceEnabled=!voiceEnabled;
+ voiceToggle.textContent=voiceEnabled?"🔊":"🔇";
+ voiceToggle.classList.toggle("voice-active",voiceEnabled);
+ voiceToggle.title=voiceEnabled?"صدای پاسخ‌ها روشن است":"صدای پاسخ‌ها خاموش است";
+ if(!voiceEnabled && "speechSynthesis" in window)window.speechSynthesis.cancel();
+};
+langToggle.onclick=()=>{
+ speechLanguage=speechLanguage==="fa-IR"?"en-US":"fa-IR";
+ langToggle.textContent=speechLanguage==="fa-IR"?"فا":"EN";
+ langToggle.title=speechLanguage==="fa-IR"?"تشخیص گفتار فارسی":"Speech recognition: English";
+};
+const STORAGE_KEY="jarvis_ir_chat_history_v1";
+const messages=[];
+let chatSessions=[];
+let currentChatId=null;
+const historyKey=STORAGE_KEY+"_sessions";
+function makeChatId(){return "c"+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function currentSession(){return chatSessions.find(x=>x.id===currentChatId)}
+function saveHistory(){
+ try{
+  if(messages.length){let chat=currentSession();if(!chat){chat={id:currentChatId||makeChatId(),title:"گفتگوی جدید",messages:[],updatedAt:Date.now()};currentChatId=chat.id;chatSessions.unshift(chat)}
+   chat.messages=messages.slice(-40);chat.updatedAt=Date.now();const first=chat.messages.find(x=>x.role==="user");if(first&&chat.title==="گفتگوی جدید")chat.title=first.content.slice(0,34)+(first.content.length>34?"…":"");
+  }
+  chatSessions.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));localStorage.setItem(historyKey,JSON.stringify(chatSessions.slice(0,50)));
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(messages.slice(-40)));renderChatList();
+ }catch(e){console.warn("Chat history could not be saved",e)}
+}
+function renderChatList(){
+ const host=document.getElementById("chatList");if(!host)return;host.replaceChildren();
+ for(const chat of chatSessions){const b=document.createElement("button");b.type="button";b.className="chat-item"+(chat.id===currentChatId?" active":"");b.textContent=chat.title||"گفتگوی جدید";b.title=b.textContent;b.onclick=()=>openChat(chat.id);host.appendChild(b)}
+}
+function add(role,text,scroll=true){
+ welcome.style.display="none";const e=document.createElement("div");e.className="msg "+(role==="user"?"user":"ai");e.textContent=text;list.appendChild(e);if(scroll)e.scrollIntoView({behavior:"smooth"});
+}
+function openChat(id){
+ const chat=chatSessions.find(x=>x.id===id);if(!chat)return;currentChatId=id;messages.length=0;list.replaceChildren();for(const item of chat.messages||[]){messages.push(item);add(item.role,item.content,false)}welcome.style.display=messages.length?"none":"";if(messages.length)list.lastElementChild?.scrollIntoView();renderChatList();closeSidebar();
+}
+function newChat(){
+ if(messages.length)saveHistory();currentChatId=makeChatId();messages.length=0;list.replaceChildren();welcome.style.display="";renderChatList();closeSidebar();input.focus();
+}
+function closeSidebar(){document.getElementById("historySidebar")?.classList.remove("open");document.getElementById("sidebarShade")?.classList.remove("show")}
+function restoreHistory(){
+ try{
+  const saved=JSON.parse(localStorage.getItem(historyKey)||"null");
+  if(Array.isArray(saved)){chatSessions=saved.filter(x=>x&&typeof x.id==="string"&&Array.isArray(x.messages)).slice(0,50)}
+  else {const old=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");if(Array.isArray(old)&&old.length)chatSessions=[{id:makeChatId(),title:old.find(x=>x.role==="user")?.content?.slice(0,34)||"گفتگوی قبلی",messages:old.slice(-40),updatedAt:Date.now()}]}
+  if(chatSessions.length){chatSessions.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));openChat(chatSessions[0].id)}else{currentChatId=makeChatId();welcome.style.display=""}
+  renderChatList();
+ }catch(e){console.warn("Saved chat history could not be loaded",e);currentChatId=makeChatId()}
+}
+function clearHistory(){
+ if(!confirm("این گفتگو پاک شود؟"))return;chatSessions=chatSessions.filter(x=>x.id!==currentChatId);messages.length=0;list.replaceChildren();welcome.style.display="";try{localStorage.setItem(historyKey,JSON.stringify(chatSessions));localStorage.removeItem(STORAGE_KEY)}catch(e){}currentChatId=makeChatId();renderChatList();
+}
+document.getElementById("historyToggle").onclick=()=>{document.getElementById("historySidebar").classList.add("open");document.getElementById("sidebarShade").classList.add("show")};
+document.getElementById("closeHistory").onclick=closeSidebar;document.getElementById("sidebarShade").onclick=closeSidebar;document.getElementById("newChat").onclick=newChat;
+function localReply(raw){
+ const s=raw.trim().toLowerCase();
+ const has=(...words)=>words.some(w=>s.includes(w));
+ if(/^(hi|hello|hey|سلام|درود|سلام جارویس|سلام جارويس)[!.؟? ]*$/.test(s) || has("سلام جارویس","سلام جارويس"))
+   return has("hello","hi","hey") && !has("سلام") ? "Hello! I'm JARVIS. I can answer simple questions locally without an API key." : "سلام! من جارویس هستم 🤖 فعلاً در حالت رایگان و ساده کار می‌کنم. چه کمکی از دستم برمیاد؟";
+ if(has("اسم تو چیه","اسمت چیه","تو کی هستی","who are you","your name"))
+   return "من JARVIS هستم؛ دستیار ساده‌ای که بدون کلید API کار می‌کنه.";
+ if(has("چه کار","چیکار","چه کمکی","help","قابلیت"))
+   return "می‌تونم به سلام و احوال‌پرسی، چند سؤال عمومی و محاسبات ساده جواب بدم. این نسخه از مدل هوش مصنوعی پیشرفته استفاده نمی‌کنه و جواب‌هام محدوده.";
+ if(has("ممنون","مرسی","تشکر","thank you","thanks"))
+   return "خواهش می‌کنم! هر وقت خواستی من اینجام. 🤖";
+ if(has("خداحافظ","بای","فعلا","خدافظ","goodbye","bye"))
+   return "خداحافظ! تا گفت‌وگوی بعدی. 👋";
+ if(has("ساعت چنده","ساعت الان","what time is it","current time")){
+   return "ساعت دستگاه شما: "+new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
+ }
+ if(has("امروز چندمه","تاریخ امروز","what is today's date","today's date")){
+   return "تاریخ دستگاه شما: "+new Date().toLocaleDateString();
+ }
+ if(has("هوا چطوره","آب و هوا","weather"))
+   return "در این نسخه به اینترنت و اطلاعات زندهٔ آب‌وهوا وصل نیستم؛ برای پیش‌بینی دقیق، برنامهٔ آب‌وهوا را بررسی کن.";
+ if(has("جوک","joke"))
+   return "چرا کامپیوتر خسته شد؟ چون تمام روز کار می‌کرد و هیچ‌وقت استراحت نمی‌گرفت! 😄";
+ if(has("پایتخت ایران","capital of iran"))
+   return "پایتخت ایران تهران است.";
+ if(has("پایتخت فرانسه","capital of france"))
+   return "پایتخت فرانسه پاریس است.";
+ if(has("چطوری","حالت چطوره","خوبی","how are you"))
+   return "ممنون که پرسیدی! من آماده‌ام کمکت کنم. تو چطوری؟";
+ // Simple arithmetic: numbers and one arithmetic operator only.
+ const m=s.match(/^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/×÷])\s*(-?\d+(?:\.\d+)?)\s*[=?؟]?\s*$/);
+ if(m){
+   const a=Number(m[1]), b=Number(m[3]), op=m[2];
+   if((op==="/"||op==="÷")&&b===0) return "تقسیم بر صفر تعریف نشده است.";
+   const result=op==="+"?a+b:op==="-"?a-b:(op==="*"||op==="×")?a*b:a/b;
+   return "جواب: "+result;
+ }
+ if(has("hello","hi","good morning","good evening"))
+   return "Hello! I'm JARVIS. This is the free basic mode, so I can answer only a limited set of questions.";
+ if(has("capital of spain")) return "The capital of Spain is Madrid.";
+ if(has("capital of usa","capital of the united states")) return "The capital of the United States is Washington, D.C.";
+ return "هنوز جواب این سؤال رو بلد نیستم. 🧠 این نسخهٔ رایگان و ساده است و از مدل هوش مصنوعی پیشرفته استفاده نمی‌کنه. می‌تونی سؤال ساده‌تری بپرسی یا یک محاسبه مثل 12 * 4 بنویسی.";
+}
+async function health(){
+ status.textContent="● حالت رایگان";
+ status.title="پاسخ‌های ساده در همین مرورگر تولید می‌شوند؛ API لازم نیست.";
+}
+async function ask(){
+ const text=input.value.trim();if(!text)return;
+ input.value="";add("user",text);send.disabled=true;
+ const load=document.createElement("div");load.className="msg ai";load.textContent="یک لحظه…";list.appendChild(load);
+ try{
+ const response = await fetch("/api/chat", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    message: text,
+    history: messages.slice(0, -1).slice(-10)
+  })
+});
+
+const data = await response.json().catch(() => ({}));
+if (!response.ok) throw new Error(data.error || "AI request failed");
+
+const reply = data.reply || data.answer;
+if (typeof reply !== "string" || !reply.trim()) throw new Error("پاسخ خالی از سرور دریافت شد.");
+  
+   load.remove();messages.push({role:"user",content:text},{role:"assistant",content:reply});saveHistory();add("assistant",reply);speakReply(reply);
+ }catch(e){load.className="msg ai error";load.textContent=e.message || "پاسخ آماده نشد. دوباره امتحان کن."}
+ finally{send.disabled=false;input.focus()}
+}
+document.querySelectorAll(".suggestion").forEach(b=>b.onclick=()=>{input.value=b.dataset.prompt;ask()});
+$("clearChat").onclick=clearHistory;restoreHistory();
+send.onclick=ask;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask()}});
+let mediaRecorder=null, audioChunks=[];
+async function startRecording(){
+ if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){
+  alert("ضبط صدا در این مرورگر در دسترس نیست. مطمئن شو سایت با HTTPS باز شده است.");return;
+ }
+ try{
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  let mimeType="";
+  if(MediaRecorder.isTypeSupported("audio/webm;codecs=opus"))mimeType="audio/webm;codecs=opus";
+  else if(MediaRecorder.isTypeSupported("audio/ogg;codecs=opus"))mimeType="audio/ogg;codecs=opus";
+  mediaRecorder=new MediaRecorder(stream,mimeType?{mimeType}:undefined);
+  audioChunks=[];
+  mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size)audioChunks.push(e.data)};
+  mediaRecorder.onerror=()=>{stream.getTracks().forEach(t=>t.stop());mic.classList.remove("on");mic.textContent="🎙️";alert("هنگام ضبط صدا خطایی رخ داد.")};
+  mediaRecorder.onstop=async()=>{
+   stream.getTracks().forEach(t=>t.stop());
+   mic.classList.remove("on");mic.textContent="🎙️";mic.disabled=true;
+   const blob=new Blob(audioChunks,{type:mediaRecorder.mimeType||"audio/webm"});
+   if(!blob.size){mic.disabled=false;return}
+   const previous=mic.title;mic.title="در حال تبدیل صدا به متن…";status.textContent="● در حال تشخیص گفتار…";
+   try{
+    const lang=speechLanguage==="fa-IR"?"fa":"en";
+    const response=await fetch("/transcribe?language="+lang,{method:"POST",headers:{"Content-Type":blob.type||"audio/webm"},body:blob,signal:AbortSignal.timeout(40000)});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(data.error||"تبدیل صدا به متن ناموفق بود.");
+    if(!data.text)throw new Error("صدای واضحی تشخیص داده نشد؛ دوباره صحبت کن.");
+    input.value=data.text;await ask();
+   }catch(error){alert(error.name==="TimeoutError"||error.name==="AbortError"?"زمان پاسخ‌گویی تشخیص گفتار تمام شد. دوباره با یک پیام کوتاه امتحان کن.":(error.message||"تشخیص گفتار ناموفق بود."))}
+   finally{mic.disabled=false;mic.title=previous;status.textContent="● متصل"}
+  };
+  mediaRecorder.start();
+  mic.classList.add("on");mic.textContent="⏹️";mic.title="پایان ضبط و تبدیل گفتار";
+ }catch(error){
+  if(error.name==="NotAllowedError"||error.name==="PermissionDeniedError")alert("اجازهٔ استفاده از میکروفون داده نشده است. دسترسی میکروفون را برای این سایت فعال کن.");
+  else alert("میکروفون در دسترس نیست: "+error.message);
+ }
+}
+mic.onclick=()=>{
+ if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();
+ else startRecording();
+};
+const imageLab=document.getElementById("imageLab"),imagePrompt=document.getElementById("imagePrompt"),imageStatus=document.getElementById("imageStatus"),imagePreview=document.getElementById("imagePreview"),imageGenerate=document.getElementById("imageGenerate");
+document.getElementById("imageOpen").onclick=()=>{imageLab.classList.add("open");closeSidebar();imagePrompt.focus()};
+document.getElementById("imageClose").onclick=()=>imageLab.classList.remove("open");
+imageLab.addEventListener("click",e=>{if(e.target===imageLab)imageLab.classList.remove("open")});
+imageGenerate.onclick=async()=>{const prompt=imagePrompt.value.trim();if(!prompt){imageStatus.textContent="اول توضیح تصویر را بنویس.";return}imageGenerate.disabled=true;imageStatus.textContent="در حال ساخت تصویر...";imagePreview.textContent="⏳ لطفاً صبر کن";
+try{const response=await fetch("/api/image",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt,style:document.getElementById("imageStyle").value,ratio:document.getElementById("imageRatio").value}),signal:AbortSignal.timeout(100000)});const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"ساخت تصویر ناموفق بود.");const img=document.createElement("img");img.src=data.image;img.alt=prompt;imagePreview.replaceChildren(img);imageStatus.textContent="تصویر آماده شد! ✨"}catch(e){imagePreview.textContent="تصویر ساخته نشد.";imageStatus.textContent=e.message||"خطا در ساخت تصویر."}finally{imageGenerate.disabled=false}};
+health();
+if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
+</script></body></html>
