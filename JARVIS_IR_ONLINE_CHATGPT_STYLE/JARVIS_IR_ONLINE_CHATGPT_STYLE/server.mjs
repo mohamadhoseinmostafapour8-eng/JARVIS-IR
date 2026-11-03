@@ -86,11 +86,11 @@ app.post("/api/image", async (req, res) => {
   const prompt = typeof req.body?.prompt === "string" ? req.body.prompt.trim().slice(0,1800) : "";
   if (!prompt) return res.status(400).json({ok:false,error:"توضیح تصویر را بنویس."});
   const styles = {cinematic:"cinematic lighting, highly detailed",anime:"anime illustration, polished details",realistic:"photorealistic, natural lighting",fantasy:"epic fantasy concept art",comic:"comic-book illustration, bold ink lines","3d":"high-quality 3D render"};
-  const ratios = {square:[1024,1024],landscape:[1024,768],portrait:[768,1024]};
-  const [width,height] = ratios[req.body?.ratio] || ratios.square;
+  const compositions = {square:"balanced square composition",landscape:"wide landscape composition",portrait:"vertical portrait composition"};
+  const composition = compositions[req.body?.ratio] || compositions.square;
   const style = styles[req.body?.style] || styles.cinematic;
   try {
-    const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/@cf/black-forest-labs/flux-1-schnell`, {method:"POST",headers:{Authorization:`Bearer ${apiToken}`,"Content-Type":"application/json"},body:JSON.stringify({prompt:`${prompt}. Style: ${style}. No watermark.`,width,height,num_steps:4}),signal:AbortSignal.timeout(90000)});
+    const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/@cf/black-forest-labs/flux-1-schnell`, {method:"POST",headers:{Authorization:`Bearer ${apiToken}`,"Content-Type":"application/json"},body:JSON.stringify({prompt:`${prompt}. Style: ${style}. Composition: ${composition}. No watermark.`,steps:4}),signal:AbortSignal.timeout(90000)});
     const data = await response.json().catch(()=>({}));
     if (!response.ok || data.success === false) { console.error("JARVIS image API error:",response.status,data.errors||data); return res.status(502).json({ok:false,error:"سرویس تصویرساز پاسخ نداد؛ تنظیمات یا سهمیه را بررسی کن."}); }
     const image = data.result?.image;
