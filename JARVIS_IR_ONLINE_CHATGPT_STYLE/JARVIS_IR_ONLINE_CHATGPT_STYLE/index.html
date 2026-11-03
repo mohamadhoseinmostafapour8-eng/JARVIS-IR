@@ -33,6 +33,67 @@ button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;ba
 .lab-head{display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid #23425f}.lab-head strong{font-size:22px;color:#dff7ff}.lab-head button{background:#17283c;color:white;border:1px solid #365675;border-radius:10px;padding:8px 14px}
 .lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:22px}.lab-controls{display:flex;flex-direction:column;gap:12px}.lab-controls label{color:#ccecff;font-weight:700;font-size:13px}.lab-controls textarea,.lab-controls select{width:100%;padding:13px;border-radius:12px;border:1px solid #355675;background:#070d17;color:white;font:inherit}.lab-controls textarea{min-height:150px;resize:vertical}.lab-controls button{padding:14px;border:0;border-radius:13px;background:linear-gradient(100deg,#0ea5e9,#2563eb);color:white;font-weight:900;font:inherit}.lab-controls button:disabled{opacity:.5}.lab-preview{min-height:300px;border:1px dashed #426c91;border-radius:17px;background:#08101c;display:flex;align-items:center;justify-content:center;color:#a8c6df;text-align:center;overflow:hidden;padding:10px}.lab-preview img{max-width:100%;max-height:560px;border-radius:12px}.lab-status{color:#9fe7ff;font-size:13px;min-height:24px}
 @media(max-width:700px){.lab-grid{grid-template-columns:1fr;padding:14px}.image-lab{padding:7px}.lab-preview{min-height:230px}}
+
+/* MINMON-INSPIRED THEME */
+/* CAT THEME — unified premium interface for chat, image and worksheet tools */
+:root{color-scheme:dark;--bg:#070b1b;--panel:#101a33;--line:#293d68;--muted:#a9b9d8;--cyan:#62dcff;--blue:#397bff;--violet:#a56bff}
+body{background:radial-gradient(ellipse at 50% -12%,#173a78 0,transparent 48%),radial-gradient(circle at 90% 75%,#381d68aa,transparent 30%),#070b1b;color:#f4f7ff}
+body:before{opacity:.22;background-image:linear-gradient(#8db8ff12 1px,transparent 1px),linear-gradient(90deg,#8db8ff12 1px,transparent 1px)}
+.app{max-width:1180px}
+header{background:#080e20eF;border-bottom:1px solid #304675;box-shadow:0 10px 35px #0005;gap:16px}
+.brand{gap:12px;font-size:21px;letter-spacing:1.3px;color:#eaf5ff}
+.brand:before{content:"J";display:grid;place-items:center;width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#263d83,#171c45);border:1px solid #6e91ff;box-shadow:0 0 24px #527dff88,inset 0 0 14px #9e79ff44;color:#dff7ff;font-size:25px;font-weight:950}
+.brand-sub{display:block;font-size:10px;letter-spacing:0;color:#9db4df;font-weight:500;margin-top:2px}
+.header-actions{gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.header-actions button{height:39px;border-radius:13px;font-size:12px;padding:0 13px}
+.clear-chat{background:#121f3c;border-color:#344c7d;color:#d9e8ff}
+.worksheet-open{background:linear-gradient(110deg,#6237c9,#285cce)!important;border:1px solid #9c80ff!important;color:white!important;box-shadow:0 0 18px #744cff55}
+.image-open{background:linear-gradient(110deg,#174c91,#382c9d)!important;border:1px solid #5e9dff!important;color:white!important;box-shadow:0 0 18px #398cff55}
+.status{background:#102c36;border-color:#286277;color:#8ef0d1}
+.welcome{margin:8vh auto 42px;max-width:760px}
+.hero-cat{width:116px;height:116px;margin:0 auto 20px;display:grid;place-items:center;border-radius:34px;background:linear-gradient(145deg,#1d3470,#281b59);border:1px solid #718cff;box-shadow:0 0 55px #477dff66,inset 0 0 28px #9e79ff33;font-size:70px;animation:catGlow 4s ease-in-out infinite}
+@keyframes catGlow{50%{box-shadow:0 0 70px #477dff99,inset 0 0 32px #9e79ff55;transform:translateY(-3px)}}
+.welcome:before{content:"✦  JARVIS • YOUR SMART AI ASSISTANT";color:#8beaff;border-color:#3976b6;background:#10294dcc}
+.welcome h1{background:linear-gradient(100deg,#fff 15%,#8deaff 55%,#b59aff);color:transparent;background-clip:text}
+.welcome p{color:#adbfdf}
+.suggestion{background:linear-gradient(145deg,#121f3b,#11172e);border-color:#344b79;border-radius:18px;box-shadow:0 9px 25px #0003}
+.suggestion:hover{border-color:#65dfff;box-shadow:0 0 22px #438cff44}
+.messages{max-width:900px}
+.msg{box-shadow:0 10px 28px #0004;border-radius:20px}
+.user{background:linear-gradient(120deg,#2458a7,#3447a0);color:#fff;border-color:#648fff;border-bottom-left-radius:7px}
+.ai{background:linear-gradient(135deg,#182849,#24234d);color:#f2f5ff;border:1px solid #5369a3;border-bottom-right-radius:7px}
+.ai:before{content:"✦";display:inline-grid;place-items:center;width:27px;height:27px;margin-left:8px;border-radius:9px;background:#293d78;vertical-align:middle;font-size:17px}
+.composer{background:linear-gradient(transparent,#070b1b 24%);backdrop-filter:blur(14px)}
+.composer-inner{background:#111d38;border:1px solid #5572b5;border-radius:23px;box-shadow:0 12px 45px #0009,0 0 25px #367bff22}
+.composer-inner:focus-within{border-color:#65dfff;box-shadow:0 12px 45px #0009,0 0 0 3px #65dfff22}
+textarea{color:#f4f7ff}textarea::placeholder{color:#8297c2}
+button{background:#1b2d53;border-color:#3c568b;color:#edf5ff}
+.send{background:linear-gradient(135deg,#2376e8,#6944dc);border-color:#7d9fff;color:white}
+.voice-active{background:#123b55;border-color:#58dfff;color:#a7f2ff}
+.sidebar{background:#0d1730;border-color:#304675}
+.new-chat,.chat-item.active{background:#17294d;border-color:#4869a8}
+.worksheet-lab{background:radial-gradient(ellipse at 50% 0%,#263e8b 0%,#0b1530 55%,#070b1b 100%)}
+.worksheet-shell{background:linear-gradient(145deg,#111e3c,#0c142b);border-color:#5578c5;box-shadow:0 25px 90px #000b,0 0 50px #426fff33}
+.worksheet-head{border-color:#304675}.worksheet-head strong{color:#a8eaff}
+.worksheet-controls label{color:#c8d9ff}
+.worksheet-controls textarea,.worksheet-controls select{background:#0a1228;border-color:#3c568b;color:#f5f7ff}
+.worksheet-controls button{background:linear-gradient(100deg,#7043dd,#267be5);box-shadow:0 8px 24px #456cff55}
+.worksheet-result{box-shadow:0 12px 35px #0004}
+.image-lab{background:radial-gradient(ellipse at 50% 0%,#253e89 0%,#101333 48%,#070b1b 100%)}
+.lab-shell{background:linear-gradient(145deg,#111d3bfa,#0c1128fa);border-color:#5578c5;box-shadow:0 25px 110px #000d,0 0 65px #477cff33}
+.lab-head{background:linear-gradient(90deg,#1c2c5b,#11142e);border-color:#344b7b}
+.lab-head strong{background:linear-gradient(90deg,#fff,#8deaff,#b99cff);color:transparent;background-clip:text}
+.lab-head small,.lab-status{color:#a9caff}
+.lab-head button{background:#18284d;color:#dceaff;border-color:#5875b5}
+.lab-controls label{color:#cbdcff}
+.lab-controls textarea,.lab-controls select{background:#090f22;border-color:#405a92;color:#fff}
+.lab-controls textarea:focus,.lab-controls select:focus{border-color:#6bdfff;box-shadow:0 0 0 3px #4daaff22}
+.lab-controls button{background:linear-gradient(100deg,#287ee8,#6545d8);box-shadow:0 10px 30px #376dff55}
+.lab-preview{border-color:#536eb1;background:radial-gradient(circle at 50% 35%,#25366e,#0c1125 75%);color:#c8d9ff}
+.lab-note{color:#91a8d4}
+@media(max-width:600px){header{align-items:flex-start}.brand{font-size:17px}.brand:before{width:40px;height:40px;font-size:22px}.header-actions button{font-size:10px;padding:0 9px}}
+
+
 </style></head>
 <body>
 <div class="app">
