@@ -17,7 +17,7 @@ const VISION_MODEL = process.env.GROQ_VISION_MODEL || "qwen/qwen3.8-27b";
 const OWNER_CODE = process.env.JARVIS_OWNER_CODE;
 const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 
-const instructions = `You are JARVIS.IR, a helpful general-purpose AI assistant.
+const instructions = `You are JARVIS, a helpful general-purpose AI assistant.
 Use natural, clear Persian (Farsi) by default. Switch to English when the user explicitly asks or clearly starts entirely in English.
 Be friendly, respectful, accurate, and beginner-friendly. Explain difficult topics in simple steps.
 Help with science, mathematics, technology, programming, history, geography, education, writing, games, and general knowledge.
@@ -83,7 +83,7 @@ function sendApiError(res, error, fallback) {
 app.get("/health", (_req, res) => {
   res.json({
     ok: true,
-    service: "JARVIS.IR",
+    service: "JARVIS",
     aiConfigured: Boolean(GROQ_API_KEY),
     provider: "Groq",
     model: MODEL,
@@ -93,6 +93,7 @@ app.get("/health", (_req, res) => {
       webSearch: MODEL.startsWith("openai/gpt-oss"),
       imageAnalysis: true,
       worksheetBuilder: true,
+      teacherAssistant: true,
       speechToText: true
     }
   });
