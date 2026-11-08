@@ -374,40 +374,8 @@ textarea::placeholder{color:#ad9380}
 </section>
 <header><div class="brand"><span class="cat-mark" aria-hidden="true"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS energy core"><circle cx="50" cy="50" r="42" fill="#170d12" stroke="#e7a83e" stroke-width="4"/><circle cx="50" cy="50" r="32" fill="none" stroke="#d84b36" stroke-width="5" stroke-dasharray="12 5"/><circle cx="50" cy="50" r="22" fill="#25121a" stroke="#ffcf70" stroke-width="3"/><path d="M50 27 62 44 58 65 42 65 38 44Z" fill="#ffcc66" stroke="#fff0bd" stroke-width="2"/><circle cx="50" cy="50" r="8" fill="#fff2c4"/><path d="M50 4V15M50 85V96M4 50H15M85 50H96" stroke="#ffcf70" stroke-width="3" stroke-linecap="round"/></svg></span><span><b>JARVIS</b><small class="brand-sub">Your AI assistant</small></span></div><div class="header-actions"><button id="homeDashboard" class="clear-chat home-dashboard" type="button" title="بازگشت به صفحهٔ اصلی">⌂ خانه</button><button id="historyToggle" class="sidebar-toggle" type="button" title="Chat history">☰</button><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status" role="status" aria-live="polite">● Ready</div></div></header>
 <div id="sidebarShade" class="sidebar-shade"></div><aside id="historySidebar" class="sidebar" aria-label="Chat history"><div class="sidebar-head"><span>Previous chats</span><button id="closeHistory" type="button" aria-label="Close">×</button></div><button id="newChat" class="new-chat" type="button">＋ New chat</button><div id="chatList" class="chat-list"></div></aside>
-<main><section id="welcome" class="welcome"><div class="hero-cat" aria-hidden="true"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS energy core"><circle cx="50" cy="50" r="42" fill="#170d12" stroke="#e7a83e" stroke-width="4"/><circle cx="50" cy="50" r="32" fill="none" stroke="#d84b36" stroke-width="5" stroke-dasharray="12 5"/><circle cx="50" cy="50" r="22" fill="#25121a" stroke="#ffcf70" stroke-width="3"/><path d="M50 27 62 44 58 65 42 65 38 44Z" fill="#ffcc66" stroke="#fff0bd" stroke-width="2"/><circle cx="50" cy="50" r="8" fill="#fff2c4"/><path d="M50 4V15M50 85V96M4 50H15M85 50H96" stroke="#ffcf70" stroke-width="3" stroke-linecap="round"/></svg></div><h1>سلام! من جارویس هستم</h1><p>دستیار هوشمند تو برای یادگیری، برنامه‌نویسی، فناوری، علوم و ایده‌پردازی. از کجا شروع کنیم؟</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی در روبلاکس بده">🎮 ایده‌های بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را خیلی ساده توضیح بده">🧠 هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 دانستنی علمی</button></div></section><section id="messages" class="messages"></section></main><div id="imageLab" class="image-lab"><div class="lab-shell"><div class="lab-head"><div><strong>✦ JARVIS • Image Studio</strong><small>AI image creation studio • POWERED BY FLUX</small></div><button id="imageClose" type="button">×</button></div><div class="lab-grid"><div class="lab-controls"><label for="imagePrompt">✦ Turn your idea into an image</label><textarea id="imagePrompt" maxlength="1800" placeholder="e.g. A futuristic city at night, a starry sky, pink and purple neon lights, stunning architecture, cinematic composition..."></textarea><label for="imageStyle">Art style</label><select id="imageStyle"><option value="cinematic">🎬 Cinematic</option><option value="realistic">📷 Photorealistic</option><option value="anime">🌸 Anime</option><option value="fantasy">🪄 Fantasy</option><option value="comic">💥 Comic book</option><option value="3d">🧊 3D</option></select><label for="imageRatio">Aspect ratio</label><select id="imageRatio"><option value="square">Square 1:1</option><option value="landscape">Landscape 4:3</option><option value="portrait">Portrait 3:4</option></select><button id="imageGenerate" type="button">✧ Generate Image</button><div id="imageStatus" class="lab-status" aria-live="polite"></div><div class="lab-note">FLUX.1 schnell engine • Free Cloudflare usage is limited. Your image stays here until you close this window.</div></div><div id="imagePreview" class="lab-preview">✧<br>Your JARVIS magic happens here<br>Create an image and see the result!</div></div></div></div>
-<div id="worksheetLab" class="worksheet-lab"><div class="worksheet-shell"><div class="worksheet-head"><div><strong>🐱 JARVIS • AI Worksheet Builder</strong><div class="small">Create real, print-ready educational worksheets</div></div><button id="worksheetClose" type="button" aria-label="Close">×</button></div><div class="worksheet-body"><div class="worksheet-controls"><label for="worksheetPrompt">Worksheet topic or instructions</label><textarea id="worksheetPrompt" maxlength="4000" placeholder="e.g. Create a beginner-level English worksheet about colours and animals. Enter your instructions in English."></textarea><label for="worksheetLevel">Language level</label><select id="worksheetLevel"><option value="Pre-A1 starter">Pre-A1 — Starter</option><option value="A1.1 beginner">A1.1 — Beginner</option><option value="A1.2 beginner">A1.2 — Beginner</option><option value="A2.1 elementary">A2.1 — Elementary</option><option value="A2.2 elementary">A2.2 — Elementary</option><option value="B1.1 intermediate">B1.1 — Intermediate</option><option value="B1.2 intermediate">B1.2 — Intermediate</option><option value="B2.1 upper-intermediate">B2.1 — Upper-intermediate</option><option value="B2.2 upper-intermediate">B2.2 — Upper-intermediate</option><option value="C1 advanced">C1 — Advanced</option><option value="C2 proficiency">C2 — Proficiency</option><option value="Mixed CEFR levels">Mixed levels</option></select><label for="worksheetGrade">Grade or age group</label><select id="worksheetGrade"><option>Children</option><option>Teenagers</option><option>Adults</option><option>Grades 5–6</option><option>Grades 7–8</option><option>Grades 9–10</option></select><label for="worksheetFocus">Main exercise type</label><select id="worksheetFocus"><option>Mixed: vocabulary, grammar, reading and writing</option><option>Grammar and sentence structure</option><option>Vocabulary and spelling</option><option>Speaking and everyday situations</option><option>Reading comprehension</option><option>Test and lesson review</option></select><button id="worksheetCreate" type="button">Create Professional Worksheet</button><div id="worksheetStatus" class="worksheet-status" aria-live="polite">Questions are written by AI and displayed in a properly formatted worksheet—not generated as an image.</div></div><div id="worksheetResult" class="worksheet-result">Your worksheet preview will appear here.</div></div></div></div>
-<div id="teacherLab" class="teacher-lab"><div class="teacher-shell">
- <div class="teacher-head"><div><strong>🎓 JARVIS · TEACHER STUDIO</strong><div class="small">Your all-in-one English teaching workspace</div></div><button id="teacherClose" type="button" aria-label="Close">×</button></div>
- <nav class="teacher-tabs"><button type="button" data-teacher-tab="classes" class="active">🏫 Classes & Students</button><button type="button" data-teacher-tab="attendance">✓ Attendance</button><button type="button" data-teacher-tab="planner">📚 Lesson Planner</button><button type="button" data-teacher-tab="homework">📝 Homework</button><button type="button" data-teacher-tab="questions">✨ Question Lab</button><button type="button" data-teacher-tab="reports">✉ Parent Reports</button></nav>
- <div class="teacher-content">
-  <section class="teacher-pane active" data-teacher-pane="classes"><div class="teacher-grid">
-   <div class="teacher-card"><h3>Create a Class</h3><label>Class Name</label><input id="tcName" placeholder="e.g. Family and Friends 3"><label>Schedule</label><input id="tcSchedule" placeholder="e.g. Mon & Wed, 5:00 PM"><label>Coursebook / Level</label><input id="tcBook" placeholder="e.g. Family and Friends 3"><label>Current Unit / Lesson</label><input id="tcLesson" placeholder="e.g. Unit 2 · Lesson 1"><button id="tcSave">Save Class</button></div>
-   <div class="teacher-card"><h3>Add a Student</h3><label>Student Name</label><input id="tsName" placeholder="Student first name"><label>Class</label><select id="tsClass"></select><button id="tsSave">Add Student</button><div class="teacher-hint">Class and student records are saved in this browser only. They are not synced across devices yet.</div></div>
-  </div><div class="teacher-grid" style="margin-top:14px"><div class="teacher-card"><h3>Your Classes</h3><div id="tcList" class="teacher-list"></div></div><div class="teacher-card"><h3>Your Students</h3><div id="tsList" class="teacher-list"></div></div></div></section>
-  <section class="teacher-pane" data-teacher-pane="attendance"><div class="teacher-card"><h3>Take Attendance</h3><label>Select a class</label><select id="taClass"></select><label>Lesson Date</label><input id="taDate" type="date"><div id="taStudents" class="teacher-attendance"></div><button id="taSave">Save Attendance</button><div id="taStatus" class="teacher-hint"></div></div></section>
-  <section class="teacher-pane" data-teacher-pane="planner"><div class="teacher-grid"><div class="teacher-card"><h3>Build a Lesson Plan</h3><label>Class</label><select id="tpClass"></select><label>Lesson Topic</label><input id="tpTopic" placeholder="e.g. Present Simple · Daily Routines"><label>Lesson Length (minutes)</label><select id="tpDuration"><option>45</option><option selected>60</option><option>75</option><option>90</option></select><label>Learning Goals & Notes</label><textarea id="tpGoals" placeholder="Review, vocabulary practice, group game, speaking…"></textarea><button id="tpGenerate">Generate Lesson Plan</button></div><div class="teacher-card"><h3>Your Lesson Plan</h3><div id="tpOutput" class="teacher-output">Your lesson plan will appear here.</div><button id="tpCopy">Copy Plan</button></div></div></section>
-  
-  <section class="teacher-pane" data-teacher-pane="homework"><div class="teacher-grid"><div class="teacher-card"><h3>Create English Homework</h3><label>Class</label><select id="thClass"></select><label>Topic / Language Focus</label><input id="thTopic" placeholder="e.g. There is / There are · Food"><label>Homework Type</label><select id="thType"><option>Mixed practice with answer key</option><option>Grammar practice</option><option>Vocabulary and spelling</option><option>Reading comprehension</option><option>Writing and sentence building</option><option>Speaking and conversation</option><option>Creative at-home activity</option></select><label>Instructions & Requirements</label><textarea id="thNotes" placeholder="e.g. 10 minutes, beginner level, no printing."></textarea><button id="thGenerate">Generate Homework + Answer Key</button><hr><h3>📎 Check Submitted Homework</h3><p class="teacher-hint">Upload homework as PDF, DOCX, TXT, MD, CSV or a photo (JPG, PNG, WEBP). JARVIS extracts the answers and reviews them. Scanned PDFs and photos are read with English OCR.</p><label for="thReviewTask">Original Homework / Answer Key (optional)</label><textarea id="thReviewTask" placeholder="Paste the original homework, expected answers or marking criteria here."></textarea><label for="thReviewFile">Student Submission File</label><input id="thReviewFile" type="file" accept=".pdf,.docx,.txt,.md,.csv,.jpg,.jpeg,.png,.webp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/markdown,text/csv,image/jpeg,image/png,image/webp"><label for="thReviewLevel">Learner Level</label><select id="thReviewLevel"><option>Pre-A1 — Starter</option><option>A1.1 — Beginner</option><option>A1.2 — Beginner</option><option>A2.1 — Elementary</option><option>A2.2 — Elementary</option><option>B1.1 — Intermediate</option><option>B1.2 — Intermediate</option><option>B2.1 — Upper-intermediate</option><option>B2.2 — Upper-intermediate</option><option>C1 — Advanced</option><option>C2 — Proficiency</option></select><label for="thReviewNotes">Teacher Notes (optional)</label><textarea id="thReviewNotes" placeholder="Focus on grammar, vocabulary, spelling, writing criteria..."></textarea><button id="thReviewBtn" type="button">Review Student File</button><div id="thReviewOutput" class="teacher-output">Upload a student file to begin the review.</div><button id="thReviewCopy" type="button">Copy Review</button></div><div class="teacher-card"><h3>Homework Preview</h3><div id="thOutput" class="teacher-output">Your homework and answer key will appear here.</div><button id="thCopy">Copy Homework</button></div></div></section>
-  <section class="teacher-pane" data-teacher-pane="questions">
-   <div class="teacher-question-hero"><div class="teacher-kicker">ASSESSMENT DESIGN WORKSPACE</div><h2>✨ Professional English Question Lab</h2><p>Create accurate, level-aligned English assessments with carefully checked questions, plausible distractors and a complete answer key.</p><div class="teacher-question-pills"><span>CEFR aligned</span><span>One clear answer</span><span>Teacher-ready output</span><span>English voice input 🎙</span></div></div>
-   <div class="teacher-grid teacher-question-grid">
-    <div class="teacher-card"><h3>🎯 Assessment Brief</h3>
-     <label for="qClass">Class</label><select id="qClass"></select>
-     <label for="qLevel">CEFR Level</label><select id="qLevel"><option>Pre-A1 — Starter</option><option>A1.1 — Beginner</option><option>A1.2 — Beginner</option><option>A2.1 — Elementary</option><option>A2.2 — Elementary</option><option selected>B1.1 — Intermediate</option><option>B1.2 — Intermediate</option><option>B2.1 — Upper-intermediate</option><option>B2.2 — Upper-intermediate</option><option>C1 — Advanced</option><option>C2 — Proficiency</option><option>Mixed / Not specified</option></select>
-     <label for="qAge">Learner Group</label><select id="qAge"><option>Young learners (6–9)</option><option selected>Pre-teens (10–12)</option><option>Teenagers (13–17)</option><option>Adults (18+)</option></select>
-     <label for="qType">Question Format</label><select id="qType"><option>Mixed assessment</option><option>Multiple choice (4 options)</option><option>Gap-fill / Cloze</option><option>Error correction</option><option>Sentence transformation</option><option>Matching</option><option>Reading comprehension</option><option>Vocabulary in context</option><option>Grammar in context</option><option>Writing prompts</option><option>Speaking prompts</option></select>
-     <label for="qCount">Number of Questions</label><select id="qCount"><option>5</option><option>10</option><option selected>15</option><option>20</option><option>25</option><option>30</option></select>
-     <label for="qFocus">Skill / Language Focus</label><select id="qFocus"><option>Grammar</option><option>Vocabulary</option><option>Reading</option><option>Listening transcript questions</option><option>Writing</option><option>Speaking</option><option>Use of English</option><option>Integrated skills</option></select>
-     <label for="qTopic">Topic, Unit or Target Language</label><textarea id="qTopic" placeholder="e.g. Present simple, daily routines, Unit 4 vocabulary…"></textarea>
-     <label for="qSource">Reading Text / Source Material (optional)</label><textarea id="qSource" placeholder="Paste a passage or source text here. Reading questions must be based only on this text."></textarea>
-     <label for="qInstructions">Teacher Requirements</label><textarea id="qInstructions" placeholder="e.g. Avoid tricky questions; include real-life contexts; use British English…"></textarea>
-     <button id="qGenerate" class="teacher-action" type="button">✦ Generate & Quality-Check Questions</button><div id="qStatus" class="teacher-hint" aria-live="polite">The AI will draft, review and check every item before presenting the assessment.</div>
-    </div>
-    <div class="teacher-card teacher-question-preview"><div class="teacher-output-head"><h3>📋 Assessment Preview</h3><span class="teacher-live-dot">● READY</span></div><div id="qOutput" class="teacher-output">Your questions, instructions and answer key will appear here.</div><button id="qCopy" class="teacher-action" type="button">Copy Assessment</button></div>
-   </div>
-  </section>
-  <section class="teacher-pane" data-teacher-pane="reports"><div class="teacher-grid"><div class="teacher-card"><h3>Create a Parent Report</h3><label>Class</label><select id="trClass"></select><label>Lesson Date</label><input id="trDate" type="date"><label>Lesson Content & Activities</label><textarea id="trContent" placeholder="What was taught? Which activities did learners complete?"></textarea><label>Homework for Next Lesson</label><textarea id="trHomework" placeholder="Describe the homework clearly."></textarea><button id="trGenerate">Generate Parent Report</button></div><div class="teacher-card"><h3>Ready-to-Send Report</h3><div id="trOutput" class="teacher-output">Your parent report will appear here.</div><button id="trCopy">Copy Report</button></div></div></section>
- </div></div></div><div class="composer"><div id="attachmentBar" class="attachment-bar" hidden><img id="attachmentThumb" alt="Selected image preview"><span id="attachmentName"></span><button id="removeAttachment" type="button" title="Remove attachment">×</button></div><div class="composer-inner"><button id="attach" type="button" title="Attach an image">📎</button><input id="attachmentInput" type="file" accept="image/*" hidden><button id="mic" title="Start speaking">🎙️</button><select id="speechLangSelect" aria-label="Speech input language" title="Choose microphone language" class="speech-language-select"><option value="en-US">🎙 English</option><option value="fa-IR" selected>🎙 فارسی</option><option value="auto">🌐 Auto detect</option></select><button id="voiceToggle" class="voice-active" title="Turn reply audio off">🔊</button><textarea id="input" rows="1" placeholder="پیامت را اینجا بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • Speech recognition powered by the server</div></div>
+<main><section id="welcome" class="welcome"><div class="hero-cat" aria-hidden="true"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS energy core"><circle cx="50" cy="50" r="42" fill="#170d12" stroke="#e7a83e" stroke-width="4"/><circle cx="50" cy="50" r="32" fill="none" stroke="#d84b36" stroke-width="5" stroke-dasharray="12 5"/><circle cx="50" cy="50" r="22" fill="#25121a" stroke="#ffcf70" stroke-width="3"/><path d="M50 27 62 44 58 65 42 65 38 44Z" fill="#ffcc66" stroke="#fff0bd" stroke-width="2"/><circle cx="50" cy="50" r="8" fill="#fff2c4"/><path d="M50 4V15M50 85V96M4 50H15M85 50H96" stroke="#ffcf70" stroke-width="3" stroke-linecap="round"/></svg></div><h1>سلام! من جارویس هستم</h1><p>دستیار هوشمند تو برای یادگیری، برنامه‌نویسی، فناوری، علوم و ایده‌پردازی. از کجا شروع کنیم؟</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی در روبلاکس بده">🎮 ایده‌های بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را خیلی ساده توضیح بده">🧠 هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 دانستنی علمی</button></div></section><section id="messages" class="messages"></section></main><div id="worksheetLab" class="worksheet-lab"><div class="worksheet-shell"><div class="worksheet-head"><div><strong>🐱 JARVIS • AI Worksheet Builder</strong><div class="small">Create real, print-ready educational worksheets</div></div><button id="worksheetClose" type="button" aria-label="Close">×</button></div><div class="worksheet-body"><div class="worksheet-controls"><label for="worksheetPrompt">Worksheet topic or instructions</label><textarea id="worksheetPrompt" maxlength="4000" placeholder="e.g. Create a beginner-level English worksheet about colours and animals. Enter your instructions in English."></textarea><label for="worksheetLevel">Language level</label><select id="worksheetLevel"><option value="Pre-A1 starter">Pre-A1 — Starter</option><option value="A1.1 beginner">A1.1 — Beginner</option><option value="A1.2 beginner">A1.2 — Beginner</option><option value="A2.1 elementary">A2.1 — Elementary</option><option value="A2.2 elementary">A2.2 — Elementary</option><option value="B1.1 intermediate">B1.1 — Intermediate</option><option value="B1.2 intermediate">B1.2 — Intermediate</option><option value="B2.1 upper-intermediate">B2.1 — Upper-intermediate</option><option value="B2.2 upper-intermediate">B2.2 — Upper-intermediate</option><option value="C1 advanced">C1 — Advanced</option><option value="C2 proficiency">C2 — Proficiency</option><option value="Mixed CEFR levels">Mixed levels</option></select><label for="worksheetGrade">Grade or age group</label><select id="worksheetGrade"><option>Children</option><option>Teenagers</option><option>Adults</option><option>Grades 5–6</option><option>Grades 7–8</option><option>Grades 9–10</option></select><label for="worksheetFocus">Main exercise type</label><select id="worksheetFocus"><option>Mixed: vocabulary, grammar, reading and writing</option><option>Grammar and sentence structure</option><option>Vocabulary and spelling</option><option>Speaking and everyday situations</option><option>Reading comprehension</option><option>Test and lesson review</option></select><button id="worksheetCreate" type="button">Create Professional Worksheet</button><div id="worksheetStatus" class="worksheet-status" aria-live="polite">Questions are written by AI and displayed in a properly formatted worksheet—not generated as an image.</div></div><div id="worksheetResult" class="worksheet-result">Your worksheet preview will appear here.</div></div></div></div>
+<div class="composer"><div id="attachmentBar" class="attachment-bar" hidden><img id="attachmentThumb" alt="Selected image preview"><span id="attachmentName"></span><button id="removeAttachment" type="button" title="Remove attachment">×</button></div><div class="composer-inner"><button id="attach" type="button" title="Attach an image">📎</button><input id="attachmentInput" type="file" accept="image/*" hidden><button id="mic" title="Start speaking">🎙️</button><select id="speechLangSelect" aria-label="Speech input language" title="Choose microphone language" class="speech-language-select"><option value="en-US">🎙 English</option><option value="fa-IR" selected>🎙 فارسی</option><option value="auto">🌐 Auto detect</option></select><button id="voiceToggle" class="voice-active" title="Turn reply audio off">🔊</button><textarea id="input" rows="1" placeholder="پیامت را اینجا بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • Speech recognition powered by the server</div></div>
 </div>
 <script>
 const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic"), voiceToggle=$("voiceToggle"), speechLangSelect=$("speechLangSelect");
@@ -698,22 +666,6 @@ mic.onclick=()=>{
  if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();
  else startRecording();
 };
-const imageLab=document.getElementById("imageLab"),imagePrompt=document.getElementById("imagePrompt"),imageStatus=document.getElementById("imageStatus"),imagePreview=document.getElementById("imagePreview"),imageGenerate=document.getElementById("imageGenerate");
-document.getElementById("imageOpen").onclick=()=>{imageLab.classList.add("open");closeSidebar();imagePrompt.focus()};
-document.getElementById("imageClose").onclick=()=>imageLab.classList.remove("open");
-imageLab.addEventListener("click",e=>{if(e.target===imageLab)imageLab.classList.remove("open")});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")imageLab.classList.remove("open")});
-async function createImage(prompt,style,ratio){
- const response=await fetch("/api/image",{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({prompt,style,ratio}),
-  signal:AbortSignal.timeout(125000)
- });
- const data=await response.json().catch(()=>({}));
- if(!response.ok||!data.ok||typeof data.image!=="string")throw new Error(data.error||"Image generation failed.");
- return data.image;
-}
 const worksheetLab=$("worksheetLab"),worksheetPrompt=$("worksheetPrompt"),worksheetStatus=$("worksheetStatus"),worksheetResult=$("worksheetResult"),worksheetCreate=$("worksheetCreate");
 $("worksheetOpen").onclick=()=>{worksheetLab.classList.add("open");closeSidebar();worksheetPrompt.focus()};
 $("worksheetClose").onclick=()=>worksheetLab.classList.remove("open");
@@ -729,245 +681,6 @@ async function generateWorksheet(){
  finally{worksheetCreate.disabled=false;worksheetCreate.textContent="Create Professional Worksheet"}
 }
 worksheetCreate.onclick=generateWorksheet;
-imageGenerate.onclick=async()=>{
- const prompt=imagePrompt.value.trim();
- if(!prompt){imageStatus.textContent="Please describe the image you want to create.";imagePrompt.focus();return}
- imageGenerate.disabled=true;
- imageGenerate.textContent="Generating image…";
- imageStatus.textContent="Step 1 of 2: Understanding your prompt…";
- imagePreview.textContent="✧ Your prompt will be processed first, then your image will be generated.";
- try{
-  const image=await createImage(prompt,document.getElementById("imageStyle").value,document.getElementById("imageRatio").value);
-  const img=document.createElement("img");
-  img.src=image;img.alt=prompt;img.loading="eager";
-  img.style.cssText="display:block;max-width:100%;max-height:620px;width:auto;height:auto;object-fit:contain;border-radius:12px;margin:auto";
-  const download=document.createElement("a");
-  download.href=image;download.download="JARVIS-image.png";download.textContent="⬇ Download image";
-  download.style.cssText="display:inline-block;margin:12px auto 0;padding:9px 16px;border-radius:9px;background:#0e7490;color:white;text-decoration:none;font-weight:700";
-  const result=document.createElement("div");
-  result.style.cssText="display:flex;flex-direction:column;align-items:center;width:100%";
-  result.append(img,download);imagePreview.replaceChildren(result);
-  imageStatus.textContent="Image generated successfully. You can download it now.";
- }catch(error){
-  imagePreview.textContent="No image was generated.";
-  imageStatus.textContent=error.message||"An unknown error occurred while generating the image.";
- }finally{
-  imageGenerate.disabled=false;
-  imageGenerate.textContent="✧ Generate Image";
- }
-};
-
-/* Teacher dashboard: local class records + AI-generated teaching materials */
-(()=>{
- const $t=id=>document.getElementById(id), lab=$t("teacherLab");
- if(!lab)return;
- const KEY="jarvis_teacher_workspace_v1";
- let db={classes:[],students:[],attendance:[]};
- try{const saved=JSON.parse(localStorage.getItem(KEY)||"null");if(saved&&typeof saved==="object")db={...db,...saved}}catch{}
- const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(db))}catch{alert("Not enough browser storage is available.")}};
- const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
- const className=id=>db.classes.find(x=>x.id===id)?.name||"Deleted class";
- const fillSelect=(id,placeholder)=>{const el=$t(id),old=el.value;el.replaceChildren(new Option(placeholder,""));db.classes.forEach(c=>el.add(new Option(c.name,c.id)));if(db.classes.some(c=>c.id===old))el.value=old};
- function render(){
-  $t("tcList").innerHTML=db.classes.length?db.classes.map(c=>'<div class="teacher-row"><span><b>'+esc(c.name)+'</b><br><small>'+esc([c.schedule,c.book,c.lesson].filter(Boolean).join(" • "))+'</small></span><button data-del-class="'+c.id+'">Delete</button></div>').join(""):'<div class="teacher-hint">No classes have been added yet.</div>';
-  $t("tsList").innerHTML=db.students.length?db.students.map(s=>'<div class="teacher-row"><span>'+esc(s.name)+' <small>— '+esc(className(s.classId))+'</small></span><button data-del-student="'+s.id+'">Delete</button></div>').join(""):'<div class="teacher-hint">No students have been added yet.</div>';
-  ["tsClass","taClass","tpClass","trClass","thClass","qClass"].forEach(id=>fillSelect(id,"Select a class"));
-  renderAttendance();
- }
- function renderAttendance(){
-  const cid=$t("taClass").value, host=$t("taStudents"), people=db.students.filter(s=>s.classId===cid);
-  host.innerHTML=people.length?people.map(s=>'<label><input type="checkbox" data-att="'+s.id+'" checked> '+esc(s.name)+'</label>').join(""):'<div class="teacher-hint">No students are registered in this class yet.</div>';
- }
- $t("teacherOpen").onclick=()=>{lab.classList.add("open");render()};
- const closeTeacherAndReturnHome=()=>{lab.classList.remove("open");document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.add("dashboard-mode");window.scrollTo({top:0,behavior:"smooth"});};
- $t("teacherClose").onclick=closeTeacherAndReturnHome;
- lab.addEventListener("click",e=>{if(e.target===lab)closeTeacherAndReturnHome()});
- lab.querySelectorAll("[data-teacher-tab]").forEach(b=>b.onclick=()=>{lab.querySelectorAll("[data-teacher-tab]").forEach(x=>x.classList.toggle("active",x===b));lab.querySelectorAll("[data-teacher-pane]").forEach(x=>x.classList.toggle("active",x.dataset.teacherPane===b.dataset.teacherTab));if(b.dataset.teacherTab==="attendance")renderAttendance()});
-
- // English voice dictation buttons for teacher inputs and text areas.
- const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
- lab.querySelectorAll(".teacher-card textarea,.teacher-card input:not([type=date])").forEach((field)=>{
-   if(field.dataset.voiceReady)return;field.dataset.voiceReady="1";
-   const parent=field.parentNode;
-   const row=document.createElement("div");row.className="teacher-mic-row";parent.insertBefore(row,field);row.appendChild(field);
-   const button=document.createElement("button");button.type="button";button.className="teacher-mic";button.title="Dictate using the selected language";button.setAttribute("aria-label","Start voice dictation");button.textContent="🎙";row.appendChild(button);
-   const status=document.createElement("div");status.className="teacher-mic-status";parent.insertBefore(status,row.nextSibling);
-   if(!SpeechRecognition){
-     if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){button.disabled=true;button.title="This browser does not support microphone recording";button.style.opacity=".4";status.textContent="Microphone recording is not supported in this browser.";return}
-     let recorder=null,stream=null,chunks=[];
-     button.onclick=async()=>{
-      if(recorder&&recorder.state==="recording"){recorder.stop();button.textContent="…";button.classList.remove("listening");status.textContent="Processing voice recording…";return}
-      try{
-       status.textContent="Requesting microphone permission…";
-       stream=await navigator.mediaDevices.getUserMedia({audio:true});
-       const mimeType=MediaRecorder.isTypeSupported("audio/webm;codecs=opus")?"audio/webm;codecs=opus":undefined;
-       recorder=new MediaRecorder(stream,mimeType?{mimeType}:{});
-       chunks=[];
-       recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
-       recorder.onerror=()=>{status.textContent="Recording failed. Please try again.";stream?.getTracks().forEach(t=>t.stop());button.textContent="🎙";button.classList.remove("listening")};
-       recorder.onstop=async()=>{
-        stream?.getTracks().forEach(t=>t.stop());
-        const blob=new Blob(chunks,{type:recorder.mimeType||"audio/webm"});
-        if(!blob.size){status.textContent="No audio was recorded.";button.textContent="🎙";return}
-        try{
-         const selectedLang=speechLanguage==="fa-IR"?"fa":speechLanguage==="en-US"?"en":"auto";
-         const response=await fetch("/transcribe?language="+selectedLang,{method:"POST",headers:{"Content-Type":blob.type},body:blob,signal:AbortSignal.timeout(65000)});
-         const data=await response.json().catch(()=>({}));
-         if(!response.ok||!data.ok||!data.text)throw new Error(data.error||"English transcription failed.");
-         field.value=(field.value.trim()?field.value.trim()+" ":"")+data.text;
-         field.dispatchEvent(new Event("input",{bubbles:true}));
-         status.textContent="English voice text added. You can edit it.";
-        }catch(error){status.textContent=error.message||"Could not transcribe the recording."}
-        finally{button.textContent="🎙";button.classList.remove("listening")}
-       };
-       recorder.start();button.textContent="■";button.classList.add("listening");status.textContent="Recording… Tap ■ to finish.";
-      }catch(error){status.textContent=error.name==="NotAllowedError"?"Microphone permission was denied. Allow microphone access in your browser.":(error.message||"Could not access the microphone.");button.textContent="🎙"}
-     };
-     status.textContent="Choose a language above, then tap 🎙 to record.";
-     return;
-   }
-   let recognition=null,listening=false;
-   button.onclick=()=>{
-    if(listening){recognition?.stop();return}
-    recognition=new SpeechRecognition();recognition.lang=speechLanguage==="auto"?"en-US":speechLanguage;recognition.interimResults=true;recognition.continuous=true;
-    let finalText="";
-    recognition.onstart=()=>{listening=true;button.classList.add("listening");button.textContent="■";status.textContent="Listening in English…"};
-    recognition.onresult=e=>{let interim="";for(let i=e.resultIndex;i<e.results.length;i++){const part=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=part+" ";else interim+=part}field.value=(field.value.trim()?field.value.trim()+" ":"")+finalText+interim;field.dispatchEvent(new Event("input",{bubbles:true}))};
-    recognition.onerror=e=>{status.textContent=e.error==="not-allowed"?"Microphone permission was denied.":"Voice input error: "+e.error};
-    recognition.onend=()=>{listening=false;button.classList.remove("listening");button.textContent="🎙";if(finalText.trim())status.textContent="Voice text added. You can edit it.";else if(!status.textContent.startsWith("Microphone"))status.textContent="Tap the microphone to dictate in English."};
-    try{recognition.start()}catch(e){status.textContent="Could not start microphone. Try again."}
-   };
-   status.textContent="Choose a language above, then tap 🎙 to dictate.";
- });
-
- $t("tcSave").onclick=()=>{const name=$t("tcName").value.trim();if(!name){alert("Class Name Please enter a value.");return}db.classes.push({id:crypto.randomUUID?.()||String(Date.now()),name,schedule:$t("tcSchedule").value.trim(),book:$t("tcBook").value.trim(),lesson:$t("tcLesson").value.trim()});["tcName","tcSchedule","tcBook","tcLesson"].forEach(id=>$t(id).value="");persist();render()};
- $t("tsSave").onclick=()=>{const name=$t("tsName").value.trim(),classId=$t("tsClass").value;if(!name||!classId){alert("Enter the student name and select a class.");return}db.students.push({id:crypto.randomUUID?.()||String(Date.now()),name,classId});$t("tsName").value="";persist();render()};
- $t("tcList").onclick=e=>{const b=e.target.closest("[data-del-class]");if(!b)return;if(!confirm("Delete this class and its student associations?"))return;db.classes=db.classes.filter(c=>c.id!==b.dataset.delClass);db.students=db.students.filter(s=>s.classId!==b.dataset.delClass);persist();render()};
- $t("tsList").onclick=e=>{const b=e.target.closest("[data-del-student]");if(!b)return;db.students=db.students.filter(s=>s.id!==b.dataset.delStudent);persist();render()};
- $t("taClass").onchange=renderAttendance;
- $t("taSave").onclick=()=>{const classId=$t("taClass").value,date=$t("taDate").value||new Date().toISOString().slice(0,10);if(!classId){alert("Please select a class first.");return}const present=[...lab.querySelectorAll("[data-att]:checked")].map(x=>x.dataset.att);const record={classId,date,present,studentIds:db.students.filter(s=>s.classId===classId).map(s=>s.id),savedAt:Date.now()};db.attendance=db.attendance.filter(x=>!(x.classId===classId&&x.date===date));db.attendance.push(record);persist();$t("taStatus").textContent="Attendance saved: "+present.length+" students present out of "+record.studentIds.length+" students."};
- async function generate(prompt,button,output,success){
-  if(!prompt.trim()){alert("Please enter the required information.");return}
-  const old=button.textContent;button.disabled=true;button.textContent="Preparing…";output.textContent="AI is preparing your teaching material…";
-  try{const r=await fetch("/api/teacher-assist",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt}),signal:AbortSignal.timeout(70000)});const d=await r.json().catch(()=>({}));if(!r.ok||!d.ok)throw new Error(d.error||"The request could not be completed.");output.textContent=d.text;success?.()}catch(e){output.textContent=e.message||"Error generating content."}finally{button.disabled=false;button.textContent=old}
- }
- $t("tpGenerate").onclick=()=>{
-  const c=db.classes.find(x=>x.id===$t("tpClass").value);
-  const prompt="Act as an experienced English language teaching specialist. Create a practical, well-structured lesson plan in English. Class name: "+(c?.name||"Not specified")+"; Coursebook / level: "+(c?.book||"Not specified")+"; Current unit / lesson: "+(c?.lesson||"Not specified")+"; Topic: "+$t("tpTopic").value+"; Duration: "+$t("tpDuration").value+" minutes; Objectives and notes: "+$t("tpGoals").value+". Ensure the total timing matches the lesson duration exactly. Include each activity’s objective, materials, sample English language, and a way to check learning. Make activities practical for a real class and appropriate for the learners’ age and level.";
-  generate(prompt,$t("tpGenerate"),$t("tpOutput"));
- };
-
- const loadHomeworkScript=(src,globalName)=>new Promise((resolve,reject)=>{
-  if(window[globalName]){resolve(window[globalName]);return}
-  const existing=document.querySelector('script[data-homework-lib="'+globalName+'"]');
-  if(existing){existing.addEventListener("load",()=>resolve(window[globalName]),{once:true});existing.addEventListener("error",()=>reject(new Error("Could not load the "+globalName+" document reader.")),{once:true});return}
-  const script=document.createElement("script");script.src=src;script.async=true;script.dataset.homeworkLib=globalName;
-  script.onload=()=>window[globalName]?resolve(window[globalName]):reject(new Error("The "+globalName+" reader did not initialise."));
-  script.onerror=()=>reject(new Error("Could not load the "+globalName+" reader. Check your internet connection and try again."));
-  document.head.appendChild(script);
- });
- const extractHomeworkText=async(file,progress)=>{
-  const name=file.name.toLowerCase(),maxChars=25000;
-  if(/[.](txt|md|csv)$/i.test(name))return (await file.text()).slice(0,maxChars);
-  if(/[.]docx$/i.test(name)){
-   const mammoth=await loadHomeworkScript("https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.9.0/mammoth.browser.min.js","mammoth");
-   const result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});return String(result.value||"").slice(0,maxChars);
-  }
-  const runOcr=async(source,label)=>{
-   const Tesseract=await loadHomeworkScript("https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js","Tesseract");
-   progress("Reading "+label+" with English OCR…");
-   const result=await Tesseract.recognize(source,"eng",{logger:m=>{if(m.status==="recognizing text")progress("Reading "+label+" with English OCR… "+Math.round((m.progress||0)*100)+"%")}});
-   return result.data?.text||"";
-  };
-  if(/[.](jpg|jpeg|png|webp)$/i.test(name)||file.type.startsWith("image/"))return (await runOcr(file,"photo")).slice(0,maxChars);
-  if(/[.]pdf$/i.test(name)||file.type==="application/pdf"){
-   const pdfjs=await loadHomeworkScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js","pdfjsLib");
-   pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-   const pdf=await pdfjs.getDocument({data:await file.arrayBuffer()}).promise;
-   if(pdf.numPages>30)throw new Error("This PDF has more than 30 pages. Please upload a shorter file.");
-   let pages=[],total="";
-   for(let n=1;n<=pdf.numPages;n++){
-    progress("Extracting PDF text — page "+n+" of "+pdf.numPages+"…");
-    const page=await pdf.getPage(n),content=await page.getTextContent();
-    let text=content.items.map(item=>item.str||"").join(" ");
-    if(text.trim().length<25&&n<=8){
-     const viewport=page.getViewport({scale:1.5}),canvas=document.createElement("canvas"),ctx=canvas.getContext("2d");
-     canvas.width=viewport.width;canvas.height=viewport.height;
-     await page.render({canvasContext:ctx,viewport}).promise;
-     text=await runOcr(canvas,"PDF page "+n);
-     canvas.width=canvas.height=1;
-    }
-    if(text.trim())pages.push("[Page "+n+"]\n"+text.trim());
-    total=pages.join("\n\n");if(total.length>=maxChars)break;
-   }
-   return total.slice(0,maxChars);
-  }
-  throw new Error("Unsupported file type. Please use PDF, DOCX, TXT, MD, CSV, JPG, PNG or WEBP.");
- };
- $t("thReviewBtn").onclick=async()=>{
-  const file=$t("thReviewFile").files?.[0],output=$t("thReviewOutput"),button=$t("thReviewBtn");
-  if(!file){output.textContent="Please choose a student submission file first.";return}
-  if(file.size>10*1024*1024){output.textContent="This file is larger than 10 MB. Please choose a smaller file.";return}
-  const supported=/[.](pdf|docx|txt|md|csv|jpg|jpeg|png|webp)$/i.test(file.name);
-  if(!supported){output.textContent="Unsupported file type. Use PDF, DOCX, TXT, MD, CSV, JPG, PNG or WEBP.";return}
-  const original=button.textContent;button.disabled=true;button.textContent="Reading file…";output.textContent="Preparing your student's submission…";
-  try{
-   const content=await extractHomeworkText(file,message=>{output.textContent=message});
-   if(!content.trim())throw new Error("No readable text was found. Check that the file contains text or a clear English photo.");
-   const task=$t("thReviewTask").value.trim(),notes=$t("thReviewNotes").value.trim(),level=$t("thReviewLevel").value;
-   button.textContent="Reviewing…";output.textContent="The file has been read. JARVIS is checking the answers…";
-   const prompt="Act as a fair, experienced English-language teacher reviewing a student's submitted homework. Student level: "+level+". Original task, rubric or answer key (if provided): "+(task||"Not provided; infer cautiously and state limitations.")+". Teacher notes: "+(notes||"None")+". File: "+file.name+". Extracted student submission (up to 25,000 characters):\n--- START ---\n"+content.slice(0,25000)+"\n--- END ---\nReview carefully. Do not invent missing answers or claim certainty where the original task is unavailable. Provide an overall summary, item-by-item corrections, corrected versions, brief level-appropriate explanations, a suggested score only if the task and marking basis are clear, and practical next steps. Be encouraging, specific and fair. Keep student-facing feedback in clear English. If OCR appears uncertain or words are unclear, flag them rather than guessing.";
-   const response=await fetch("/api/teacher-assist",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt}),signal:AbortSignal.timeout(90000)});
-   const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"The review could not be completed.");
-   output.textContent=data.text||"No review was returned.";
-  }catch(error){output.textContent=error.message||"Could not review this file."}
-  finally{button.disabled=false;button.textContent=original}
- };
- $t("thReviewCopy").onclick=()=>{const text=$t("thReviewOutput").textContent||"";if(!text||text.startsWith("Upload a student"))return;navigator.clipboard?.writeText(text).then(()=>alert("Review copied.")).catch(()=>alert("Clipboard access is unavailable."))};
- $t("thGenerate").onclick=()=>{
-  const c=db.classes.find(x=>x.id===$t("thClass").value);
-  const prompt="Act as an English language teaching specialist. Design a complete, classroom-ready homework assignment in English. Class: "+(c?.name||"Not specified")+"; Coursebook / level: "+(c?.book||"Not specified")+"; Topic: "+$t("thTopic").value+"; Homework type: "+$t("thType").value+"; Notes: "+$t("thNotes").value+". Write clear instructions, create varied level-appropriate exercises, and provide a separate complete answer key. If the level is unknown, do not guess it; choose beginner level and clearly state this assumption.";
-  generate(prompt,$t("thGenerate"),$t("thOutput"));
- };
- $t("trGenerate").onclick=()=>{
-  const c=db.classes.find(x=>x.id===$t("trClass").value);
-  const prompt="Write an English lesson report for parents. Use a warm, professional, respectful and clear tone. Avoid exaggeration or invented details; use only the information below. Class: "+(c?.name||"Not specified")+"; Coursebook / level: "+(c?.book||"Not specified")+"; Date: "+$t("trDate").value+"; Lesson content and activities: "+$t("trContent").value+"; Homework for next lesson: "+$t("trHomework").value+". Use a suitable heading and clear, readable sections.";
-  generate(prompt,$t("trGenerate"),$t("trOutput"));
- };
- $t("qGenerate").onclick=()=>{
-  const c=db.classes.find(x=>x.id===$t("qClass").value);
-  const level=$t("qLevel").value,age=$t("qAge").value,type=$t("qType").value,count=Number($t("qCount").value),focus=$t("qFocus").value;
-  const topic=$t("qTopic").value.trim(),source=$t("qSource").value.trim(),notes=$t("qInstructions").value.trim();
-  if(!topic&&!source){$t("qStatus").textContent="Please enter a topic, target language or source text first.";return}
-  $t("qStatus").textContent="Building and reviewing "+count+" assessment items…";
-  const prompt=[
-   "Act as a senior ELT assessment specialist, Cambridge-style item writer and rigorous proofreader.",
-   "Create exactly "+count+" original English-language assessment questions.",
-   "Class context: "+(c?.name||"Not specified")+"; coursebook: "+(c?.book||"Not specified")+"; unit: "+(c?.lesson||"Not specified")+".",
-   "CEFR level: "+level+". Learner group: "+age+". Format: "+type+". Main skill/focus: "+focus+".",
-   "Topic / target language: "+(topic||"Use only the supplied source text")+".",
-   "Source text (if supplied): "+(source||"No source text supplied")+".",
-   "Teacher requirements: "+(notes||"Use natural British English, unless a different variety is explicitly requested.")+".",
-   "OUTPUT LANGUAGE: All questions, options, instructions, passages and answer keys must be in clear, natural English. Do not translate the questions into Persian.",
-   "COUNT AND FORMAT: Produce exactly "+count+" numbered questions. Follow the selected question format. For multiple choice, every item must have exactly four labelled options A-D and exactly one defensibly correct answer.",
-   "QUALITY CONTROL: Align every item with the CEFR level and learner age. Use authentic classroom or real-life contexts. Distractors must be plausible, grammatically parallel, mutually exclusive and clearly wrong. No trick questions, ambiguity, hidden assumptions, answer clues, repeated templates or duplicate targets. Each gap-fill must have one clear expected answer. Reading questions must be answerable from the supplied passage only; do not invent facts. Avoid testing content not taught or specified.",
-   "ASSESSMENT DESIGN: Balance recall, understanding and application. Vary sentence structures and contexts. Keep instructions concise. For writing/speaking prompts, give a clear communicative purpose and suitable expected length or speaking time.",
-   "ANSWER KEY: Add a separate complete answer key with the correct answer for every numbered question. Explain briefly why the correct answer is right and, for multiple choice, why distractors are unsuitable when useful. Include accepted alternatives where appropriate.",
-   "FINAL REVIEW: Before responding, silently check the exact item count, grammar, spelling, level, answer uniqueness and that every answer key entry matches its question. If information is missing, state the assumption briefly rather than inventing a textbook page or passage.",
-   "Use clear section headings and classroom-ready formatting."
-  ].join("\n");
-  generate(prompt,$t("qGenerate"),$t("qOutput"),()=>$t("qStatus").textContent="Complete — "+count+" questions generated. Review the answer key before using the assessment.");
- };
- $t("qCopy").onclick=()=>{const v=$t("qOutput").textContent;if(!v||v.startsWith("Your questions"))return;navigator.clipboard?.writeText(v).then(()=>$t("qStatus").textContent="Assessment copied to clipboard.").catch(()=>$t("qStatus").textContent="Clipboard access is unavailable in this browser.")};
- $t("thCopy").onclick=()=>copy("thOutput");
- $t("trGenerate").onclick=()=>{const c=db.classes.find(x=>x.id===$t("trClass").value);const prompt="Write an English lesson report for parents. Use a warm, professional, respectful and clear tone. Avoid exaggeration or invented details; use only the information below. Class: "+(c?.name||"Not specified")+" ; Coursebook / level: "+(c?.book||"Not specified")+" ; Date: "+$t("trDate").value+" ; Lesson content and activities: "+$t("trContent").value+" ; Homework for next lesson: "+$t("trHomework").value+". Use a suitable heading and clear, readable sections.";generate(prompt,$t("trGenerate"),$t("trOutput"))};
- const copy=id=>{const v=$t(id).textContent;if(!v||v.startsWith("Your lesson plan")||v.startsWith("Your parent report"))return;navigator.clipboard?.writeText(v).then(()=>alert("Text copied.")).catch(()=>alert("Clipboard access is unavailable in this browser."))};
- $t("tpCopy").onclick=()=>copy("tpOutput");$t("trCopy").onclick=()=>copy("trOutput");
- const today=new Date().toISOString().slice(0,10);["taDate","trDate"].forEach(id=>$t(id).value=today);
- render();
-})();
-
-
 /* Return from chat to the JARVIS dashboard */
 (()=>{
  const home=document.getElementById("homeDashboard");
@@ -976,7 +689,7 @@ imageGenerate.onclick=async()=>{
   document.body.classList.add("dashboard-mode");
   document.getElementById("historySidebar")?.classList.remove("open");
   document.getElementById("sidebarShade")?.classList.remove("show");
-  ["teacherLab","imageLab","worksheetLab"].forEach(id=>document.getElementById(id)?.classList.remove("open"));
+  document.getElementById("worksheetLab")?.classList.remove("open");
   window.scrollTo({top:0,behavior:"smooth"});
  });
 })();
@@ -997,10 +710,7 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
   const pages={
    games:{title:"🎮 دنیای بازی‌ها",subtitle:"یک کتابخانهٔ آغازین برای کشف بازی‌ها، سبک‌ها و پلتفرم‌ها.",content:'<p class="hub-note">این بخش یک فهرست آغازین از بازی‌ها و مسیرهای رسمی آن‌هاست؛ همهٔ بازی‌های دنیا داخل JARVIS اجرا نمی‌شوند و دسترسی، قیمت و محدودیت سنی هر بازی را در وب‌سایت رسمی بررسی کن.</p><input class="hub-filter" id="gameSearch" placeholder="جست‌وجوی نام بازی یا سبک..."><div class="hub-grid" id="gameGrid"><article class="hub-card" data-game="minecraft sandbox crafting adventure"><span class="hub-chip">Sandbox · بقا و ساخت‌وساز</span><h2>Minecraft</h2><p>ساخت جهان، کاوش و بازی خلاقانه.</p><a href="https://www.minecraft.net/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="roblox platform user created games"><span class="hub-chip">Platform · بازی‌های کاربرساز</span><h2>Roblox</h2><p>هزاران تجربه و بازی ساخته‌شده توسط کاربران.</p><a href="https://www.roblox.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="fortnite action battle royale"><span class="hub-chip">Action · رقابتی</span><h2>Fortnite</h2><p>تجربه‌های اکشن و حالت‌های متنوع بازی.</p><a href="https://www.fortnite.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="rocket league sports cars football"><span class="hub-chip">Sports · مسابقه‌ای</span><h2>Rocket League</h2><p>ترکیب فوتبال و خودروهای مسابقه‌ای.</p><a href="https://www.rocketleague.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="steam pc store library"><span class="hub-chip">PC · فروشگاه و کتابخانه</span><h2>Steam</h2><p>کشف و مدیریت بازی‌های کامپیوتر.</p><a href="https://store.steampowered.com/" target="_blank" rel="noopener">رفتن به Steam</a></article><article class="hub-card" data-game="epic games store pc"><span class="hub-chip">PC · فروشگاه</span><h2>Epic Games Store</h2><p>فروشگاه بازی‌های رایانه‌ای و پیشنهادهای آن.</p><a href="https://store.epicgames.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article></div>'},
    study:{title:"📚 آکادمی درسی",subtitle:"یادگیری ساده، مرحله‌به‌مرحله و متناسب با پایهٔ تحصیلی.",content:'<div class="hub-grid"><article class="hub-card"><span class="hub-chip">ریاضی</span><h2>حل مسئله و تمرین</h2><p>مفاهیم، محاسبات و مسئله‌ها را با توضیح مرحله‌به‌مرحله یاد بگیر.</p><button data-page-action="study-math">شروع ریاضی</button></article><article class="hub-card"><span class="hub-chip">علوم</span><h2>آزمایشگاه علوم</h2><p>موضوعات علمی، بدن انسان، زمین، انرژی و فناوری را کشف کن.</p><button data-page-action="study-science">شروع علوم</button></article><article class="hub-card"><span class="hub-chip">فارسی و نگارش</span><h2>زبان و ادبیات</h2><p>معنی واژه‌ها، دستور زبان، املا و نگارش را تمرین کن.</p><button data-page-action="study-persian">شروع فارسی</button></article><article class="hub-card"><span class="hub-chip">English</span><h2>یادگیری انگلیسی</h2><p>واژگان، گرامر، مکالمه و درک مطلب را تمرین کن.</p><button data-page-action="study-english">شروع انگلیسی</button></article><article class="hub-card"><span class="hub-chip">تمرین و کاربرگ</span><h2>ساخت کاربرگ</h2><p>برای موضوع موردنظرت تمرین آموزشی و برگهٔ قابل چاپ بساز.</p><button data-page-action="study-worksheet">ساخت کاربرگ</button></article><article class="hub-card"><span class="hub-chip">گفت‌وگوی آموزشی</span><h2>معلم هوشمند JARVIS</h2><p>سؤالت را بپرس و پاسخ را با مثال و توضیح ساده دریافت کن.</p><button data-page-action="study-chat">پرسش از JARVIS</button></article></div>'},
-   reports:{title:"Reports",subtitle:"Create clear, professional lesson updates for parents.",content:'<div class="utility-grid"><article class="utility-card"><h2>✉ Parent Reports</h2><p>Generate a polished report using the class, lesson activities and homework details you provide. JARVIS will not invent classroom information.</p><button class="utility-action" data-page-action="parent-reports">Open Parent Reports →</button></article><article class="utility-card"><h2>📚 Where reports are created</h2><p>Your report workspace is inside Teacher Studio. Choose a class, enter the lesson details, and generate a ready-to-send parent message.</p></article></div>'},
-   toolkit:{title:"Teacher Toolkit",subtitle:"Practical tools for the everyday work of an English language teacher.",content:"<div class=\"utility-grid\">\n<article class=\"utility-card\"><h2>🗂 Vocabulary Flashcard Maker</h2><p>Create vocabulary cards with simple meanings and natural examples.</p><label for=\"tkFlashTopic\">Topic</label><input id=\"tkFlashTopic\" placeholder=\"e.g. Food, daily routines, travel\"><label for=\"tkFlashLevel\">CEFR level</label><select id=\"tkFlashLevel\"><option>Pre-A1</option><option>A1</option><option selected>A2</option><option>B1</option><option>B2</option><option>C1</option></select><label for=\"tkFlashCount\">Number of cards</label><select id=\"tkFlashCount\"><option>8</option><option selected>12</option><option>16</option><option>20</option></select><button class=\"utility-action\" data-page-action=\"flashcards\">Create Flashcards</button><div id=\"tkFlashOutput\" class=\"tool-output\">Your flashcards will appear here.</div><button class=\"utility-action\" data-page-action=\"copy-flash\">Copy Flashcards</button></article>\n<article class=\"utility-card\"><h2>📅 Weekly Teaching Planner</h2><p>Build a realistic weekly plan from the information you provide.</p><label for=\"tkWeek\">Week starting</label><input id=\"tkWeek\" type=\"date\"><label for=\"tkPlanClass\">Class / course</label><input id=\"tkPlanClass\" placeholder=\"e.g. Family and Friends 3\"><label for=\"tkPlanSchedule\">Class days and times</label><input id=\"tkPlanSchedule\" placeholder=\"e.g. Monday and Wednesday, 5 PM\"><label for=\"tkPlanFocus\">Units, goals and priorities</label><textarea id=\"tkPlanFocus\" rows=\"3\" placeholder=\"Vocabulary review, speaking practice, Unit 4...\"></textarea><button class=\"utility-action\" data-page-action=\"weekly-plan\">Build Weekly Plan</button><div id=\"tkPlanOutput\" class=\"tool-output\">Your weekly plan will appear here.</div><button class=\"utility-action\" data-page-action=\"copy-plan\">Copy Weekly Plan</button></article>\n<article class=\"utility-card\"><h2>✉ Parent Message Writer</h2><p>Draft warm, professional messages using only the facts you enter.</p><label for=\"tkParentStudent\">Student or class</label><input id=\"tkParentStudent\" placeholder=\"Name or class\"><label for=\"tkParentPurpose\">Purpose</label><select id=\"tkParentPurpose\"><option>Weekly lesson update</option><option>Positive progress note</option><option>Homework reminder</option><option>Absence follow-up</option><option>Meeting request</option><option>General announcement</option></select><label for=\"tkParentFacts\">Facts to include</label><textarea id=\"tkParentFacts\" rows=\"4\" placeholder=\"Lesson content, progress observed, homework...\"></textarea><label for=\"tkParentTone\">Tone</label><select id=\"tkParentTone\"><option>Warm and professional</option><option>Friendly and encouraging</option><option>Formal and concise</option></select><button class=\"utility-action\" data-page-action=\"parent-message\">Write Parent Message</button><div id=\"tkParentOutput\" class=\"tool-output\">Your parent message will appear here.</div><button class=\"utility-action\" data-page-action=\"copy-parent\">Copy Message</button></article>\n<article class=\"utility-card\"><h2>🏅 Printable Certificate Maker</h2><p>Create a simple certificate for a learner and print it from your browser.</p><label for=\"tkCertName\">Student name</label><input id=\"tkCertName\" placeholder=\"Student full name\"><label for=\"tkCertCourse\">Course / class</label><input id=\"tkCertCourse\" placeholder=\"e.g. English A2 · Term 2\"><label for=\"tkCertAchievement\">Achievement</label><input id=\"tkCertAchievement\" value=\"For completing the course\"><label for=\"tkCertDate\">Date</label><input id=\"tkCertDate\" type=\"date\"><button class=\"utility-action\" data-page-action=\"certificate\">Create Certificate Preview</button><div id=\"tkCertPreview\" class=\"certificate-preview\">Your certificate preview will appear here.</div><button class=\"utility-action\" data-page-action=\"print-certificate\">Print Certificate</button></article>\n</div>"},
-   settings:{title:"Settings",subtitle:"Manage JARVIS's voice and speech preferences.",content:'<div class="utility-grid"><article class="utility-card"><h2>🎙 Speech input language</h2><p>Choose the language JARVIS should listen for when you use the microphone.</p><label for="utilitySpeechLanguage">Microphone language</label><select id="utilitySpeechLanguage"><option value="en-US">English</option><option value="fa-IR">Persian</option><option value="auto">Auto detect</option></select><p class="utility-note">This setting is shared with the language selector in the chat composer.</p></article><article class="utility-card"><h2>🔊 Assistant voice</h2><p>Turn spoken AI replies on or off.</p><button class="utility-action" data-page-action="toggle-voice">Toggle voice replies</button><p id="utilityVoiceState" class="utility-note"></p></article></div>'},
-   help:{title:"Help & Support",subtitle:"Quick guidance for using your English teaching workspace.",content:'<div class="utility-grid"><article class="utility-card"><h2>💬 Chat with JARVIS</h2><p>Ask JARVIS to explain a feature, help prepare a lesson, or troubleshoot a problem.</p><button class="utility-action" data-page-action="open-chat">Open JARVIS Chat →</button></article><article class="utility-card"><h2>🎓 Teacher Studio</h2><p>Use Classes & Students, Attendance, Lesson Planner, Homework, Question Lab and Parent Reports from one workspace.</p><button class="utility-action" data-page-action="open-teacher">Open Teacher Studio →</button></article><article class="utility-card"><h2>🎙 Microphone not working?</h2><p>Check browser microphone permission, make sure the correct input device is selected, and try Chrome or Edge if speech recognition is unavailable in your browser.</p></article><article class="utility-card"><h2>💾 Your teaching data</h2><p>Class, student and attendance records are currently saved in this browser. They are not automatically synchronised to other devices.</p></article></div>'}
+
   };
   const p=pages[kind];if(!p)return;
   page.innerHTML='<div class="utility-shell"><div class="utility-top"><div><h1>'+p.title+'</h1><p class="utility-subtitle">'+p.subtitle+'</p></div><button class="utility-back" data-page-action="back">← Dashboard</button></div>'+p.content+'</div>';
@@ -1024,52 +734,13 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
   if(action==="reports"||action==="settings"||action==="help"||action==="toolkit"){openPage(action);return}
  });
 
- const toolkitGenerate=async(prompt,button,outputId)=>{
-  const output=document.getElementById(outputId);if(!output)return;
-  const original=button.textContent;button.disabled=true;button.textContent="Preparing…";output.textContent="JARVIS is preparing your teaching material…";
-  try{const response=await fetch("/api/teacher-assist",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt}),signal:AbortSignal.timeout(70000)});const data=await response.json().catch(()=>({}));if(!response.ok||!data.ok)throw new Error(data.error||"The request could not be completed.");output.textContent=data.text||"No content was returned."}
-  catch(error){output.textContent=error.message||"Something went wrong. Please try again."}
-  finally{button.disabled=false;button.textContent=original}
- };
- const copyToolkitText=id=>{const el=document.getElementById(id),value=el?.textContent||"";if(!value||value.startsWith("Your "))return;navigator.clipboard?.writeText(value).then(()=>alert("Copied to clipboard.")).catch(()=>alert("Clipboard access is unavailable in this browser."))};
- const escapeCertificate=value=>String(value||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  page.addEventListener("input",e=>{if(e.target.id==="gameSearch"){const q=e.target.value.trim().toLowerCase();document.querySelectorAll("#gameGrid .hub-card").forEach(card=>{card.hidden=!!q&&!((card.textContent+" "+card.dataset.game).toLowerCase().includes(q));});}});
- page.addEventListener("change",e=>{
-  if(e.target.id==="utilitySpeechLanguage"){const sel=document.getElementById("speechLangSelect");if(sel){sel.value=e.target.value;sel.dispatchEvent(new Event("change",{bubbles:true}));}}
- });
  page.addEventListener("click",e=>{
   const b=e.target.closest("[data-page-action]");if(!b)return;
   const action=b.dataset.pageAction;
 
   if(action==="study-math"||action==="study-science"||action==="study-persian"||action==="study-english"||action==="study-chat"){const topics={"study-math":"ریاضی را با زبان ساده و مرحله‌به‌مرحله به من آموزش بده.","study-science":"یک موضوع علمی را ساده و با مثال برایم توضیح بده.","study-persian":"در یادگیری فارسی، معنی واژه‌ها و نگارش کمکم کن.","study-english":"به من در یادگیری زبان انگلیسی با تمرین سطح‌بندی‌شده کمک کن.","study-chat":"می‌خواهم یک سؤال درسی بپرسم."};page.classList.remove("open");showChat();const box=document.getElementById("input")||document.querySelector(".composer textarea");if(box){box.value=topics[action];box.dispatchEvent(new Event("input",{bubbles:true}));box.focus();}return;}
-  if(action==="study-worksheet"){page.classList.remove("open");document.getElementById("worksheetOpen")?.click();return;}
-  if(action==="flashcards"){
-   const topic=document.getElementById("tkFlashTopic").value.trim(),level=document.getElementById("tkFlashLevel").value,count=document.getElementById("tkFlashCount").value;
-   if(!topic){alert("Please enter a vocabulary topic first.");return}
-   toolkitGenerate("Act as an experienced English language teacher. Create exactly "+count+" vocabulary flashcards about "+topic+" for CEFR "+level+". For each card include the target word or phrase, a simple accurate meaning, a natural example sentence and a learner-friendly practice question. Avoid duplicates, keep the level consistent and format as a numbered table. Do not invent IPA or claim audio is included.",b,"tkFlashOutput");return;
-  }
-  if(action==="weekly-plan"){
-   const week=document.getElementById("tkWeek").value,course=document.getElementById("tkPlanClass").value.trim(),schedule=document.getElementById("tkPlanSchedule").value.trim(),focus=document.getElementById("tkPlanFocus").value.trim();
-   if(!course||!focus){alert("Please enter the class/course and at least one teaching priority.");return}
-   toolkitGenerate("Act as an experienced English language teaching coordinator. Create a practical weekly teaching plan. Week starting: "+(week||"Not specified")+". Class/course: "+course+". Schedule: "+(schedule||"Not specified")+". Teaching priorities and syllabus details: "+focus+". Organise by actual class days if provided; otherwise label any suggested structure clearly. Include objectives, stages, timing, materials, homework and a quick learning check. Do not invent textbook page numbers or student results.",b,"tkPlanOutput");return;
-  }
-  if(action==="parent-message"){
-   const who=document.getElementById("tkParentStudent").value.trim(),purpose=document.getElementById("tkParentPurpose").value,facts=document.getElementById("tkParentFacts").value.trim(),tone=document.getElementById("tkParentTone").value;
-   if(!facts){alert("Please enter the real lesson or student details first.");return}
-   toolkitGenerate("Write a ready-to-send message to a student's parent. Student/class: "+(who||"Not specified")+". Purpose: "+purpose+". Tone: "+tone+". Use only these supplied facts: "+facts+". Do not invent grades, behaviour, attendance, achievements, promises or homework. Omit missing details instead of guessing. Use polished English with a suitable greeting and sign-off.",b,"tkParentOutput");return;
-  }
-  if(action==="copy-flash"){copyToolkitText("tkFlashOutput");return}
-  if(action==="copy-plan"){copyToolkitText("tkPlanOutput");return}
-  if(action==="copy-parent"){copyToolkitText("tkParentOutput");return}
-  if(action==="certificate"){
-   const name=document.getElementById("tkCertName").value.trim(),course=document.getElementById("tkCertCourse").value.trim(),achievement=document.getElementById("tkCertAchievement").value.trim(),date=document.getElementById("tkCertDate").value;
-   if(!name||!course){alert("Please enter the student's name and course.");return}
-   document.getElementById("tkCertPreview").innerHTML='<div class="certificate-sheet"><div class="certificate-kicker">JARVIS · ENGLISH LEARNING</div><h2>Certificate of Achievement</h2><p>This certificate is proudly presented to</p><h3>'+escapeCertificate(name)+'</h3><p>'+escapeCertificate(achievement||"For completing the course")+'</p><strong>'+escapeCertificate(course)+'</strong><div class="certificate-date">'+escapeCertificate(date||new Date().toISOString().slice(0,10))+'</div><div class="certificate-sign">Teacher</div></div>';return;
-  }
-  if(action==="print-certificate"){
-   if(!document.querySelector("#tkCertPreview .certificate-sheet")){alert("Create the certificate preview first.");return}
-   window.print();return;
-  }
+  if(action==="study-worksheet"){page.classList.remove("open");const lab=document.getElementById("worksheetLab"),prompt=document.getElementById("worksheetPrompt");lab?.classList.add("open");prompt?.focus();return;}
   if(action==="back"){page.classList.remove("open");return}
   if(action==="parent-reports"){openTeacher("reports");return}
   if(action==="open-chat"){showChat();return}
