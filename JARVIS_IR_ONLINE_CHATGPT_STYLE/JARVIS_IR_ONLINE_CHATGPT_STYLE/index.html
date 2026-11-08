@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090a0d"><meta name="description" content="JARVIS AI assistant with teaching dashboard">
+<meta name="theme-color" content="#090a0d"><meta name="description" content="JARVIS AI assistant, game discovery and study hub">
 <link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icon.svg">
 <title>JARVIS</title>
 <style>
@@ -728,8 +728,6 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
   if(action==="chat"){showChat();return}
   if(action==="games"){openPage("games");return}
   if(action==="study"){openPage("study");return}
-  if(action==="questions"){openTeacher("questions");return}
-  if(action==="classes"||action==="students"){openTeacher("classes");return}
   if(action==="reports"||action==="settings"||action==="help"||action==="toolkit"){openPage(action);return}
  });
 
@@ -741,9 +739,7 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
   if(action==="study-math"||action==="study-science"||action==="study-persian"||action==="study-english"||action==="study-chat"){const topics={"study-math":"ریاضی را با زبان ساده و مرحله‌به‌مرحله به من آموزش بده.","study-science":"یک موضوع علمی را ساده و با مثال برایم توضیح بده.","study-persian":"در یادگیری فارسی، معنی واژه‌ها و نگارش کمکم کن.","study-english":"به من در یادگیری زبان انگلیسی با تمرین سطح‌بندی‌شده کمک کن.","study-chat":"می‌خواهم یک سؤال درسی بپرسم."};page.classList.remove("open");showChat();const box=document.getElementById("input")||document.querySelector(".composer textarea");if(box){box.value=topics[action];box.dispatchEvent(new Event("input",{bubbles:true}));box.focus();}return;}
   if(action==="study-worksheet"){page.classList.remove("open");const lab=document.getElementById("worksheetLab"),prompt=document.getElementById("worksheetPrompt");lab?.classList.add("open");prompt?.focus();return;}
   if(action==="back"){page.classList.remove("open");return}
-  if(action==="parent-reports"){openTeacher("reports");return}
   if(action==="open-chat"){showChat();return}
-  if(action==="open-teacher"){openTeacher("classes");return}
   if(action==="toggle-voice"){document.getElementById("voiceToggle")?.click();const state=document.getElementById("utilityVoiceState"),voice=document.getElementById("voiceToggle");if(state)state.textContent=voice?.title?.includes("off")?"Voice replies are currently ON.":"Voice replies are currently OFF.";}
  });
 })();
