@@ -326,8 +326,9 @@ status.title="JARVIS interface loaded.";
 window.addEventListener("error",event=>{status.textContent="● UI error";status.title=event.message||"A JavaScript error occurred on this page.";});
 window.addEventListener("unhandledrejection",event=>{status.textContent="● Connection error";status.title=String(event.reason?.message||event.reason||"Request error");});
 let voiceEnabled=true;
-let speechLanguage="en-US";
+let speechLanguage="fa-IR";
 speechLangSelect.value=speechLanguage;
+health();
 speechLangSelect.onchange=()=>{speechLanguage=speechLangSelect.value;};
 function speakReply(text){
  if(!voiceEnabled || !("speechSynthesis" in window))return;
@@ -434,8 +435,18 @@ function localReply(raw){
  return "I’m not sure about that yet. 🧠 Please try rephrasing your question or give me a little more context.";
 }
 async function health(){
- status.textContent="● Basic mode";
- status.title="Basic replies are generated in this browser. No API key is required.";
+ try{
+  const response=await fetch("/health",{cache:"no-store",signal:AbortSignal.timeout(8000)});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok||!data.ok)throw new Error(data.error||"Health check failed");
+  status.textContent=data.aiConfigured?"● Online":"● API key missing";
+  status.title=data.aiConfigured
+   ? "JARVIS server is online. Provider: "+(data.provider||"AI")+". Model: "+(data.model||"configured")+"."
+   : "The server is online, but GROQ_API_KEY is not configured.";
+ }catch(error){
+  status.textContent="● Offline";
+  status.title="JARVIS server could not be reached. Check the connection and try again.";
+ }
 }
 let selectedImageData=null, selectedImageName="";
 const attachmentInput=$("attachmentInput"),attachmentBar=$("attachmentBar"),attachmentThumb=$("attachmentThumb"),attachmentName=$("attachmentName");
@@ -584,7 +595,7 @@ async function startRecording(){
     if(!data.text)throw new Error("No clear speech was detected. Please try again.");
     input.value=data.text;await ask();
    }catch(error){alert(error.name==="TimeoutError"||error.name==="AbortError"?"Speech recognition timed out. Please try again with a shorter message.":(error.message||"Speech recognition failed."))}
-   finally{mic.disabled=false;mic.title=previous;status.textContent="● Connected"}
+   finally{mic.disabled=false;mic.title=previous;health()}
   };
   mediaRecorder.start();
   mic.classList.add("on");mic.textContent="⏹️";mic.title="Stop recording and transcribe";
