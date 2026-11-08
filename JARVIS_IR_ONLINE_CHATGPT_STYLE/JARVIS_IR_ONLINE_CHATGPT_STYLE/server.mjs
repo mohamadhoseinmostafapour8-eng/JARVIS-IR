@@ -93,7 +93,6 @@ app.get("/health", (_req, res) => {
       webSearch: MODEL.startsWith("openai/gpt-oss"),
       imageAnalysis: true,
       worksheetBuilder: true,
-      teacherAssistant: true,
       speechToText: true
     }
   });
