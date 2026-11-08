@@ -214,6 +214,29 @@ app.post("/api/vision-chat", async (req, res) => {
   }
 });
 
+app.post("/api/teacher-assist", async (req, res) => {
+  const prompt = typeof req.body?.prompt === "string"
+    ? req.body.prompt.trim().slice(0, 30000)
+    : "";
+  if (!prompt) {
+    return res.status(400).json({ ok: false, error: "لطفاً موضوع یا توضیحات آموزشی را وارد کن." });
+  }
+
+  try {
+    const text = await groqChat([
+      {
+        role: "system",
+        content: instructions + "\nYou are JARVIS Study Center, an experienced, supportive educational tutor and teaching assistant. Keep all content age-appropriate. Explain concepts clearly, use step-by-step reasoning, check factual accuracy, and never invent student results, textbook pages, classroom events, or missing source material. Follow the requested output language and format."
+      },
+      { role: "user", content: prompt }
+    ], { maxTokens: 3500, temperature: 0.3, timeout: 75000 });
+
+    return res.json({ ok: true, text });
+  } catch (error) {
+    return sendApiError(res, error, "ساخت محتوای آموزشی با خطا روبه‌رو شد.");
+  }
+});
+
 app.post("/api/worksheet", async (req, res) => {
   const prompt = typeof req.body?.prompt === "string" ? req.body.prompt.trim().slice(0, 5000) : "";
   if (!prompt) return res.status(400).json({ ok: false, error: "موضوع یا توضیحات کاربرگ را وارد کن." });
