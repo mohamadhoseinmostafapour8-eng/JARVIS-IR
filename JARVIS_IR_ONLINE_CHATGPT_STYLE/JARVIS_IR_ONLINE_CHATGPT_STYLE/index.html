@@ -492,8 +492,8 @@ async function ask(){
  const load=document.createElement("div");load.className="msg ai";load.textContent="One moment…";list.appendChild(load);
  try{
    const normalizedRequest = text.normalize("NFKC");
-   const wantsWorksheet = /worksheet|work\s?sheet|english\s+exercise|language\s+practice/i.test(normalizedRequest);
-    const wantsImage = /(?:image|picture|illustration|artwork).*(?:generate|create|draw)|(?:generate|create|draw).*(?:image|picture|illustration|artwork)/i.test(normalizedRequest);
+   const wantsWorksheet = /worksheet|work\s?sheet|english\s+exercise|language\s+practice|کاربرگ|تمرین\s*(?:انگلیسی|زبان)|برگه\s*تمرین/i.test(normalizedRequest);
+    const wantsImage = /(?:image|picture|illustration|artwork).*(?:generate|create|draw)|(?:generate|create|draw).*(?:image|picture|illustration|artwork)|(?:تصویر|عکس|نقاشی).*(?:بساز|ایجاد\s*کن|بکش)|(?:بساز|ایجاد\s*کن|بکش).*(?:تصویر|عکس|نقاشی)/i.test(normalizedRequest);
    if(wantsWorksheet&&!attachedImage){
      load.textContent="Designing questions and formatting your worksheet…";
      const worksheetResponse=await fetch("/api/worksheet",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:text}),signal:AbortSignal.timeout(70000)});
