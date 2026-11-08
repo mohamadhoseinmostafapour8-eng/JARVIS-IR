@@ -667,7 +667,7 @@ mic.onclick=()=>{
  else startRecording();
 };
 const worksheetLab=$("worksheetLab"),worksheetPrompt=$("worksheetPrompt"),worksheetStatus=$("worksheetStatus"),worksheetResult=$("worksheetResult"),worksheetCreate=$("worksheetCreate");
-$("worksheetOpen").onclick=()=>{worksheetLab.classList.add("open");closeSidebar();worksheetPrompt.focus()};
+
 $("worksheetClose").onclick=()=>worksheetLab.classList.remove("open");
 worksheetLab.addEventListener("click",e=>{if(e.target===worksheetLab)worksheetLab.classList.remove("open")});
 async function generateWorksheet(){
@@ -703,8 +703,7 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
  if(!dashboard)return;
  document.body.classList.add("dashboard-mode");
  const showChat=()=>{document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.remove("dashboard-mode");window.scrollTo({top:0,behavior:"smooth"});};
- const openTeacher=(tab)=>{document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.remove("dashboard-mode");document.getElementById("teacherOpen")?.click();setTimeout(()=>{document.querySelector('[data-teacher-tab="'+tab+'"]')?.click()},180);};
- let page=document.getElementById("dashboardUtilityPage");
+  let page=document.getElementById("dashboardUtilityPage");
  if(!page){page=document.createElement("section");page.id="dashboardUtilityPage";page.setAttribute("aria-live","polite");document.body.appendChild(page);}
  const openPage=(kind)=>{
   const pages={
