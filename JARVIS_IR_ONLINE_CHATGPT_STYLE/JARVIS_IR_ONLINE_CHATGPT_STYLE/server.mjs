@@ -112,7 +112,7 @@ app.post("/transcribe", express.raw({ type: () => true, limit: "20mb" }), async 
     const form = new FormData();
     form.append("file", new Blob([req.body], { type: mime }), "recording." + extension);
     form.append("model", "whisper-large-v3-turbo");
-    form.append("language", req.query.language === "en" ? "en" : "fa");
+    if (req.query.language === "en" || req.query.language === "fa") form.append("language", req.query.language);
     form.append("response_format", "json");
 
     const response = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
