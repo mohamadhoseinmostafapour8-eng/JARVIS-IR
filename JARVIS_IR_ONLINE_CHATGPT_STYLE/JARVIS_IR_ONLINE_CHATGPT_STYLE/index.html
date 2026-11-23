@@ -26,7 +26,7 @@ button{border:1px solid #344761;border-radius:16px;min-width:46px;height:46px;ba
 /* Chat history sidebar */
 .sidebar-toggle{min-width:38px;width:38px;height:34px;border-radius:10px;font-size:17px}
 .sidebar{position:fixed;z-index:30;top:0;left:0;right:auto;bottom:0;width:min(290px,84vw);padding:18px;background:#0d1421;border-left:1px solid #29374d;box-shadow:-12px 0 40px #0008;transform:translateX(-105%);transition:transform .22s ease;display:flex;flex-direction:column;gap:12px}
-.sidebar.open{transform:translateX(0)}.sidebar-head{display:flex;align-items:center;justify-content:space-between;color:#eef5ff;font-weight:800}.sidebar-actions{display:flex;gap:8px}.new-chat{width:100%;height:42px;border-radius:12px;background:#17263a;border:1px solid #354968;color:#edf5ff;font-size:13px}.chat-list{overflow:auto;display:flex;flex-direction:column;gap:6px}.chat-item{width:100%;height:auto;min-height:42px;text-align:left;padding:9px 11px;border-radius:10px;background:transparent;border:1px solid transparent;color:#cbd8e9;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat-item.active{background:#1a2940;border-color:#3a506e;color:#fff}.sidebar-shade{display:none;position:fixed;inset:0;z-index:29;background:#0008}.sidebar-shade.show{display:block}
+.history-empty{padding:14px 10px;color:#aebdd4;font-size:12px;line-height:1.8;text-align:center;border:1px dashed #34445d;border-radius:12px}.sidebar.open{transform:translateX(0)}.sidebar-head{display:flex;align-items:center;justify-content:space-between;color:#eef5ff;font-weight:800}.sidebar-actions{display:flex;gap:8px}.new-chat{width:100%;height:42px;border-radius:12px;background:#17263a;border:1px solid #354968;color:#edf5ff;font-size:13px}.chat-list{overflow:auto;display:flex;flex-direction:column;gap:6px}.chat-item{width:100%;height:auto;min-height:42px;text-align:left;padding:9px 11px;border-radius:10px;background:transparent;border:1px solid transparent;color:#cbd8e9;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat-item.active{background:#1a2940;border-color:#3a506e;color:#fff}.sidebar-shade{display:none;position:fixed;inset:0;z-index:29;background:#0008}.sidebar-shade.show{display:block}
 @media(min-width:900px){.sidebar{width:270px}}
 /* WORKSHEET STUDIO */
 .worksheet-open{background:linear-gradient(120deg,#075985,#164e63)!important;border:1px solid #38bdf8!important;color:#e0f2fe!important}
@@ -354,6 +354,7 @@ textarea::placeholder{color:#ad9380}
   <div class="dash-brand"><div class="dash-cat"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS energy core"><circle cx="50" cy="50" r="42" fill="#170d12" stroke="#e7a83e" stroke-width="4"/><circle cx="50" cy="50" r="32" fill="none" stroke="#d84b36" stroke-width="5" stroke-dasharray="12 5"/><circle cx="50" cy="50" r="22" fill="#25121a" stroke="#ffcf70" stroke-width="3"/><path d="M50 27 62 44 58 65 42 65 38 44Z" fill="#ffcc66" stroke="#fff0bd" stroke-width="2"/><circle cx="50" cy="50" r="8" fill="#fff2c4"/><path d="M50 4V15M50 85V96M4 50H15M85 50H96" stroke="#ffcf70" stroke-width="3" stroke-linecap="round"/></svg></div><div><strong>JARVIS</strong><small>GAME • STUDY • AI HUB</small></div></div>
   <nav class="dash-nav">
    <button class="active" data-dash="home">⌂ &nbsp; خانه</button>
+   <button data-dash="history">🕘 &nbsp; تاریخچهٔ گفتگو</button>
    <button data-dash="games">🎮 &nbsp; دنیای بازی‌ها</button>
    <button data-dash="study">📚 &nbsp; آکادمی درسی</button>
    <button data-dash="chat">🤖 &nbsp; دستیار هوشمند</button>
@@ -423,6 +424,7 @@ function saveHistory(){
 }
 function renderChatList(){
  const host=document.getElementById("chatList");if(!host)return;host.replaceChildren();
+ if(!chatSessions.length){const empty=document.createElement("div");empty.className="history-empty";empty.textContent="هنوز گفتگویی ذخیره نشده است. یک گفتگوی جدید شروع کن.";host.appendChild(empty);return;}
  for(const chat of chatSessions){const b=document.createElement("button");b.type="button";b.className="chat-item"+(chat.id===currentChatId?" active":"");b.textContent=chat.title||"New chat";b.title=b.textContent;b.onclick=()=>openChat(chat.id);host.appendChild(b)}
 }
 function add(role,text,scroll=true){
@@ -686,6 +688,7 @@ worksheetCreate.onclick=generateWorksheet;
  const home=document.getElementById("homeDashboard");
  if(!home)return;
  home.addEventListener("click",()=>{
+  document.getElementById("dashboardUtilityPage")?.classList.remove("open");
   document.body.classList.add("dashboard-mode");
   document.getElementById("historySidebar")?.classList.remove("open");
   document.getElementById("sidebarShade")?.classList.remove("show");
@@ -703,6 +706,8 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
  if(!dashboard)return;
  document.body.classList.add("dashboard-mode");
  const showChat=()=>{document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.remove("dashboard-mode");window.scrollTo({top:0,behavior:"smooth"});};
+ const openHistory=()=>{const sidebar=document.getElementById("historySidebar"),shade=document.getElementById("sidebarShade");sidebar?.classList.add("open");shade?.classList.add("show");renderChatList();};
+ const showDashboardHome=()=>{page?.classList.remove("open");document.body.classList.add("dashboard-mode");closeSidebar();document.getElementById("worksheetLab")?.classList.remove("open");window.scrollTo({top:0,behavior:"smooth"});};
   let page=document.getElementById("dashboardUtilityPage");
  if(!page){page=document.createElement("section");page.id="dashboardUtilityPage";page.setAttribute("aria-live","polite");document.body.appendChild(page);}
  const openPage=(kind)=>{
@@ -735,6 +740,8 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
  dashboard.addEventListener("click",e=>{
   const b=e.target.closest("[data-dash]");if(!b)return;
   const action=b.dataset.dash;
+  if(action==="home"){showDashboardHome();return}
+  if(action==="history"){openHistory();return}
   if(action==="chat"){showChat();return}
   if(action==="games"){openPage("games");return}
   if(action==="study"){openPage("study");return}
