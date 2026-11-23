@@ -431,9 +431,11 @@ function add(role,text,scroll=true){
  welcome.style.display="none";const e=document.createElement("div");e.className="msg "+(role==="user"?"user":"ai");e.textContent=text;list.appendChild(e);if(scroll)e.scrollIntoView({behavior:"smooth"});
 }
 function openChat(id){
+ document.body.classList.remove("dashboard-mode");document.getElementById("dashboardUtilityPage")?.classList.remove("open");
  const chat=chatSessions.find(x=>x.id===id);if(!chat)return;currentChatId=id;messages.length=0;list.replaceChildren();for(const item of chat.messages||[]){messages.push(item);add(item.role,item.content,false)}welcome.style.display=messages.length?"none":"";if(messages.length)list.lastElementChild?.scrollIntoView();renderChatList();closeSidebar();
 }
 function newChat(){
+ document.body.classList.remove("dashboard-mode");document.getElementById("dashboardUtilityPage")?.classList.remove("open");
  if(messages.length)saveHistory();currentChatId=makeChatId();messages.length=0;list.replaceChildren();welcome.style.display="";renderChatList();closeSidebar();input.focus();
 }
 function closeSidebar(){document.getElementById("historySidebar")?.classList.remove("open");document.getElementById("sidebarShade")?.classList.remove("show")}
