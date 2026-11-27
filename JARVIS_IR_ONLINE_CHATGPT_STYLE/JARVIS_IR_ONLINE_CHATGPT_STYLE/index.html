@@ -1328,6 +1328,7 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
   if(action==="home"){showDashboardHome();return}
   if(action==="history"){openHistory();return}
   if(action==="chat"){showChat();return}
+  if(action==="commandcenter"){openPage("commandcenter");return}
   if(action==="games"){openPage("games");return}
   if(action==="study"){openPage("study");return}
   if(action==="tools"||action==="settings"||action==="help"){openPage(action);return}
