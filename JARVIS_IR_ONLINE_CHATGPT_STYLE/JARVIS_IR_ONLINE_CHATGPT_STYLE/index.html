@@ -470,6 +470,143 @@ body.dashboard-mode header:not(.jarvis-topbar),body.dashboard-mode main,body.das
 @media(max-width:390px){.top-system{font-size:8px;gap:4px}.identity-wordmark strong{font-size:20px}.portal-grid{grid-template-columns:1fr 1fr}.hero-shortcuts button{padding:0 6px}}
 @media(prefers-reduced-motion:reduce){.figure-core-orbit{animation:none}}
 
+
+/* CHAT EXPERIENCE — polished control deck, history drawer and message composer */
+.chat-topbar{
+ position:sticky;top:0;z-index:25;margin:0 -22px;padding:12px 22px;min-height:76px;
+ display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+ background:linear-gradient(105deg,#090b13f5,#17121af0 55%,#0b1421f5);
+ border-bottom:1px solid #70452f;box-shadow:0 12px 35px #0008,inset 0 1px #ffffff0d;
+ backdrop-filter:blur(20px);
+}
+.chat-brand{display:flex;align-items:center;gap:11px;min-width:160px}
+.chat-brand .cat-mark{display:grid;place-items:center;width:45px;height:45px;padding:4px;border-radius:50%;background:radial-gradient(circle,#fff6d8 0 7%,#f0ae43 12% 27%,#9f252a 40%,#241014 72%);border:1px solid #e6b458;box-shadow:0 0 22px #e84c3d66,inset 0 0 10px #ffe4a744}
+.chat-brand .cat-mark .jarvis-cat-svg{width:100%;height:100%}
+.chat-brand-copy b{display:block;color:#ffdda0;font-size:23px;font-weight:950;letter-spacing:1.2px;line-height:1.1}
+.chat-brand-copy b span{color:#f05a49}
+.chat-brand-copy small{display:block;color:#a8bed2;font-size:9px;letter-spacing:1.5px;margin-top:5px}
+.chat-session-label{display:flex;align-items:center;gap:8px;padding:10px 15px;border:1px solid #285f73;border-radius:99px;background:linear-gradient(110deg,#0b1c2a,#111b29);color:#c8f4ff;font-size:11px;font-weight:850;letter-spacing:1px;box-shadow:0 0 18px #138dcc20}
+.chat-session-label i{width:1px;height:15px;background:#527080}
+.chat-session-label small{font-size:10px;font-weight:600;letter-spacing:0;color:#a9bacb}
+.session-pulse,.composer-live-dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#35ed9a;box-shadow:0 0 11px #35ed9a}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.chat-control-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:0;height:40px;padding:0 12px;border:1px solid #574232;border-radius:12px;background:linear-gradient(145deg,#21191b,#11151d);color:#f4e4ce;font-size:12px;font-weight:750;box-shadow:inset 0 1px #ffffff0d;transition:background .2s,border-color .2s,transform .2s,box-shadow .2s}
+.chat-control-btn .control-icon{font-size:17px;line-height:1;color:#ffcc71}
+.chat-control-btn:hover{transform:translateY(-2px);border-color:#bd8a4c;background:#32201e;box-shadow:0 6px 18px #0007,0 0 14px #eaa64a22}
+.chat-control-btn.home-dashboard{border-color:#476b8c;background:linear-gradient(120deg,#10253b,#151c2d);color:#d8f1ff}
+.chat-control-btn.home-dashboard .control-icon{color:#7edcff}
+.chat-control-btn.chat-clear-btn{border-color:#75413a;background:linear-gradient(120deg,#35191d,#21151a);color:#ffd9c5}
+.chat-control-btn.chat-clear-btn .control-icon{color:#ff826a}
+.chat-topbar .status{min-width:82px;padding:9px 11px;border:1px solid #376449;border-radius:99px;background:#0b2119;color:#a9f3c7;font-size:10px;font-weight:800;text-align:center;white-space:nowrap;box-shadow:0 0 16px #2ce28a18}
+.sidebar{
+ position:fixed;z-index:40;top:0;left:auto;right:0;bottom:0;width:min(360px,calc(100vw - 22px));
+ padding:20px;direction:rtl;background:linear-gradient(160deg,#17151b,#0d111b 55%,#101722);
+ border-left:0;border-right:1px solid #96623a;box-shadow:-20px 0 65px #000b,0 0 35px #d04a2b20;
+ transform:translateX(105%);transition:transform .32s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;gap:14px;
+}
+.sidebar.open{transform:translateX(0)}
+.sidebar-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:5px 2px 14px;border-bottom:1px solid #ffffff12;color:#fff0d4}
+.sidebar-title-group{display:flex;flex-direction:column;gap:5px}
+.sidebar-title-group strong{font-size:17px;color:#ffe0a6}
+.sidebar-title-group small{font-size:11px;color:#a9b5c5}
+.sidebar-head button{width:35px;min-width:35px;height:35px;border:1px solid #704b37;border-radius:11px;background:#261719;color:#ffcf80;font-size:22px}
+.new-chat{display:flex;align-items:center;justify-content:flex-start;gap:10px;width:100%;height:49px;min-width:0;padding:0 13px;border:1px solid #d59a50;border-radius:14px;background:linear-gradient(105deg,#91252b,#bb672d);color:#fff4df;font-size:13px;font-weight:850;box-shadow:0 8px 24px #a33a2b33}
+.new-chat-plus{display:grid;place-items:center;width:27px;height:27px;border-radius:9px;background:#fff2dc22;font-size:19px}
+.new-chat-arrow{margin-inline-start:auto;font-size:16px;color:#ffe2a6}
+.sidebar-section-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;color:#e5c28d;font-size:11px;font-weight:850}
+.sidebar-section-label span:last-child{color:#8095a9;font-size:9px;letter-spacing:1.3px}
+.chat-list{overflow:auto;display:flex;flex-direction:column;gap:7px;padding:2px}
+.chat-item{width:100%;height:auto;min-height:47px;text-align:right;padding:10px 12px;border-radius:12px;background:linear-gradient(105deg,#1b1b25,#151a22);border:1px solid #ffffff0c;color:#d4dfeb;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .18s,border-color .18s,transform .18s}
+.chat-item:hover{background:#28212a;border-color:#785436;transform:translateX(-2px)}
+.chat-item.active{background:linear-gradient(105deg,#3b2022,#211a20);border-color:#ae7043;color:#ffe4b2;box-shadow:inset -3px 0 #e9aa50}
+.sidebar-foot{display:flex;align-items:center;gap:10px;margin-top:auto;padding:12px;border:1px solid #37536a;border-radius:13px;background:linear-gradient(120deg,#101e2b,#11151f)}
+.sidebar-foot-orb{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border:1px solid #3c96be;border-radius:50%;color:#83e5ff;box-shadow:0 0 13px #20aaff33}
+.sidebar-foot b{display:block;color:#c5eaff;font-size:10px;letter-spacing:.7px}
+.sidebar-foot small{display:block;color:#879caf;font-size:10px;margin-top:3px;line-height:1.5}
+.sidebar-shade{z-index:39;background:#02040bc9;backdrop-filter:blur(4px)}
+.composer{
+ position:fixed;z-index:20;left:50%;right:auto;bottom:13px;transform:translateX(-50%);
+ width:min(1040px,calc(100% - 28px));padding:0;background:transparent;backdrop-filter:none;
+}
+.composer-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:100%;margin:0 auto 7px;padding:0 10px;color:#a6b5c9;font-size:10px}
+.composer-topline>span:first-child{display:flex;align-items:center;gap:7px;color:#9bd8e9;letter-spacing:1px;font-weight:850}
+.composer-topline>span:last-child{color:#9aa8b8}
+.composer-topline b{display:inline-grid;place-items:center;min-width:19px;height:19px;border:1px solid #66503a;border-radius:5px;color:#f2c476;font-size:12px}
+.composer-inner{max-width:none;min-height:75px;align-items:center;gap:8px;padding:10px;border:1px solid #8e6541;border-radius:23px;background:linear-gradient(115deg,#17151cfa,#0e1723fa 55%,#1b1419fa);box-shadow:0 17px 48px #000b,0 0 0 3px #e9a44810,0 0 28px #d44c2a25,inset 0 1px #ffffff17;backdrop-filter:blur(20px);transition:border-color .22s,box-shadow .22s}
+.composer-inner:focus-within{border-color:#e4b46a;box-shadow:0 17px 48px #000b,0 0 0 3px #e9a44820,0 0 31px #24baff24,inset 0 1px #ffffff20}
+.composer-inner #attach,.composer-inner #mic,.composer-inner #voiceToggle{width:41px;min-width:41px;height:41px;flex:0 0 41px;border-radius:13px;border:1px solid #465d79;background:linear-gradient(145deg,#142b40,#111825);color:#c7e9ff;font-size:17px;box-shadow:inset 0 1px #ffffff12}
+.composer-inner #attach:hover,.composer-inner #mic:hover,.composer-inner #voiceToggle:hover{border-color:#62c8ed;background:#173650}
+.composer-inner #mic{border-color:#875345;color:#ffd2aa;background:linear-gradient(145deg,#39201e,#1c1820)}
+.composer-inner #voiceToggle.voice-active{border-color:#267d91;background:linear-gradient(145deg,#0d4253,#112432);color:#78edff}
+.composer-inner .speech-language-select{height:39px;min-width:105px;max-width:125px;padding:0 8px;border:1px solid #40556e;border-radius:11px;background:#111b29;color:#d6e8f4;font-size:11px}
+.composer-inner textarea#input{flex:1;min-width:70px;min-height:48px;max-height:150px;padding:12px 14px;border:0;border-radius:13px;background:linear-gradient(90deg,#ffffff06,#ffffff0b);color:#fff2df;font-size:14px;line-height:1.8;text-align:right;direction:rtl}
+.composer-inner textarea#input::placeholder{color:#9aa9bb}
+.composer-inner .send{width:47px;min-width:47px;height:47px;flex:0 0 47px;border:1px solid #ffc16a;border-radius:15px;background:linear-gradient(145deg,#f2644b,#a71f2c);color:#fff8e7;font-size:24px;box-shadow:0 0 19px #e54b3d55,inset 0 1px #ffffff33}
+.composer-inner .send:hover{transform:translateY(-2px);box-shadow:0 8px 22px #dd463e55,0 0 20px #f4ae4d44}
+.composer .hint{margin-top:7px;color:#687b90;font-size:9px;letter-spacing:.5px}
+.attachment-bar{max-width:100%;margin:0 auto 8px;padding:7px 12px;border:1px solid #3d83a4;border-radius:13px;background:#101e2d;color:#d9f3ff}
+.messages{max-width:900px;padding:12px 6px 20px;gap:17px}
+.msg{max-width:min(82%,760px);padding:15px 18px;border-radius:19px;font-size:14px;line-height:1.95;box-shadow:0 10px 28px #0005}
+.user{border:1px solid #a85846;background:linear-gradient(135deg,#682b31,#321b25);color:#fff0df;border-bottom-right-radius:6px}
+.ai{border:1px solid #4d7185;background:linear-gradient(135deg,#142836,#1a1b29);color:#eaf4fb;border-bottom-left-radius:6px}
+#welcome{padding:10px 0 16px}
+#welcome h1{color:#ffe0a5}
+#welcome p{color:#aebfd2}
+.welcome:before{color:#a7eaff;border-color:#286b8b;background:#0c2435}
+.suggestions .suggestion{background:linear-gradient(145deg,#151b28,#10141e);border-color:#354b65;color:#dbeaff}
+.suggestions .suggestion:hover{border-color:#d7a24f;background:#211b22}
+.sidebar-toggle{width:auto;min-width:0}
+@keyframes jarvis-portal-expand{
+ 0%{opacity:0;clip-path:circle(0 at 50% 52%);filter:blur(10px)}
+ 20%{opacity:.9}
+ 100%{opacity:0;clip-path:circle(105% at 50% 52%);filter:blur(0)}
+}
+@keyframes jarvis-chat-header-in{0%{opacity:0;transform:translateY(-24px);filter:blur(8px)}75%{opacity:1;transform:translateY(3px);filter:blur(0)}100%{opacity:1;transform:translateY(0)}}
+@keyframes jarvis-chat-main-in{0%{opacity:0;transform:translateY(25px) scale(.985);filter:blur(7px)}70%{opacity:1;transform:translateY(-3px) scale(1.002);filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes jarvis-chat-composer-in{0%{opacity:0;transform:translate(-50%,34px) scale(.96);filter:blur(5px)}75%{opacity:1;transform:translate(-50%,-3px) scale(1.005);filter:blur(0)}100%{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes jarvis-chat-message-in{0%{opacity:0;transform:translateY(17px) scale(.985)}100%{opacity:1;transform:translateY(0) scale(1)}}
+body.chat-entering:after{content:"";position:fixed;inset:-5%;z-index:100;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle at 50% 52%,#9ceeff18 0 10%,#52c9ff55 11%,transparent 12% 27%,#e7a94b38 28%,transparent 29% 47%,#d8483c35 48%,transparent 49%),linear-gradient(110deg,transparent 35%,#50d5ff18 49%,transparent 62%);animation:jarvis-portal-expand .9s cubic-bezier(.16,.78,.28,1) both}
+body.chat-entering .chat-topbar{animation:jarvis-chat-header-in .62s cubic-bezier(.2,.8,.2,1) both}
+body.chat-entering .app>main{animation:jarvis-chat-main-in .72s .08s cubic-bezier(.2,.8,.2,1) both}
+body.chat-entering .composer{animation:jarvis-chat-composer-in .72s .14s cubic-bezier(.2,.8,.2,1) both}
+body.chat-entering .messages .msg{animation:jarvis-chat-message-in .42s both}
+body.chat-entering .messages .msg:nth-child(2){animation-delay:.06s}
+body.chat-entering .messages .msg:nth-child(3){animation-delay:.12s}
+body.chat-entering .messages .msg:nth-child(4){animation-delay:.18s}
+@media(max-width:760px){
+ .chat-topbar{margin:0 -13px;padding:10px 13px;gap:9px}
+ .chat-brand{min-width:135px}.chat-brand .cat-mark{width:39px;height:39px}
+ .chat-brand-copy b{font-size:20px}.chat-brand-copy small{font-size:8px}
+ .chat-session-label{display:none}
+ .header-actions{gap:5px}
+ .chat-control-btn{height:36px;padding:0 8px;gap:4px;font-size:10px}
+ .chat-control-btn .control-icon{font-size:15px}
+ .chat-topbar .status{min-width:0;padding:7px 8px;font-size:9px}
+ .sidebar{padding:15px}
+ .composer{bottom:8px;width:calc(100% - 16px)}
+ .composer-topline{padding:0 6px;font-size:9px}
+ .composer-inner{min-height:0;gap:5px;padding:7px;border-radius:18px;flex-wrap:wrap}
+ .composer-inner textarea#input{order:0;flex:1 1 100%;min-height:43px;max-height:110px;padding:9px 11px}
+ .composer-inner #attach,.composer-inner #mic,.composer-inner #voiceToggle{width:35px;min-width:35px;height:35px;flex-basis:35px;border-radius:11px;font-size:15px}
+ .composer-inner .speech-language-select{height:34px;min-width:92px;max-width:108px;font-size:10px}
+ .composer-inner .send{width:39px;min-width:39px;height:39px;flex-basis:39px;border-radius:12px;font-size:21px}
+ .composer .hint{font-size:8px;margin-top:5px}
+ .messages{padding-bottom:18px}
+ .msg{max-width:94%;font-size:13px;padding:12px 14px}
+}
+@media(max-width:420px){
+ .chat-brand-copy small{display:none}
+ .chat-control-btn{padding:0 6px}
+ .chat-control-btn:not(.home-dashboard) span:not(.control-icon){font-size:9px}
+ .chat-topbar .status{display:none}
+ .composer-topline>span:last-child{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ body.chat-entering:after{display:none}
+ body.chat-entering .chat-topbar,body.chat-entering .app>main,body.chat-entering .composer,body.chat-entering .messages .msg{animation:none!important}
+ .sidebar{transition:none}
+}
+
 </style></head>
 <body style="direction:rtl">
 <div class="app">
@@ -527,10 +664,32 @@ body.dashboard-mode header:not(.jarvis-topbar),body.dashboard-mode main,body.das
  </main>
 </section>
 
-<header><div class="brand"><span class="cat-mark" aria-hidden="true"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS energy core"><circle cx="50" cy="50" r="42" fill="#170d12" stroke="#e7a83e" stroke-width="4"/><circle cx="50" cy="50" r="32" fill="none" stroke="#d84b36" stroke-width="5" stroke-dasharray="12 5"/><circle cx="50" cy="50" r="22" fill="#25121a" stroke="#ffcf70" stroke-width="3"/><path d="M50 27 62 44 58 65 42 65 38 44Z" fill="#ffcc66" stroke="#fff0bd" stroke-width="2"/><circle cx="50" cy="50" r="8" fill="#fff2c4"/><path d="M50 4V15M50 85V96M4 50H15M85 50H96" stroke="#ffcf70" stroke-width="3" stroke-linecap="round"/></svg></span><span><b>JARVIS</b><small class="brand-sub">Your AI assistant</small></span></div><div class="header-actions"><button id="homeDashboard" class="clear-chat home-dashboard" type="button" title="بازگشت به صفحهٔ اصلی">⌂ خانه</button><button id="historyToggle" class="sidebar-toggle" type="button" title="Chat history">☰</button><button id="clearChat" class="clear-chat" type="button">پاک‌کردن گفتگو</button><div id="status" class="status" role="status" aria-live="polite">● Ready</div></div></header>
-<div id="sidebarShade" class="sidebar-shade"></div><aside id="historySidebar" class="sidebar" aria-label="Chat history"><div class="sidebar-head"><span>Previous chats</span><button id="closeHistory" type="button" aria-label="Close">×</button></div><button id="newChat" class="new-chat" type="button">＋ New chat</button><div id="chatList" class="chat-list"></div></aside>
+<header class="chat-topbar">
+ <div class="chat-brand">
+  <span class="cat-mark" aria-hidden="true"><svg class="jarvis-cat-svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="#170d12" stroke="#e7a83e" stroke-width="4"/><circle cx="50" cy="50" r="32" fill="none" stroke="#d84b36" stroke-width="5" stroke-dasharray="12 5"/><circle cx="50" cy="50" r="22" fill="#25121a" stroke="#ffcf70" stroke-width="3"/><path d="M50 27 62 44 58 65 42 65 38 44Z" fill="#ffcc66" stroke="#fff0bd" stroke-width="2"/><circle cx="50" cy="50" r="8" fill="#fff2c4"/></svg></span>
+  <span class="chat-brand-copy"><b>JARVIS<span>.IR</span></b><small>PERSONAL AI • CHAT</small></span>
+ </div>
+ <div class="chat-session-label"><span class="session-pulse"></span><span>AI CORE</span><i></i><small>گفت‌وگوی هوشمند</small></div>
+ <div class="header-actions">
+  <button id="homeDashboard" class="chat-control-btn home-dashboard" type="button" title="بازگشت به صفحهٔ اصلی"><span class="control-icon">⌂</span><span>خانه</span></button>
+  <button id="historyToggle" class="chat-control-btn sidebar-toggle" type="button" title="نمایش تاریخچهٔ گفتگو"><span class="control-icon">☷</span><span>گفتگوها</span></button>
+  <button id="clearChat" class="chat-control-btn chat-clear-btn" type="button" title="پاک‌کردن پیام‌های این گفتگو"><span class="control-icon">↻</span><span>پاک‌کردن</span></button>
+  <div id="status" class="status" role="status" aria-live="polite">● Ready</div>
+ </div>
+</header>
+<div id="sidebarShade" class="sidebar-shade"></div>
+<aside id="historySidebar" class="sidebar" aria-label="تاریخچهٔ گفتگو">
+ <div class="sidebar-head">
+  <div class="sidebar-title-group"><strong>تاریخچهٔ گفتگو</strong><small>مکالمه‌های قبلی تو</small></div>
+  <button id="closeHistory" type="button" aria-label="بستن تاریخچه">×</button>
+ </div>
+ <button id="newChat" class="new-chat" type="button"><span class="new-chat-plus">＋</span><span>شروع گفت‌وگوی تازه</span><span class="new-chat-arrow">←</span></button>
+ <div class="sidebar-section-label"><span>گفتگوهای ذخیره‌شده</span><span>RECENT</span></div>
+ <div id="chatList" class="chat-list"></div>
+ <div class="sidebar-foot"><span class="sidebar-foot-orb">✦</span><span><b>JARVIS MEMORY</b><small>گفتگوها روی همین مرورگر ذخیره می‌شوند.</small></span></div>
+</aside>
 <main><section id="welcome" class="welcome"><div class="hero-cat" aria-hidden="true"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS energy core"><circle cx="50" cy="50" r="42" fill="#170d12" stroke="#e7a83e" stroke-width="4"/><circle cx="50" cy="50" r="32" fill="none" stroke="#d84b36" stroke-width="5" stroke-dasharray="12 5"/><circle cx="50" cy="50" r="22" fill="#25121a" stroke="#ffcf70" stroke-width="3"/><path d="M50 27 62 44 58 65 42 65 38 44Z" fill="#ffcc66" stroke="#fff0bd" stroke-width="2"/><circle cx="50" cy="50" r="8" fill="#fff2c4"/><path d="M50 4V15M50 85V96M4 50H15M85 50H96" stroke="#ffcf70" stroke-width="3" stroke-linecap="round"/></svg></div><h1>سلام! من جارویس هستم</h1><p>دستیار هوشمند تو برای یادگیری، برنامه‌نویسی، فناوری، علوم و ایده‌پردازی. از کجا شروع کنیم؟</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی در روبلاکس بده">🎮 ایده‌های بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را خیلی ساده توضیح بده">🧠 هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 دانستنی علمی</button></div></section><section id="messages" class="messages"></section></main><div id="worksheetLab" class="worksheet-lab"><div class="worksheet-shell"><div class="worksheet-head"><div><strong>🐱 JARVIS • AI Worksheet Builder</strong><div class="small">Create real, print-ready educational worksheets</div></div><button id="worksheetClose" type="button" aria-label="Close">×</button></div><div class="worksheet-body"><div class="worksheet-controls"><label for="worksheetPrompt">Worksheet topic or instructions</label><textarea id="worksheetPrompt" maxlength="4000" placeholder="e.g. Create a beginner-level English worksheet about colours and animals. Enter your instructions in English."></textarea><label for="worksheetLevel">Language level</label><select id="worksheetLevel"><option value="Pre-A1 starter">Pre-A1 — Starter</option><option value="A1.1 beginner">A1.1 — Beginner</option><option value="A1.2 beginner">A1.2 — Beginner</option><option value="A2.1 elementary">A2.1 — Elementary</option><option value="A2.2 elementary">A2.2 — Elementary</option><option value="B1.1 intermediate">B1.1 — Intermediate</option><option value="B1.2 intermediate">B1.2 — Intermediate</option><option value="B2.1 upper-intermediate">B2.1 — Upper-intermediate</option><option value="B2.2 upper-intermediate">B2.2 — Upper-intermediate</option><option value="C1 advanced">C1 — Advanced</option><option value="C2 proficiency">C2 — Proficiency</option><option value="Mixed CEFR levels">Mixed levels</option></select><label for="worksheetGrade">Grade or age group</label><select id="worksheetGrade"><option>Children</option><option>Teenagers</option><option>Adults</option><option>Grades 5–6</option><option>Grades 7–8</option><option>Grades 9–10</option></select><label for="worksheetFocus">Main exercise type</label><select id="worksheetFocus"><option>Mixed: vocabulary, grammar, reading and writing</option><option>Grammar and sentence structure</option><option>Vocabulary and spelling</option><option>Speaking and everyday situations</option><option>Reading comprehension</option><option>Test and lesson review</option></select><button id="worksheetCreate" type="button">Create Professional Worksheet</button><div id="worksheetStatus" class="worksheet-status" aria-live="polite">Questions are written by AI and displayed in a properly formatted worksheet—not generated as an image.</div></div><div id="worksheetResult" class="worksheet-result">Your worksheet preview will appear here.</div></div></div></div>
-<div class="composer"><div id="attachmentBar" class="attachment-bar" hidden><img id="attachmentThumb" alt="Selected image preview"><span id="attachmentName"></span><button id="removeAttachment" type="button" title="Remove attachment">×</button></div><div class="composer-inner"><button id="attach" type="button" title="Attach an image">📎</button><input id="attachmentInput" type="file" accept="image/*" hidden><button id="mic" title="Start speaking">🎙️</button><select id="speechLangSelect" aria-label="Speech input language" title="Choose microphone language" class="speech-language-select"><option value="en-US">🎙 English</option><option value="fa-IR" selected>🎙 فارسی</option><option value="auto">🌐 Auto detect</option></select><button id="voiceToggle" class="voice-active" title="Turn reply audio off">🔊</button><textarea id="input" rows="1" placeholder="پیامت را اینجا بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • Speech recognition powered by the server</div></div>
+<div class="composer"><div class="composer-topline"><span><i class="composer-live-dot"></i> JARVIS MESSAGE CHANNEL</span><span>پاسخت را اینجا بنویس <b>↵</b></span></div><div id="attachmentBar" class="attachment-bar" hidden><img id="attachmentThumb" alt="Selected image preview"><span id="attachmentName"></span><button id="removeAttachment" type="button" title="Remove attachment">×</button></div><div class="composer-inner"><button id="attach" type="button" title="Attach an image">📎</button><input id="attachmentInput" type="file" accept="image/*" hidden><button id="mic" title="Start speaking">🎙️</button><select id="speechLangSelect" aria-label="Speech input language" title="Choose microphone language" class="speech-language-select"><option value="en-US">🎙 English</option><option value="fa-IR" selected>🎙 فارسی</option><option value="auto">🌐 Auto detect</option></select><button id="voiceToggle" class="voice-active" title="Turn reply audio off">🔊</button><textarea id="input" rows="1" placeholder="پیامت را اینجا بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • Speech recognition powered by the server</div></div>
 </div>
 <script>
 const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic"), voiceToggle=$("voiceToggle"), speechLangSelect=$("speechLangSelect");
@@ -869,7 +1028,15 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
  const dashboard=document.getElementById("jarvisDashboard");
  if(!dashboard)return;
  document.body.classList.add("dashboard-mode");
- const showChat=()=>{stopTimer();document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.remove("dashboard-mode");setActiveNav("chat");window.scrollTo({top:0,behavior:"smooth"});};
+ const chatEntryAnimation=()=>{
+  document.body.classList.remove("chat-entering");
+  void document.body.offsetWidth;
+  document.body.classList.add("chat-entering");
+  if(chatEntryTimer!==null)window.clearTimeout(chatEntryTimer);
+  chatEntryTimer=window.setTimeout(()=>{document.body.classList.remove("chat-entering");chatEntryTimer=null;},1150);
+ };
+ let chatEntryTimer=null;
+ const showChat=()=>{stopTimer();document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.remove("dashboard-mode");setActiveNav("chat");window.scrollTo({top:0,behavior:"smooth"});chatEntryAnimation();};
  const openHistory=()=>{stopTimer();const sidebar=document.getElementById("historySidebar"),shade=document.getElementById("sidebarShade");sidebar?.classList.add("open");shade?.classList.add("show");setActiveNav("history");renderChatList();};
  const showDashboardHome=()=>{stopTimer();page?.classList.remove("open");document.body.classList.add("dashboard-mode");closeSidebar();document.getElementById("worksheetLab")?.classList.remove("open");setActiveNav("home");window.scrollTo({top:0,behavior:"smooth"});};
   let page=document.getElementById("dashboardUtilityPage");
