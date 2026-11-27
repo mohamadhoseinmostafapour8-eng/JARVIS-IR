@@ -346,6 +346,43 @@ textarea::placeholder{color:#ad9380}
 .lab-preview{background:radial-gradient(circle,#382021,#100d10 75%);border-color:#87543a;color:#f2d49b}
 @media(max-width:600px){.dash-profile{font-size:10px;padding:7px 9px}}
 
+
+
+.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+.feature-panel{min-width:0;padding:18px;border:1px solid #704a37;border-radius:17px;background:linear-gradient(145deg,#2c1d1ddd,#171416dd);box-shadow:0 12px 30px #0004}
+.feature-panel h2{margin:0 0 9px;color:#ffd18b;font-size:17px}
+.feature-panel p,.feature-muted{color:#d7c3aa;font-size:12px;line-height:1.8}
+.feature-panel input,.feature-panel textarea,.feature-panel select{width:100%;box-sizing:border-box;padding:11px 12px;margin:6px 0;border:1px solid #80583d;border-radius:10px;background:#100e10;color:#fff4e3;font:inherit;font-size:13px}
+.feature-panel textarea{min-height:120px;resize:vertical;line-height:1.8}
+.feature-btn{padding:10px 14px;border:1px solid #d5a35b;border-radius:10px;background:linear-gradient(105deg,#8f2928,#bb702b);color:#fff7e8;font-weight:750;font-size:12px}
+.feature-btn.secondary{background:#332322;border-color:#80583d}
+.feature-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.task-list,.flashcard-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.task-row,.flashcard-row{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid #684a39;border-radius:11px;background:#171315}
+.task-row span{flex:1;min-width:0;overflow-wrap:anywhere;color:#f5e6d3;font-size:13px}
+.task-row.done span{text-decoration:line-through;color:#9e907e}
+.task-icon,.task-delete{min-width:34px;width:34px;height:34px;border-radius:9px;font-size:14px}
+.task-delete{background:#4a2020;border-color:#8c3830}
+.flashcard-row{display:block}
+.flashcard-question{font-weight:800;color:#ffe0a6}
+.flashcard-answer{margin:8px 0;padding:9px;border-radius:9px;background:#100e10;color:#e6d6c3;white-space:pre-wrap;line-height:1.8}
+.flashcard-answer[hidden]{display:none}
+.quiz-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}
+.quiz-option{height:auto;min-height:44px;padding:9px;border-radius:10px;text-align:right;font-size:13px;background:#241a19;border-color:#79543b}
+.quiz-option.correct{background:#17452d;border-color:#43ad70}
+.quiz-option.wrong{background:#572626;border-color:#d36b60}
+.quiz-feedback{margin-top:12px;padding:11px;border:1px solid #79583e;border-radius:10px;color:#ffe3b5;font-size:13px;line-height:1.8}
+.focus-clock{font-size:clamp(38px,7vw,58px);font-weight:900;letter-spacing:2px;text-align:center;color:#ffd17a;font-variant-numeric:tabular-nums;padding:12px}
+.focus-state{text-align:center;color:#cfb99f;font-size:12px}
+.hub-toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:10px 0 16px}
+.hub-toolbar select{min-width:140px;max-width:100%;padding:10px;border-radius:10px;border:1px solid #81583c;background:#171315;color:#fff0db}
+.game-favorite{display:inline-flex;align-items:center;justify-content:center;min-width:0;height:34px;margin-top:12px;padding:0 11px;border-radius:9px;background:#30201b;border:1px solid #80583d;color:#ffe0a6;font-size:12px}
+.game-favorite.saved{background:#5b381d;border-color:#f0b65c;color:#fff0bd}
+.game-count,.feature-status{color:#d8b98f;font-size:12px;min-height:18px}
+.backup-warning{padding:10px;border:1px solid #80613d;border-radius:10px;background:#251c16;color:#f5d6a1;font-size:12px;line-height:1.8}
+body.reduce-motion *,body.reduce-motion *:before,body.reduce-motion *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(max-width:720px){.feature-grid{grid-template-columns:1fr}.quiz-options{grid-template-columns:1fr}.feature-panel{padding:14px}.hub-toolbar select{flex:1;min-width:120px}}
+
 </style></head>
 <body style="direction:rtl">
 <div class="app">
@@ -357,6 +394,9 @@ textarea::placeholder{color:#ad9380}
    <button data-dash="history">🕘 &nbsp; تاریخچهٔ گفتگو</button>
    <button data-dash="games">🎮 &nbsp; دنیای بازی‌ها</button>
    <button data-dash="study">📚 &nbsp; آکادمی درسی</button>
+   <button data-dash="tools">🧰 &nbsp; ابزارهای کاربردی</button>
+   <button data-dash="settings">⚙️ &nbsp; تنظیمات</button>
+   <button data-dash="help">❔ &nbsp; راهنما</button>
    <button data-dash="chat">🤖 &nbsp; دستیار هوشمند</button>
   </nav>
   <button class="dash-gochat" data-dash="chat"><span>▣</span><span>Go to Chat<small>Talk with JARVIS</small></span><span>›</span></button>
@@ -707,18 +747,197 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
  const dashboard=document.getElementById("jarvisDashboard");
  if(!dashboard)return;
  document.body.classList.add("dashboard-mode");
- const showChat=()=>{document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.remove("dashboard-mode");window.scrollTo({top:0,behavior:"smooth"});};
- const openHistory=()=>{const sidebar=document.getElementById("historySidebar"),shade=document.getElementById("sidebarShade");sidebar?.classList.add("open");shade?.classList.add("show");renderChatList();};
- const showDashboardHome=()=>{page?.classList.remove("open");document.body.classList.add("dashboard-mode");closeSidebar();document.getElementById("worksheetLab")?.classList.remove("open");window.scrollTo({top:0,behavior:"smooth"});};
+ const showChat=()=>{stopTimer();document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.remove("dashboard-mode");setActiveNav("chat");window.scrollTo({top:0,behavior:"smooth"});};
+ const openHistory=()=>{stopTimer();const sidebar=document.getElementById("historySidebar"),shade=document.getElementById("sidebarShade");sidebar?.classList.add("open");shade?.classList.add("show");setActiveNav("history");renderChatList();};
+ const showDashboardHome=()=>{stopTimer();page?.classList.remove("open");document.body.classList.add("dashboard-mode");closeSidebar();document.getElementById("worksheetLab")?.classList.remove("open");setActiveNav("home");window.scrollTo({top:0,behavior:"smooth"});};
   let page=document.getElementById("dashboardUtilityPage");
  if(!page){page=document.createElement("section");page.id="dashboardUtilityPage";page.setAttribute("aria-live","polite");document.body.appendChild(page);}
+
+  const readLocal=(key,fallback)=>{try{const value=JSON.parse(localStorage.getItem(key)||"null");return value===null?fallback:value;}catch(error){console.warn("JARVIS data read failed",key,error);return fallback;}};
+  const writeLocal=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));return true;}catch(error){console.warn("JARVIS data save failed",key,error);return false;}};
+  const savedGames=readLocal("jarvis_game_favorites_v1",[]);
+  const favoriteGames=Array.isArray(savedGames)?savedGames:[];
+  const savedTasks=readLocal("jarvis_tasks_v1",[]);
+  let jarvisTasks=Array.isArray(savedTasks)?savedTasks:[];
+  const savedCards=readLocal("jarvis_flashcards_v1",[]);
+  let jarvisFlashcards=Array.isArray(savedCards)?savedCards:[];
+  let timerMode="focus",timerSeconds=1500,timerHandle=null;
+  let quiz={items:[],index:0,score:0,answered:false,selected:-1};
+  const setActiveNav=(name)=>dashboard.querySelectorAll(".dash-nav [data-dash]").forEach(button=>button.classList.toggle("active",button.dataset.dash===name));
+  const stopTimer=()=>{if(timerHandle!==null){clearInterval(timerHandle);timerHandle=null;}};
+  function downloadFile(filename,content,type){
+    const url=URL.createObjectURL(new Blob([content],{type:type||"text/plain;charset=utf-8"}));
+    const link=document.createElement("a");link.href=url;link.download=filename;document.body.appendChild(link);link.click();link.remove();
+    window.setTimeout(()=>URL.revokeObjectURL(url),1200);
+  }
+  function filterGames(){
+    const query=(document.getElementById("gameSearch")?.value||"").trim().toLowerCase();
+    const genre=document.getElementById("gameGenreFilter")?.value||"";
+    const platform=document.getElementById("gamePlatformFilter")?.value||"";
+    const onlyFavorites=document.getElementById("gameFavoritesOnly")?.getAttribute("aria-pressed")==="true";
+    const cards=[...page.querySelectorAll("#gameGrid .hub-card")];let shown=0;
+    cards.forEach(card=>{
+      const title=card.querySelector("h2")?.textContent||"",meta=(card.dataset.game||"").toLowerCase();
+      const text=(title+" "+card.textContent+" "+meta).toLowerCase();
+      const platformMatch=!platform||
+        (platform==="pc"&&(/\bpc\b|steam|epic games/i.test(text)))||
+        (platform==="playstation"&&/(playstation|ps5|ps4)/i.test(text))||
+        (platform==="xbox"&&/xbox/i.test(text))||
+        (platform==="switch"&&/(switch|nintendo)/i.test(text))||
+        (platform==="mobile"&&/(mobile|android|ios)/i.test(text));
+      const visible=(!query||text.includes(query))&&(!genre||meta.includes(genre))&&platformMatch&&(!onlyFavorites||favoriteGames.includes(title));
+      card.hidden=!visible;if(visible)shown++;
+    });
+    const label=document.getElementById("gameResultsCount");if(label)label.textContent=shown+" مورد";
+  }
+  function initGameCenter(){
+    const grid=document.getElementById("gameGrid");if(!grid)return;
+    grid.querySelectorAll(".hub-card").forEach(card=>{
+      if(card.querySelector(".game-favorite"))return;
+      const title=card.querySelector("h2")?.textContent||"",saved=favoriteGames.includes(title);
+      const button=document.createElement("button");button.type="button";button.className="game-favorite";button.dataset.gameFavorite=title;
+      button.setAttribute("aria-pressed",String(saved));button.classList.toggle("saved",saved);button.textContent=saved?"★ ذخیره‌شده":"☆ علاقه‌مندی";card.appendChild(button);
+    });
+    filterGames();
+  }
+  function renderTasks(){
+    const host=document.getElementById("taskList"),count=document.getElementById("taskCount");if(!host)return;
+    host.replaceChildren();if(count)count.textContent=jarvisTasks.filter(x=>x.done).length+" / "+jarvisTasks.length+" انجام‌شده";
+    if(!jarvisTasks.length){const empty=document.createElement("p");empty.className="feature-muted";empty.textContent="هنوز کاری اضافه نشده است.";host.appendChild(empty);return;}
+    jarvisTasks.forEach(task=>{
+      const row=document.createElement("div");row.className="task-row"+(task.done?" done":"");
+      const toggle=document.createElement("button");toggle.type="button";toggle.className="task-icon";toggle.dataset.taskToggle=String(task.id);toggle.textContent=task.done?"✓":"○";
+      const label=document.createElement("span");label.textContent=task.text;
+      const remove=document.createElement("button");remove.type="button";remove.className="task-delete";remove.dataset.taskDelete=String(task.id);remove.textContent="×";
+      row.append(toggle,label,remove);host.appendChild(row);
+    });
+  }
+  function renderTimer(){
+    const clock=document.getElementById("focusClock"),state=document.getElementById("focusState");
+    if(clock)clock.textContent=String(Math.floor(timerSeconds/60)).padStart(2,"0")+":"+String(timerSeconds%60).padStart(2,"0");
+    if(state)state.textContent=timerMode==="focus"?"زمان تمرکز":"زمان استراحت";
+  }
+  function setTimer(mode){stopTimer();timerMode=mode;timerSeconds=mode==="focus"?1500:300;renderTimer();}
+  function startTimer(){
+    if(timerHandle!==null)return;
+    timerHandle=window.setInterval(()=>{
+      timerSeconds=Math.max(0,timerSeconds-1);
+      if(timerSeconds===0){const done=timerMode;stopTimer();timerMode=done==="focus"?"break":"focus";timerSeconds=timerMode==="focus"?1500:300;}
+      renderTimer();
+    },1000);
+  }
+  function initTools(){
+    const notes=document.getElementById("jarvisNotes");if(notes)notes.value=localStorage.getItem("jarvis_notes_v1")||"";
+    renderTasks();renderTimer();
+  }
+  function renderFlashcards(){
+    const host=document.getElementById("flashcardsList"),count=document.getElementById("flashcardCount");if(!host)return;
+    host.replaceChildren();if(count)count.textContent=jarvisFlashcards.filter(x=>x.learned).length+" / "+jarvisFlashcards.length+" یادگرفته‌شده";
+    if(!jarvisFlashcards.length){const empty=document.createElement("p");empty.className="feature-muted";empty.textContent="اولین فلش‌کارتت را بساز.";host.appendChild(empty);return;}
+    jarvisFlashcards.forEach(card=>{
+      const row=document.createElement("article");row.className="flashcard-row";
+      const q=document.createElement("div");q.className="flashcard-question";q.textContent=card.front;
+      const a=document.createElement("p");a.className="flashcard-answer";a.textContent=card.back;a.hidden=!card.revealed;
+      const actions=document.createElement("div");actions.className="feature-row";
+      [["flip",card.revealed?"پنهان‌کردن پاسخ":"نمایش پاسخ"],["learned",card.learned?"✓ یادگرفته شد":"یادگرفتم"],["delete","حذف"]].forEach(pair=>{
+        const button=document.createElement("button");button.type="button";button.className="feature-btn secondary";button.dataset.cardAction=pair[0];button.dataset.cardId=String(card.id);button.textContent=pair[1];actions.appendChild(button);
+      });
+      row.append(q,a,actions);host.appendChild(row);
+    });
+  }
+  const quizBank={
+    math:[
+      {q:"۳/۴ به چند درصد تبدیل می‌شود؟",o:["۲۵٪","۵۰٪","۷۵٪","۸۰٪"],a:2,w:"۳ تقسیم بر ۴ برابر ۰٫۷۵ است؛ یعنی ۷۵ درصد."},
+      {q:"حاصل ۱۲ × ۸ کدام است؟",o:["۸۶","۹۶","۱۰۶","۱۱۸"],a:1,w:"۱۲ گروه ۸تایی برابر ۹۶ می‌شود."},
+      {q:"۲/۵ + ۱/۵ برابر است با:",o:["۱/۵","۲/۱۰","۳/۵","۳/۱۰"],a:2,w:"مخرج‌ها یکسان‌اند؛ صورت‌ها را جمع می‌کنیم: ۳/۵."},
+      {q:"محیط مربعی با ضلع ۵ سانتی‌متر چند است؟",o:["۱۰","۱۵","۲۰","۲۵"],a:2,w:"محیط مربع برابر ۴ برابر ضلع است: ۲۰."},
+      {q:"۲۵ درصدِ ۸۰ چند می‌شود؟",o:["۱۰","۱۵","۲۰","۲۵"],a:2,w:"یک‌چهارم ۸۰ برابر ۲۰ است."}
+    ],
+    science:[
+      {q:"بیشترِ غذاسازی گیاه در کدام بخش انجام می‌شود؟",o:["ریشه","برگ","گلبرگ","دانه"],a:1,w:"برگ‌ها معمولاً محل اصلی فتوسنتز هستند."},
+      {q:"تبدیل آب مایع به بخار چه نام دارد؟",o:["انجماد","میعان","تبخیر","ذوب"],a:2,w:"در تبخیر، مایع به گاز تبدیل می‌شود."},
+      {q:"دستگاه عصبی مرکزی از چه بخش‌هایی ساخته شده است؟",o:["مغز و نخاع","قلب و ریه","معده و روده","پوست و ماهیچه"],a:0,w:"دستگاه عصبی مرکزی از مغز و نخاع تشکیل شده است."},
+      {q:"یک دور گردش زمین به دور خورشید تقریباً چقدر است؟",o:["یک روز","یک ماه","یک سال","ده سال"],a:2,w:"یک دور کامل تقریباً یک سال است."},
+      {q:"کدام بخش بیرونی هستهٔ زمین مایع است؟",o:["پوسته","گوشته","هستهٔ بیرونی","هستهٔ درونی"],a:2,w:"هستهٔ بیرونی زمین حالت مایع دارد."}
+    ],
+    english:[
+      {q:"She ___ to school every day.",o:["go","goes","going","gone"],a:1,w:"برای he / she / it در زمان حال ساده معمولاً s یا es می‌آید."},
+      {q:"The plural of child is ___.",o:["childs","childes","children","childrens"],a:2,w:"جمع بی‌قاعدهٔ child برابر children است."},
+      {q:"I have lived here ___ 2020.",o:["for","since","at","on"],a:1,w:"Since برای زمان شروع مشخص به‌کار می‌رود."},
+      {q:"They ___ playing now.",o:["is","am","are","be"],a:2,w:"فاعل they با are می‌آید."},
+      {q:"The opposite of cold is ___.",o:["hot","slow","dark","short"],a:0,w:"Hot متضاد cold است."}
+    ],
+    persian:[
+      {q:"هم‌معنی واژهٔ «شاد» کدام است؟",o:["غمگین","خوشحال","خسته","ترسیده"],a:1,w:"شاد و خوشحال هم‌معنی هستند."},
+      {q:"جمع واژهٔ «کتاب» کدام است؟",o:["کتابان","کتاب‌ها","کتابین","کتابک"],a:1,w:"برای جمع‌بستن بسیاری از اسم‌ها از «ها» استفاده می‌کنیم."},
+      {q:"نهاد جملهٔ «علی کتاب خواند» چیست؟",o:["علی","کتاب","خواند","جمله"],a:0,w:"نهاد چیزی است که درباره‌اش خبر می‌دهیم؛ اینجا علی است."},
+      {q:"فعل جملهٔ «پرندگان پرواز می‌کنند» کدام است؟",o:["پرندگان","پرواز","می‌کنند","پرواز می‌کنند"],a:3,w:"گروه فعلی کامل «پرواز می‌کنند» است."},
+      {q:"کدام واژه درست نوشته شده است؟",o:["مسعول","مسئول","مصول","مسوئل"],a:1,w:"املای معیار این واژه «مسئول» است."}
+    ]
+  };
+  function renderQuiz(){
+    const host=document.getElementById("quizArea");if(!host)return;host.replaceChildren();
+    if(!quiz.items.length){const p=document.createElement("p");p.className="feature-muted";p.textContent="یک موضوع انتخاب کن و آزمون پنج‌سؤالی را شروع کن.";host.appendChild(p);return;}
+    if(quiz.index>=quiz.items.length){
+      const result=document.createElement("div");result.className="quiz-feedback";result.textContent="آزمون تمام شد! امتیاز تو: "+quiz.score+" از "+quiz.items.length+".";
+      const again=document.createElement("button");again.type="button";again.className="feature-btn";again.dataset.quizAction="restart";again.textContent="تمرین دوباره";result.appendChild(again);host.appendChild(result);return;
+    }
+    const question=quiz.items[quiz.index],heading=document.createElement("h3");heading.textContent="سؤال "+(quiz.index+1)+" از "+quiz.items.length+" — "+question.q;host.appendChild(heading);
+    const options=document.createElement("div");options.className="quiz-options";
+    question.o.forEach((value,index)=>{
+      const button=document.createElement("button");button.type="button";button.className="quiz-option";button.textContent=value;button.dataset.quizOption=String(index);
+      if(quiz.answered){button.disabled=true;if(index===question.a)button.classList.add("correct");else if(index===quiz.selected)button.classList.add("wrong");}
+      options.appendChild(button);
+    });
+    host.appendChild(options);
+    if(quiz.answered){
+      const feedback=document.createElement("div");feedback.className="quiz-feedback";feedback.textContent=(quiz.selected===question.a?"آفرین، پاسخ درست است. ":"این پاسخ درست نبود. ")+"پاسخ درست: "+question.o[question.a]+". "+question.w;
+      const next=document.createElement("button");next.type="button";next.className="feature-btn";next.dataset.quizAction="next";next.textContent=quiz.index===quiz.items.length-1?"دیدن نتیجه":"سؤال بعدی";feedback.appendChild(next);host.appendChild(feedback);
+    }
+  }
+  function startQuiz(){
+    const subject=document.getElementById("quizSubject")?.value||"math",items=(quizBank[subject]||quizBank.math).slice();
+    for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[items[i],items[j]]=[items[j],items[i]];}
+    quiz={items,index:0,score:0,answered:false,selected:-1};renderQuiz();
+  }
+  function initStudyExtras(){
+    const shell=page.querySelector(".utility-shell");if(!shell||document.getElementById("studyExtras"))return;
+    const markup='<div id="studyExtras" class="feature-grid"><section class="feature-panel"><h2>🃏 فلش‌کارت‌های من</h2><p>پرسش یا واژه را روی کارت و پاسخ را پشت آن بنویس. کارت‌ها در همین مرورگر ذخیره می‌شوند.</p><form id="flashcardForm"><input id="flashcardFront" maxlength="100" placeholder="روی کارت: پرسش یا واژه" required><textarea id="flashcardBack" maxlength="1000" placeholder="پشت کارت: پاسخ یا معنی" required></textarea><button class="feature-btn" type="submit">ساخت فلش‌کارت</button></form><p id="flashcardCount" class="feature-muted"></p><div id="flashcardsList" class="flashcard-list"></div></section><section class="feature-panel"><h2>🧠 آزمون کوتاه</h2><p>یک درس را انتخاب کن و به پنج سؤال پاسخ بده. در پایان امتیاز و توضیح جواب‌ها را می‌بینی.</p><select id="quizSubject"><option value="math">ریاضی</option><option value="science">علوم</option><option value="english">زبان انگلیسی</option><option value="persian">فارسی</option></select><button class="feature-btn" type="button" data-page-action="quiz-start">شروع آزمون پنج‌سؤالی</button><div id="quizArea" style="margin-top:14px"></div></section></div>';
+    shell.insertAdjacentHTML("beforeend",markup);renderFlashcards();renderQuiz();
+  }
+  function initTools(){
+    const notes=document.getElementById("jarvisNotes");if(notes)notes.value=localStorage.getItem("jarvis_notes_v1")||"";
+    renderTasks();renderTimer();
+  }
+  function initSettings(){
+    const language=document.getElementById("utilitySpeechLanguage"),motion=document.getElementById("utilityReduceMotion");
+    if(language)language.value=speechLangSelect.value||"fa-IR";
+    if(motion)motion.checked=readLocal("jarvis_reduce_motion_v1",false)===true;
+    document.body.classList.toggle("reduce-motion",Boolean(motion?.checked));
+    const voice=document.getElementById("settingsVoiceState");if(voice)voice.textContent=voiceEnabled?"صدای پاسخ روشن است.":"صدای پاسخ خاموش است.";
+  }
+  function saveSettings(){
+    const language=document.getElementById("utilitySpeechLanguage"),motion=document.getElementById("utilityReduceMotion");
+    if(language){speechLangSelect.value=language.value;speechLangSelect.dispatchEvent(new Event("change"));}
+    const reduce=Boolean(motion?.checked);document.body.classList.toggle("reduce-motion",reduce);writeLocal("jarvis_reduce_motion_v1",reduce);
+    const state=document.getElementById("settingsStatus");if(state)state.textContent="تنظیمات ذخیره شد.";
+  }
+  function exportBackup(){
+    const backup={product:"JARVIS.IR",createdAt:new Date().toISOString(),data:{}};
+    for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(key&&key.startsWith("jarvis_"))backup.data[key]=localStorage.getItem(key);}
+    downloadFile("JARVIS-backup.json",JSON.stringify(backup,null,2),"application/json;charset=utf-8");
+  }
+
  const openPage=(kind)=>{
   const pages={
-   games:{title:"🎮 دنیای بازی‌ها",subtitle:"یک کتابخانهٔ آغازین برای کشف بازی‌ها، سبک‌ها و پلتفرم‌ها.",content:`<p class="hub-note">این بخش یک فهرست آغازین از بازی‌ها و مسیرهای رسمی آن‌هاست؛ همهٔ بازی‌های دنیا داخل JARVIS اجرا نمی‌شوند و دسترسی، قیمت و محدودیت سنی هر بازی را در وب‌سایت رسمی بررسی کن.</p><input class="hub-filter" id="gameSearch" placeholder="جست‌وجوی نام بازی یا سبک..."><div class="hub-grid" id="gameGrid"><article class="hub-card" data-game="minecraft sandbox crafting adventure"><span class="hub-chip">Sandbox · بقا و ساخت‌وساز</span><h2>Minecraft</h2><p>ساخت جهان، کاوش و بازی خلاقانه.</p><a href="https://www.minecraft.net/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="roblox platform user created games"><span class="hub-chip">Platform · بازی‌های کاربرساز</span><h2>Roblox</h2><p>هزاران تجربه و بازی ساخته‌شده توسط کاربران.</p><a href="https://www.roblox.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="fortnite action battle royale"><span class="hub-chip">Action · رقابتی</span><h2>Fortnite</h2><p>تجربه‌های اکشن و حالت‌های متنوع بازی.</p><a href="https://www.fortnite.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="rocket league sports cars football"><span class="hub-chip">Sports · مسابقه‌ای</span><h2>Rocket League</h2><p>ترکیب فوتبال و خودروهای مسابقه‌ای.</p><a href="https://www.rocketleague.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="steam pc store library"><span class="hub-chip">PC · فروشگاه و کتابخانه</span><h2>Steam</h2><p>کشف و مدیریت بازی‌های کامپیوتر.</p><a href="https://store.steampowered.com/" target="_blank" rel="noopener">رفتن به Steam</a></article><article class="hub-card" data-game="epic games store pc"><span class="hub-chip">PC · فروشگاه</span><h2>Epic Games Store</h2><p>فروشگاه بازی‌های رایانه‌ای و پیشنهادهای آن.</p><a href="https://store.epicgames.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="pokemon pokopia life simulation cozy sandbox nintendo switch 2"><span class="hub-chip">Life Simulation · ساخت‌وساز آرام</span><h2>Pokémon Pokopia</h2><p>با Ditto یک محیط فرسوده را بازسازی کن، وسایل بساز و برای Pokémonها زیستگاه درست کن. Nintendo Switch 2 · عرضه‌شده در ۵ مارس ۲۰۲۶.</p><a href="https://www.pokemon.com/us/news/pokemon-pokopia-is-available-now-on-nintendo-switch-2" target="_blank" rel="noopener">معرفی رسمی</a></article><article class="hub-card" data-game="forza horizon 6 racing driving japan xbox pc windows playstation 5"><span class="hub-chip">Racing · مسابقه‌ای جهان‌باز</span><h2>Forza Horizon 6</h2><p>در جاده‌ها و محیط‌های گوناگون ژاپن رانندگی کن. Xbox Series X|S و PC؛ نسخهٔ PS5 در ۲۶ ژانویهٔ ۲۰۲۷ منتشر می‌شود.</p><a href="https://forza.net/news/forza-horizon-6-pre-order-ps5" target="_blank" rel="noopener">خبر رسمی پلتفرم‌ها</a></article><article class="hub-card" data-game="mario tennis fever sports tennis nintendo switch 2"><span class="hub-chip">Sports · ورزشی</span><h2>Mario Tennis Fever</h2><p>تنیس آرکید با ۳۸ شخصیت، ۳۰ راکت ویژه و حالت‌های تک‌نفره و چندنفره. Nintendo Switch 2 · عرضه‌شده در ۱۲ فوریهٔ ۲۰۲۶.</p><a href="https://www.nintendo.com/my/games/switch2/aaaea/index.html" target="_blank" rel="noopener">صفحهٔ رسمی Nintendo</a></article><article class="hub-card" data-game="lego batman legacy dark knight action adventure superhero ps5 xbox pc switch 2"><span class="hub-chip">Action-Adventure · ابرقهرمانی</span><h2>LEGO Batman: Legacy of the Dark Knight</h2><p>ماجراجویی جهان‌باز بتمن در گاتهام با طنز LEGO. PS5، Xbox Series X|S و PC؛ نسخهٔ Switch 2 نیز از ۱۸ سپتامبر ۲۰۲۶ عرضه شده است.</p><a href="https://warnerbrosgames.com/article/lego-batman-legacy-of-the-dark-knight-nintendo-switch-2" target="_blank" rel="noopener">اطلاعیهٔ رسمی Warner Bros. Games</a></article>
+   games:{title:"🎮 دنیای بازی‌ها",subtitle:"یک کتابخانهٔ آغازین برای کشف بازی‌ها، سبک‌ها و پلتفرم‌ها.",content:`<p class="hub-note">این بخش یک فهرست آغازین از بازی‌ها و مسیرهای رسمی آن‌هاست؛ همهٔ بازی‌های دنیا داخل JARVIS اجرا نمی‌شوند و دسترسی، قیمت و محدودیت سنی هر بازی را در وب‌سایت رسمی بررسی کن.</p><input class="hub-filter" id="gameSearch" placeholder="جست‌وجوی نام بازی یا سبک..."><div class="hub-toolbar"><select id="gameGenreFilter"><option value="">همهٔ سبک‌ها</option><option value="action">اکشن</option><option value="sandbox">سندباکس</option><option value="sports">ورزشی</option><option value="racing">مسابقه‌ای</option><option value="simulation">شبیه‌سازی</option><option value="adventure">ماجراجویی</option><option value="strategy">استراتژی</option></select><select id="gamePlatformFilter"><option value="">همهٔ پلتفرم‌ها</option><option value="pc">کامپیوتر</option><option value="playstation">PlayStation</option><option value="xbox">Xbox</option><option value="switch">Nintendo</option><option value="mobile">موبایل</option></select><button id="gameFavoritesOnly" class="feature-btn secondary" type="button" aria-pressed="false">☆ فقط علاقه‌مندی‌ها</button><span id="gameResultsCount" class="game-count"></span></div><div class="hub-grid" id="gameGrid"><article class="hub-card" data-game="minecraft sandbox crafting adventure"><span class="hub-chip">Sandbox · بقا و ساخت‌وساز</span><h2>Minecraft</h2><p>ساخت جهان، کاوش و بازی خلاقانه.</p><a href="https://www.minecraft.net/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="roblox platform user created games"><span class="hub-chip">Platform · بازی‌های کاربرساز</span><h2>Roblox</h2><p>هزاران تجربه و بازی ساخته‌شده توسط کاربران.</p><a href="https://www.roblox.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="fortnite action battle royale"><span class="hub-chip">Action · رقابتی</span><h2>Fortnite</h2><p>تجربه‌های اکشن و حالت‌های متنوع بازی.</p><a href="https://www.fortnite.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="rocket league sports cars football"><span class="hub-chip">Sports · مسابقه‌ای</span><h2>Rocket League</h2><p>ترکیب فوتبال و خودروهای مسابقه‌ای.</p><a href="https://www.rocketleague.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="steam pc store library"><span class="hub-chip">PC · فروشگاه و کتابخانه</span><h2>Steam</h2><p>کشف و مدیریت بازی‌های کامپیوتر.</p><a href="https://store.steampowered.com/" target="_blank" rel="noopener">رفتن به Steam</a></article><article class="hub-card" data-game="epic games store pc"><span class="hub-chip">PC · فروشگاه</span><h2>Epic Games Store</h2><p>فروشگاه بازی‌های رایانه‌ای و پیشنهادهای آن.</p><a href="https://store.epicgames.com/" target="_blank" rel="noopener">وب‌سایت رسمی</a></article><article class="hub-card" data-game="pokemon pokopia life simulation cozy sandbox nintendo switch 2"><span class="hub-chip">Life Simulation · ساخت‌وساز آرام</span><h2>Pokémon Pokopia</h2><p>با Ditto یک محیط فرسوده را بازسازی کن، وسایل بساز و برای Pokémonها زیستگاه درست کن. Nintendo Switch 2 · عرضه‌شده در ۵ مارس ۲۰۲۶.</p><a href="https://www.pokemon.com/us/news/pokemon-pokopia-is-available-now-on-nintendo-switch-2" target="_blank" rel="noopener">معرفی رسمی</a></article><article class="hub-card" data-game="forza horizon 6 racing driving japan xbox pc windows playstation 5"><span class="hub-chip">Racing · مسابقه‌ای جهان‌باز</span><h2>Forza Horizon 6</h2><p>در جاده‌ها و محیط‌های گوناگون ژاپن رانندگی کن. Xbox Series X|S و PC؛ نسخهٔ PS5 در ۲۶ ژانویهٔ ۲۰۲۷ منتشر می‌شود.</p><a href="https://forza.net/news/forza-horizon-6-pre-order-ps5" target="_blank" rel="noopener">خبر رسمی پلتفرم‌ها</a></article><article class="hub-card" data-game="mario tennis fever sports tennis nintendo switch 2"><span class="hub-chip">Sports · ورزشی</span><h2>Mario Tennis Fever</h2><p>تنیس آرکید با ۳۸ شخصیت، ۳۰ راکت ویژه و حالت‌های تک‌نفره و چندنفره. Nintendo Switch 2 · عرضه‌شده در ۱۲ فوریهٔ ۲۰۲۶.</p><a href="https://www.nintendo.com/my/games/switch2/aaaea/index.html" target="_blank" rel="noopener">صفحهٔ رسمی Nintendo</a></article><article class="hub-card" data-game="lego batman legacy dark knight action adventure superhero ps5 xbox pc switch 2"><span class="hub-chip">Action-Adventure · ابرقهرمانی</span><h2>LEGO Batman: Legacy of the Dark Knight</h2><p>ماجراجویی جهان‌باز بتمن در گاتهام با طنز LEGO. PS5، Xbox Series X|S و PC؛ نسخهٔ Switch 2 نیز از ۱۸ سپتامبر ۲۰۲۶ عرضه شده است.</p><a href="https://warnerbrosgames.com/article/lego-batman-legacy-of-the-dark-knight-nintendo-switch-2" target="_blank" rel="noopener">اطلاعیهٔ رسمی Warner Bros. Games</a></article>
 <article class="hub-card" data-game="pokemon champions turn based battle strategy switch mobile"><span class="hub-chip">Strategy · مبارزهٔ استراتژیک</span><h2>Pokémon Champions</h2><p>یک بازی مبارزه‌ای متمرکز بر استراتژی، با انتخاب نوع Pokémon، توانایی‌ها و حرکت‌ها. Nintendo Switch و Switch 2؛ موبایل و بازی بین‌پلتفرمی نیز پشتیبانی می‌شود.</p><a href="https://champions.pokemon.com/en-us/" target="_blank" rel="noopener">سایت رسمی Pokémon</a></article>
 <article class="hub-card" data-game="tomodachi life living the dream social simulation nintendo switch"><span class="hub-chip">Social Simulation · زندگی اجتماعی</span><h2>Tomodachi Life: Living the Dream</h2><p>جزیره‌ای بساز، شخصیت‌های Mii را طراحی کن و تعامل‌ها و اتفاق‌های بامزهٔ زندگی روزمره‌شان را تماشا کن. Nintendo Switch؛ روی Switch 2 هم قابل بازی است. عرضه: ۱۶ آوریل ۲۰۲۶.</p><a href="https://www.nintendo.com/us/whatsnew/tomodachi-life-living-the-dream-direct-spotlights-quirky-fun-with-player-made-mii-characters-game-launches-on-nintendo-switch-april-16/" target="_blank" rel="noopener">خبر رسمی Nintendo</a></article>
 <article class="hub-card" data-game="a little age cozy city builder settlement simulation pc steam"><span class="hub-chip">City Builder · شهرسازی</span><h2>A Little Age</h2><p>یک بازی شهرسازی آرام برای گسترش چند سکونتگاه و مدیریت غذا، مواد و طلا؛ هر وقت خواستی می‌توانی بازی را متوقف کنی. PC · Steam؛ عرضهٔ ۲۸ اوت ۲۰۲۶. وضعیت رده‌بندی سنی در منبع بررسی‌شده مشخص نبود.</p><a href="https://store.steampowered.com/app/1530850/A_Little_Age/" target="_blank" rel="noopener">صفحهٔ رسمی Steam</a></article>
 <article class="hub-card" data-game="moomintroll winters warmth cozy adventure puzzle pc steam"><span class="hub-chip">Adventure · داستان و معما</span><h2>Moomintroll: Winter’s Warmth</h2><p>یک ماجراجویی داستانی آرام در زمستان؛ گشت‌وگذار در درهٔ مومین، حل معماها و کمک به دوستان. PC · Steam؛ عرضهٔ ۲۷ آوریل ۲۰۲۶. در Steam با برچسب Family Friendly معرفی شده است.</p><a href="https://store.steampowered.com/app/3256150/Moomintroll_Winters_Warmth/" target="_blank" rel="noopener">صفحهٔ رسمی Steam</a></article></div>`},
+   tools:{title:"🧰 ابزارهای کاربردی",subtitle:"کارها، یادداشت‌ها و زمان تمرکزت را مدیریت کن.",content:'<div class="feature-grid"><section class="feature-panel"><h2>✅ فهرست کارها</h2><p>یک کار اضافه کن و پس از انجام، آن را علامت بزن.</p><form id="taskForm"><input id="taskInput" maxlength="120" placeholder="مثلاً: مرور درس علوم" required><button class="feature-btn" type="submit">افزودن کار</button></form><span id="taskCount" class="feature-muted"></span><div id="taskList" class="task-list"></div></section><section class="feature-panel"><h2>📝 یادداشت سریع</h2><p>یادداشت‌ها هنگام نوشتن ذخیره می‌شوند.</p><textarea id="jarvisNotes" maxlength="12000" placeholder="نکته‌ها، ایده‌ها و برنامه‌ها..."></textarea><div class="feature-row"><button class="feature-btn" type="button" data-page-action="download-notes">دانلود یادداشت</button><span id="notesStatus" class="feature-status"></span></div></section><section class="feature-panel"><h2>⏱️ تایمر تمرکز</h2><p>۲۵ دقیقه تمرکز و بعد ۵ دقیقه استراحت.</p><div id="focusClock" class="focus-clock">25:00</div><div id="focusState" class="focus-state">زمان تمرکز</div><div class="feature-row"><button class="feature-btn" type="button" data-feature="timer-start">شروع</button><button class="feature-btn secondary" type="button" data-feature="timer-pause">مکث</button><button class="feature-btn secondary" type="button" data-feature="timer-reset">شروع دوباره</button><button class="feature-btn secondary" type="button" data-feature="timer-break">استراحت ۵ دقیقه‌ای</button></div></section><section class="feature-panel"><h2>🧮 ماشین‌حساب</h2><div class="feature-row"><input id="calcA" type="number" step="any" placeholder="عدد اول"><select id="calcOp"><option value="+">+</option><option value="-">−</option><option value="*">×</option><option value="/">÷</option></select><input id="calcB" type="number" step="any" placeholder="عدد دوم"></div><button class="feature-btn" type="button" data-feature="calculate">محاسبه</button><div id="calcResult" class="feature-status"></div></section><section class="feature-panel"><h2>📏 تبدیل واحد</h2><input id="convertValue" type="number" step="any" placeholder="مقدار"><select id="convertType"><option value="m-cm">متر به سانتی‌متر</option><option value="cm-m">سانتی‌متر به متر</option><option value="kg-g">کیلوگرم به گرم</option><option value="g-kg">گرم به کیلوگرم</option><option value="km-m">کیلومتر به متر</option><option value="m-km">متر به کیلومتر</option></select><button class="feature-btn" type="button" data-feature="convert">تبدیل کن</button><div id="convertResult" class="feature-status"></div></section></div>'},
+   settings:{title:"⚙️ تنظیمات",subtitle:"زبان گفتار، صدا و راحتی نمایش را تنظیم کن.",content:'<div class="feature-grid"><section class="feature-panel"><h2>🎙️ زبان میکروفون</h2><select id="utilitySpeechLanguage"><option value="fa-IR">فارسی</option><option value="en-US">English</option><option value="auto">تشخیص خودکار</option></select><div class="feature-row"><button class="feature-btn" type="button" data-page-action="save-settings">ذخیره تنظیمات</button><button class="feature-btn secondary" type="button" data-page-action="toggle-voice">روشن / خاموش کردن صدا</button></div><p id="settingsVoiceState" class="feature-status"></p><p id="settingsStatus" class="feature-status"></p></section><section class="feature-panel"><h2>♿ نمایش</h2><label><input id="utilityReduceMotion" type="checkbox" style="width:auto;margin-left:8px"> کاهش انیمیشن‌ها</label><p>حرکت‌های تزئینی را کم می‌کند.</p><button class="feature-btn" type="button" data-page-action="save-settings">ذخیره</button></section><section class="feature-panel"><h2>💾 نسخهٔ پشتیبان</h2><p>یادداشت‌ها، کارها و تاریخچهٔ ذخیره‌شده را در یک فایل دریافت کن.</p><button class="feature-btn" type="button" data-page-action="export-backup">دریافت پشتیبان JSON</button><p class="backup-warning">ممکن است فایل شامل متن گفتگوها باشد؛ آن را با دیگران به اشتراک نگذار.</p></section></div>'},
+   help:{title:"❔ راهنمای JARVIS",subtitle:"آشنایی با قابلیت‌ها و حل مشکلات رایج.",content:'<div class="feature-grid"><section class="feature-panel"><h2>🤖 دستیار هوشمند</h2><p>پرسش متنی، گفتار، تحلیل تصویر و ساخت کاربرگ؛ وابسته به دسترسی سرویس.</p></section><section class="feature-panel"><h2>🎮 GAME CENTER</h2><p>بازی‌ها را جست‌وجو، فیلتر و به علاقه‌مندی‌ها اضافه کن.</p></section><section class="feature-panel"><h2>📚 STUDY CENTER</h2><p>آزمون کوتاه بده و فلش‌کارت بساز.</p></section><section class="feature-panel"><h2>🧰 ابزارها</h2><p>فهرست کارها، یادداشت، تایمر، ماشین‌حساب و تبدیل واحد.</p></section><section class="feature-panel"><h2>🛠️ رفع خطا</h2><p>برای بارگذاری نسخهٔ جدید Ctrl + Shift + R را بزن. برای خطای جاوااسکریپت پیام قرمز Console را بررسی کن.</p></section><section class="feature-panel"><h2>🔒 حریم خصوصی</h2><p>داده‌های ابزارها و فلش‌کارت‌ها در حافظهٔ محلی مرورگر ذخیره می‌شوند؛ پاک‌کردن داده‌های سایت ممکن است آن‌ها را حذف کند.</p></section></div>'},
    study:{title:"📚 آکادمی درسی",subtitle:"یادگیری ساده، مرحله‌به‌مرحله و متناسب با پایهٔ تحصیلی.",content:`<div class="hub-grid"><article class="hub-card"><span class="hub-chip">ریاضی</span><h2>حل مسئله و تمرین</h2><p>مفاهیم، محاسبات و مسئله‌ها را با توضیح مرحله‌به‌مرحله یاد بگیر.</p><button data-page-action="study-math">شروع ریاضی</button></article><article class="hub-card"><span class="hub-chip">علوم</span><h2>آزمایشگاه علوم</h2><p>موضوعات علمی، بدن انسان، زمین، انرژی و فناوری را کشف کن.</p><button data-page-action="study-science">شروع علوم</button></article><article class="hub-card"><span class="hub-chip">فارسی و نگارش</span><h2>زبان و ادبیات</h2><p>معنی واژه‌ها، دستور زبان، املا و نگارش را تمرین کن.</p><button data-page-action="study-persian">شروع فارسی</button></article><article class="hub-card"><span class="hub-chip">English</span><h2>یادگیری انگلیسی</h2><p>واژگان، گرامر، مکالمه و درک مطلب را تمرین کن.</p><button data-page-action="study-english">شروع انگلیسی</button></article><article class="hub-card"><span class="hub-chip">تمرین و کاربرگ</span><h2>ساخت کاربرگ</h2><p>برای موضوع موردنظرت تمرین آموزشی و برگهٔ قابل چاپ بساز.</p><button data-page-action="study-worksheet">ساخت کاربرگ</button></article><article class="hub-card"><span class="hub-chip">گفت‌وگوی آموزشی</span><h2>معلم هوشمند JARVIS</h2><p>سؤالت را بپرس و پاسخ را با مثال و توضیح ساده دریافت کن.</p><button data-page-action="study-chat">پرسش از JARVIS</button></article></div><h2 style="margin:26px 0 12px;color:#f5ce7a">مأموریت‌های آموزشی هفته | ۱۵ تا ۲۱ نوامبر ۲۰۲۶</h2><p class="hub-note">چهار فعالیت کوتاه برای تمرین مستقل؛ برای لینک‌های بیرونی از منابع آموزشی رسمی استفاده شده است.</p><div class="hub-grid"><article class="hub-card"><span class="hub-chip">ریاضی · کسر و درصد</span><h2>از کسر تا درصد</h2><p>۳/۴ را به عدد اعشاری و درصد تبدیل کن؛ بعد ۱۵٪ از ۲۰۰ را حساب کن.</p><details><summary>پاسخ را ببین</summary><p>۳/۴ = ۰٫۷۵ = ۷۵٪ و ۱۵٪ از ۲۰۰ برابر ۳۰ است.</p></details><a href="https://www.khanacademy.org/math/pre-algebra/fractions" target="_blank" rel="noopener">تمرین کسرها در Khan Academy</a></article><article class="hub-card"><span class="hub-chip">علوم · ساختار اتم</span><h2>اتم بساز!</h2><p>در شبیه‌ساز PhET، اتمی با ۶ پروتون، ۶ نوترون و ۶ الکترون بساز. بار آن را پیدا کن؛ سپس یک نوترون اضافه کن و عدد جرمی را مقایسه کن.</p><a href="https://phet.colorado.edu/en/simulations/build-an-atom" target="_blank" rel="noopener">اجرای شبیه‌ساز رایگان PhET</a></article><article class="hub-card"><span class="hub-chip">English · واژگان و گرامر</span><h2>تمرین انگلیسی کوتاه</h2><p>یک تمرین متناسب با سطح A1 تا B2 انتخاب کن؛ سپس با سه واژهٔ تازه، سه جملهٔ خودت را بنویس.</p><a href="https://learnenglishteens.britishcouncil.org/grammar" target="_blank" rel="noopener">تمرین گرامر British Council</a></article><article class="hub-card"><span class="hub-chip">STEM · انرژی پاک</span><h2>طراح مزرعهٔ بادی شو</h2><p>نقشه‌ای از یک مزرعهٔ بادی ساحلی طراحی کن؛ جای توربین‌ها را طوری انتخاب کن که هم انرژی تولید شود و هم مسیر کشتی‌ها و زیستگاه جانوران در نظر گرفته شود. اگر Minecraft Education نداری، طرح را روی کاغذ بکش.</p><a href="https://education.minecraft.net/en-us/lessons/offshore-wind-power-challenge" target="_blank" rel="noopener">درس رسمی Minecraft Education</a></article></div>
 <h2 style="margin:26px 0 12px;color:#f5ce7a">مأموریت‌های آموزشی هفته | ۲۲ تا ۲۸ نوامبر ۲۰۲۶</h2>
 <p class="hub-note">دو فعالیت تازه و کوتاه؛ این‌ها به مأموریت‌های هفتهٔ قبل اضافه می‌شوند و جای آن‌ها را نمی‌گیرند.</p>
@@ -730,7 +949,8 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
   };
   const p=pages[kind];if(!p)return;
   page.innerHTML='<div class="utility-shell"><div class="utility-top"><div><h1>'+p.title+'</h1><p class="utility-subtitle">'+p.subtitle+'</p></div><button class="utility-back" data-page-action="back">← Dashboard</button></div>'+p.content+'</div>';
-  page.dataset.currentPage=kind;page.classList.add("open");
+  stopTimer();page.dataset.currentPage=kind;page.classList.add("open");setActiveNav(kind);
+  if(kind==="games")initGameCenter();if(kind==="study")initStudyExtras();if(kind==="tools")initTools();if(kind==="settings")initSettings();
   if(kind==="toolkit"){const today=new Date().toISOString().slice(0,10);const week=document.getElementById("tkWeek"),cert=document.getElementById("tkCertDate");if(week&&!week.value)week.value=today;if(cert&&!cert.value)cert.value=today;}
   if(kind==="settings"){
    const speech=document.getElementById("speechLangSelect"),sel=document.getElementById("utilitySpeechLanguage");
@@ -747,19 +967,70 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
   if(action==="chat"){showChat();return}
   if(action==="games"){openPage("games");return}
   if(action==="study"){openPage("study");return}
-  if(action==="reports"||action==="settings"||action==="help"||action==="toolkit"){openPage(action);return}
+  if(action==="tools"||action==="settings"||action==="help"){openPage(action);return}
+  if(action==="reports"||action==="toolkit"){openPage(action);return}
  });
 
- page.addEventListener("input",e=>{if(e.target.id==="gameSearch"){const q=e.target.value.trim().toLowerCase();document.querySelectorAll("#gameGrid .hub-card").forEach(card=>{card.hidden=!!q&&!((card.textContent+" "+card.dataset.game).toLowerCase().includes(q));});}});
+ page.addEventListener("input",e=>{
+  if(e.target.id==="gameSearch")filterGames();
+  if(e.target.id==="jarvisNotes"){
+   try{localStorage.setItem("jarvis_notes_v1",e.target.value);const label=document.getElementById("notesStatus");if(label)label.textContent="ذخیره شد.";}
+   catch(error){const label=document.getElementById("notesStatus");if(label)label.textContent="ذخیره انجام نشد.";}
+  }
+ });
+ page.addEventListener("change",e=>{if(e.target.id==="gameGenreFilter"||e.target.id==="gamePlatformFilter")filterGames();});
+ page.addEventListener("submit",e=>{
+  if(e.target.id==="taskForm"){e.preventDefault();const field=document.getElementById("taskInput"),value=field?.value.trim();if(!value)return;jarvisTasks.unshift({id:String(Date.now()),text:value,done:false});writeLocal("jarvis_tasks_v1",jarvisTasks);field.value="";renderTasks();}
+  if(e.target.id==="flashcardForm"){e.preventDefault();const front=document.getElementById("flashcardFront")?.value.trim(),back=document.getElementById("flashcardBack")?.value.trim();if(!front||!back)return;jarvisFlashcards.unshift({id:String(Date.now()),front,back,learned:false,revealed:false});writeLocal("jarvis_flashcards_v1",jarvisFlashcards);e.target.reset();renderFlashcards();}
+ });
  page.addEventListener("click",e=>{
+  const favoriteFilter=e.target.closest("#gameFavoritesOnly");
+  if(favoriteFilter){const active=favoriteFilter.getAttribute("aria-pressed")!=="true";favoriteFilter.setAttribute("aria-pressed",String(active));favoriteFilter.textContent=active?"★ نمایش علاقه‌مندی‌ها":"☆ همهٔ بازی‌ها";filterGames();return;}
+  const fav=e.target.closest("[data-game-favorite]");
+  if(fav){const title=fav.dataset.gameFavorite,index=favoriteGames.indexOf(title);if(index>=0)favoriteGames.splice(index,1);else favoriteGames.push(title);writeLocal("jarvis_game_favorites_v1",favoriteGames);const saved=favoriteGames.includes(title);fav.classList.toggle("saved",saved);fav.setAttribute("aria-pressed",String(saved));fav.textContent=saved?"★ ذخیره‌شده":"☆ علاقه‌مندی";filterGames();return;}
+  const toggle=e.target.closest("[data-task-toggle]");
+  if(toggle){const task=jarvisTasks.find(item=>String(item.id)===toggle.dataset.taskToggle);if(task){task.done=!task.done;writeLocal("jarvis_tasks_v1",jarvisTasks);renderTasks();}return;}
+  const remove=e.target.closest("[data-task-delete]");
+  if(remove){jarvisTasks=jarvisTasks.filter(item=>String(item.id)!==remove.dataset.taskDelete);writeLocal("jarvis_tasks_v1",jarvisTasks);renderTasks();return;}
+  const cardButton=e.target.closest("[data-card-action]");
+  if(cardButton){const id=cardButton.dataset.cardId,card=jarvisFlashcards.find(item=>String(item.id)===id);if(card){if(cardButton.dataset.cardAction==="flip")card.revealed=!card.revealed;else if(cardButton.dataset.cardAction==="learned")card.learned=!card.learned;else if(cardButton.dataset.cardAction==="delete")jarvisFlashcards=jarvisFlashcards.filter(item=>String(item.id)!==id);writeLocal("jarvis_flashcards_v1",jarvisFlashcards);renderFlashcards();}return;}
+  const option=e.target.closest("[data-quiz-option]");
+  if(option&&!quiz.answered){const q=quiz.items[quiz.index];if(q){quiz.answered=true;quiz.selected=Number(option.dataset.quizOption);if(quiz.selected===q.a)quiz.score++;renderQuiz();}return;}
+  const quizAction=e.target.closest("[data-quiz-action]");
+  if(quizAction){if(quizAction.dataset.quizAction==="restart")startQuiz();else if(quizAction.dataset.quizAction==="next"){quiz.index++;quiz.answered=false;quiz.selected=-1;renderQuiz();}return;}
+  const tool=e.target.closest("[data-feature]");
+  if(tool){
+   const action=tool.dataset.feature;
+   if(action==="timer-start")startTimer();
+   else if(action==="timer-pause")stopTimer();
+   else if(action==="timer-reset")setTimer("focus");
+   else if(action==="timer-break")setTimer("break");
+   else if(action==="calculate"){
+    const af=document.getElementById("calcA"),bf=document.getElementById("calcB"),a=Number(af?.value),b=Number(bf?.value),op=document.getElementById("calcOp")?.value,result=document.getElementById("calcResult");
+    if(!af?.value||!bf?.value){if(result)result.textContent="هر دو عدد را وارد کن.";return;}
+    if(op==="/"&&b===0){if(result)result.textContent="تقسیم بر صفر تعریف نشده است.";return;}
+    const value=op==="+"?a+b:op==="-"?a-b:op==="*"?a*b:a/b;if(result)result.textContent="نتیجه: "+value;return;
+   }else if(action==="convert"){
+    const field=document.getElementById("convertValue"),value=Number(field?.value),type=document.getElementById("convertType")?.value,result=document.getElementById("convertResult");
+    if(!field?.value){if(result)result.textContent="یک مقدار وارد کن.";return;}
+    const factors={"m-cm":100,"cm-m":0.01,"kg-g":1000,"g-kg":0.001,"km-m":1000,"m-km":0.001};
+    const units={"m-cm":"سانتی‌متر","cm-m":"متر","kg-g":"گرم","g-kg":"کیلوگرم","km-m":"متر","m-km":"کیلومتر"};
+    if(result)result.textContent="نتیجه: "+(value*factors[type])+" "+units[type];return;
+   }
+   renderTimer();return;
+  }
   const b=e.target.closest("[data-page-action]");if(!b)return;
   const action=b.dataset.pageAction;
 
   if(action==="study-math"||action==="study-science"||action==="study-persian"||action==="study-english"||action==="study-chat"){const topics={"study-math":"ریاضی را با زبان ساده و مرحله‌به‌مرحله به من آموزش بده.","study-science":"یک موضوع علمی را ساده و با مثال برایم توضیح بده.","study-persian":"در یادگیری فارسی، معنی واژه‌ها و نگارش کمکم کن.","study-english":"به من در یادگیری زبان انگلیسی با تمرین سطح‌بندی‌شده کمک کن.","study-chat":"می‌خواهم یک سؤال درسی بپرسم."};page.classList.remove("open");showChat();const box=document.getElementById("input")||document.querySelector(".composer textarea");if(box){box.value=topics[action];box.dispatchEvent(new Event("input",{bubbles:true}));box.focus();}return;}
   if(action==="study-worksheet"){page.classList.remove("open");const lab=document.getElementById("worksheetLab"),prompt=document.getElementById("worksheetPrompt");lab?.classList.add("open");prompt?.focus();return;}
-  if(action==="back"){page.classList.remove("open");return}
+  if(action==="quiz-start"){startQuiz();return;}
+  if(action==="download-notes"){downloadFile("JARVIS-notes.txt",document.getElementById("jarvisNotes")?.value||"");return;}
+  if(action==="save-settings"){saveSettings();return;}
+  if(action==="export-backup"){exportBackup();return;}
+  if(action==="back"){stopTimer();page.classList.remove("open");setActiveNav("home");return}
   if(action==="open-chat"){showChat();return}
-  if(action==="toggle-voice"){document.getElementById("voiceToggle")?.click();const state=document.getElementById("utilityVoiceState"),voice=document.getElementById("voiceToggle");if(state)state.textContent=voice?.title?.includes("off")?"Voice replies are currently ON.":"Voice replies are currently OFF.";}
+  if(action==="toggle-voice"){document.getElementById("voiceToggle")?.click();const state=document.getElementById("settingsVoiceState");if(state)state.textContent=voiceEnabled?"صدای پاسخ روشن است.":"صدای پاسخ خاموش است.";}
  });
 })();
 
