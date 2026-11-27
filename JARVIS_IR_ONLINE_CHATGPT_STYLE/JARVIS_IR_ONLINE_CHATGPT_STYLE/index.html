@@ -607,6 +607,24 @@ body.chat-entering .messages .msg:nth-child(4){animation-delay:.18s}
  .sidebar{transition:none}
 }
 
+/* Speech input and Persian read-aloud controls */
+.speech-controls{max-width:850px;margin:7px auto 0;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;border:1px solid #3b5277;border-radius:14px;background:linear-gradient(110deg,#101a2beF,#172239eF);color:#dce9ff;font-size:11px;box-shadow:0 6px 20px #0005}
+.speech-controls.playing{border-color:#45c9ef;box-shadow:0 0 16px #2abde944}
+.speech-control-buttons{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.speech-control-buttons button{height:29px;min-width:0;padding:0 9px;border-radius:9px;font-size:10px;background:#1a2c49}
+.speech-control-buttons label{display:flex;align-items:center;gap:4px;color:#c5d6ef}
+.speech-control-buttons select{height:28px;max-width:100px;border-radius:8px;background:#0b1528;color:#f1f6ff;border:1px solid #3c5378;padding:0 5px;font:inherit}
+.msg-speech-actions{display:flex;justify-content:flex-end;margin-top:8px}
+.msg-speak-button{height:28px;min-width:0;padding:0 10px;border-radius:9px;border:1px solid #4d83a4;background:#123047;color:#d9f6ff;font-size:11px}
+.msg-speak-button:hover{border-color:#72e4ff}
+.mic-wave{height:28px;align-items:center;gap:3px;padding:0 7px;border-radius:9px;background:#102e36;border:1px solid #42c7b2}
+.mic-wave:not([hidden]){display:inline-flex}
+.mic-wave i{display:block;width:3px;height:7px;border-radius:3px;background:#79ffe0;animation:jarvis-mic-wave .65s ease-in-out infinite alternate}
+.mic-wave i:nth-child(2){animation-delay:.12s}.mic-wave i:nth-child(3){animation-delay:.24s}.mic-wave i:nth-child(4){animation-delay:.36s}.mic-wave i:nth-child(5){animation-delay:.48s}
+#mic.on{background:#a52e3e!important;border-color:#ff7382!important;box-shadow:0 0 0 4px #f0445540,0 0 20px #e3485d99;animation:jarvis-mic-pulse .9s ease-in-out infinite alternate}
+@keyframes jarvis-mic-wave{to{height:20px;opacity:.65}}
+@keyframes jarvis-mic-pulse{to{box-shadow:0 0 0 7px #f0445520,0 0 26px #e3485d}}
+@media(max-width:600px){.speech-controls{align-items:flex-start;flex-direction:column;padding:7px 9px}.speech-control-buttons{width:100%;gap:4px}.speech-control-buttons button{padding:0 7px}.speech-control-buttons label{font-size:10px}.speech-control-buttons select{max-width:82px}.mic-wave{height:26px}}
 </style></head>
 <body style="direction:rtl">
 <div class="app">
@@ -690,7 +708,17 @@ body.chat-entering .messages .msg:nth-child(4){animation-delay:.18s}
  <div class="sidebar-foot"><span class="sidebar-foot-orb">✦</span><span><b>JARVIS MEMORY</b><small>گفتگوها روی همین مرورگر ذخیره می‌شوند.</small></span></div>
 </aside>
 <main><section id="welcome" class="welcome"><div class="hero-cat" aria-hidden="true"><svg class="jarvis-cat-svg" viewBox="0 0 100 100" role="img" aria-label="JARVIS energy core"><circle cx="50" cy="50" r="42" fill="#170d12" stroke="#e7a83e" stroke-width="4"/><circle cx="50" cy="50" r="32" fill="none" stroke="#d84b36" stroke-width="5" stroke-dasharray="12 5"/><circle cx="50" cy="50" r="22" fill="#25121a" stroke="#ffcf70" stroke-width="3"/><path d="M50 27 62 44 58 65 42 65 38 44Z" fill="#ffcc66" stroke="#fff0bd" stroke-width="2"/><circle cx="50" cy="50" r="8" fill="#fff2c4"/><path d="M50 4V15M50 85V96M4 50H15M85 50H96" stroke="#ffcf70" stroke-width="3" stroke-linecap="round"/></svg></div><h1>سلام! من جارویس هستم</h1><p>دستیار هوشمند تو برای یادگیری، برنامه‌نویسی، فناوری، علوم و ایده‌پردازی. از کجا شروع کنیم؟</p><div class="suggestions"><button class="suggestion" data-prompt="چند ایده خلاقانه برای ساخت بازی در روبلاکس بده">🎮 ایده‌های بازی</button><button class="suggestion" data-prompt="هوش مصنوعی را خیلی ساده توضیح بده">🧠 هوش مصنوعی</button><button class="suggestion" data-prompt="یک حقیقت علمی جالب بگو">🚀 دانستنی علمی</button></div></section><section id="messages" class="messages"></section></main><div id="worksheetLab" class="worksheet-lab"><div class="worksheet-shell"><div class="worksheet-head"><div><strong>🐱 JARVIS • AI Worksheet Builder</strong><div class="small">Create real, print-ready educational worksheets</div></div><button id="worksheetClose" type="button" aria-label="Close">×</button></div><div class="worksheet-body"><div class="worksheet-controls"><label for="worksheetPrompt">Worksheet topic or instructions</label><textarea id="worksheetPrompt" maxlength="4000" placeholder="e.g. Create a beginner-level English worksheet about colours and animals. Enter your instructions in English."></textarea><label for="worksheetLevel">Language level</label><select id="worksheetLevel"><option value="Pre-A1 starter">Pre-A1 — Starter</option><option value="A1.1 beginner">A1.1 — Beginner</option><option value="A1.2 beginner">A1.2 — Beginner</option><option value="A2.1 elementary">A2.1 — Elementary</option><option value="A2.2 elementary">A2.2 — Elementary</option><option value="B1.1 intermediate">B1.1 — Intermediate</option><option value="B1.2 intermediate">B1.2 — Intermediate</option><option value="B2.1 upper-intermediate">B2.1 — Upper-intermediate</option><option value="B2.2 upper-intermediate">B2.2 — Upper-intermediate</option><option value="C1 advanced">C1 — Advanced</option><option value="C2 proficiency">C2 — Proficiency</option><option value="Mixed CEFR levels">Mixed levels</option></select><label for="worksheetGrade">Grade or age group</label><select id="worksheetGrade"><option>Children</option><option>Teenagers</option><option>Adults</option><option>Grades 5–6</option><option>Grades 7–8</option><option>Grades 9–10</option></select><label for="worksheetFocus">Main exercise type</label><select id="worksheetFocus"><option>Mixed: vocabulary, grammar, reading and writing</option><option>Grammar and sentence structure</option><option>Vocabulary and spelling</option><option>Speaking and everyday situations</option><option>Reading comprehension</option><option>Test and lesson review</option></select><button id="worksheetCreate" type="button">Create Professional Worksheet</button><div id="worksheetStatus" class="worksheet-status" aria-live="polite">Questions are written by AI and displayed in a properly formatted worksheet—not generated as an image.</div></div><div id="worksheetResult" class="worksheet-result">Your worksheet preview will appear here.</div></div></div></div>
-<div class="composer"><div class="composer-topline"><span><i class="composer-live-dot"></i> JARVIS MESSAGE CHANNEL</span><span>پاسخت را اینجا بنویس <b>↵</b></span></div><div id="attachmentBar" class="attachment-bar" hidden><img id="attachmentThumb" alt="Selected image preview"><span id="attachmentName"></span><button id="removeAttachment" type="button" title="Remove attachment">×</button></div><div class="composer-inner"><button id="attach" type="button" title="Attach an image">📎</button><input id="attachmentInput" type="file" accept="image/*" hidden><button id="mic" title="Start speaking">🎙️</button><select id="speechLangSelect" aria-label="Speech input language" title="Choose microphone language" class="speech-language-select"><option value="en-US">🎙 English</option><option value="fa-IR" selected>🎙 فارسی</option><option value="auto">🌐 Auto detect</option></select><button id="voiceToggle" class="voice-active" title="Turn reply audio off">🔊</button><textarea id="input" rows="1" placeholder="پیامت را اینجا بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="hint">JARVIS • Speech recognition powered by the server</div></div>
+<div class="composer"><div class="composer-topline"><span><i class="composer-live-dot"></i> JARVIS MESSAGE CHANNEL</span><span>پاسخت را اینجا بنویس <b>↵</b></span></div><div id="attachmentBar" class="attachment-bar" hidden><img id="attachmentThumb" alt="Selected image preview"><span id="attachmentName"></span><button id="removeAttachment" type="button" title="Remove attachment">×</button></div><div class="composer-inner"><button id="attach" type="button" title="Attach an image">📎</button><input id="attachmentInput" type="file" accept="image/*" hidden><button id="mic" title="Start speaking">🎙️</button><span id="micWave" class="mic-wave" hidden aria-label="در حال ضبط"><i></i><i></i><i></i><i></i><i></i></span><select id="speechLangSelect" aria-label="Speech input language" title="Choose microphone language" class="speech-language-select"><option value="en-US">🎙 English</option><option value="fa-IR" selected>🎙 فارسی</option><option value="auto">🌐 Auto detect</option></select><button id="voiceToggle" class="voice-active" title="Turn reply audio off">🔊</button><textarea id="input" rows="1" placeholder="پیامت را اینجا بنویس…"></textarea><button id="send" class="send">➤</button></div><div class="speech-controls" id="speechControls">
+ <span id="speechPlaybackStatus" role="status" aria-live="polite">آمادهٔ خواندن متن</span>
+ <div class="speech-control-buttons">
+  <button id="speechPause" type="button" title="مکث خواندن">⏸ مکث</button>
+  <button id="speechResume" type="button" title="ادامهٔ خواندن">▶ ادامه</button>
+  <button id="speechStop" type="button" title="توقف خواندن">⏹ توقف</button>
+  <label for="speechRate">سرعت <select id="speechRate" aria-label="سرعت خواندن"><option value="0.8">آهسته</option><option value="1" selected>عادی</option><option value="1.15">۱٫۱۵×</option><option value="1.3">۱٫۳×</option></select></label>
+  <label for="speechVoice">صدای فارسی <select id="speechVoice" aria-label="انتخاب صدای فارسی"><option value="fa-IR-DilaraNeural">زن</option><option value="fa-IR-FaridNeural">مرد</option></select></label>
+ </div>
+</div>
+<div class="hint">میکروفون از سرور JARVIS استفاده می‌کند • برای خواندن هر پاسخ، دکمهٔ بلندگوی آن را بزن</div></div>
 </div>
 <script>
 const $=id=>document.getElementById(id), input=$("input"), list=$("messages"), welcome=$("welcome"), status=$("status"), send=$("send"), mic=$("mic"), voiceToggle=$("voiceToggle"), speechLangSelect=$("speechLangSelect");
@@ -703,22 +731,48 @@ let speechLanguage="fa-IR";
 speechLangSelect.value=speechLanguage;
 health();
 speechLangSelect.onchange=()=>{speechLanguage=speechLangSelect.value;};
-function speakReply(text){
- if(!voiceEnabled || !("speechSynthesis" in window))return;
- window.speechSynthesis.cancel();
- const clean=String(text).replace(/```[\s\S]*?```/g,"code").replace(/https?:\/\/\S+/g,"link");
- const utterance=new SpeechSynthesisUtterance(clean);
- utterance.lang=/[\u0600-\u06FF]/.test(clean)?"fa-IR":"en-US";
- utterance.rate=1;utterance.pitch=1;
- window.speechSynthesis.speak(utterance);
+let cloudTtsConfigured=false,speechRunId=0,currentSpeechAudio=null,currentSpeechUrl=null;
+const speechStatus=$("speechPlaybackStatus"),speechControls=$("speechControls"),speechRate=$("speechRate"),speechVoice=$("speechVoice");
+function showSpeechStatus(text,active=false){if(speechStatus)speechStatus.textContent=text;if(speechControls)speechControls.classList.toggle("playing",active);}
+function cleanSpeechText(value){return String(value||"").normalize("NFC").replace(/\u0060\u0060\u0060[\s\S]*?\u0060\u0060\u0060/g," متن کد ").replace(/\u0060([^\u0060]+)\u0060/g,"$1").replace(/\[([^\]]+)\]\([^)]+\)/g,"$1").replace(/https?:\/\/\S+/g,"").replace(/[*_~>#]/g,"").trim();}
+function getSpeechLang(text){return /[\u0600-\u06FF]/.test(text)?"fa":"en";}
+function splitSpeech(text,max=1800){
+ const parts=String(text).match(/[^.!?؟؛\n]+(?:[.!?؟؛]+|$)/gu)||[String(text)];
+ const out=[];let current="";
+ for(const part of parts){const value=part.trim();if(!value)continue;if((current+" "+value).trim().length<=max){current=(current+" "+value).trim();continue;}if(current)out.push(current);current="";if(value.length<=max){current=value;continue;}let piece="";for(const word of value.split(/\s+/u)){if((piece+" "+word).trim().length>max&&piece){out.push(piece);piece="";}piece=(piece+" "+word).trim();}current=piece;}
+ if(current)out.push(current);return out;
 }
-voiceToggle.onclick=()=>{
- voiceEnabled=!voiceEnabled;
- voiceToggle.textContent=voiceEnabled?"🔊":"🔇";
- voiceToggle.classList.toggle("voice-active",voiceEnabled);
- voiceToggle.title=voiceEnabled?"Reply audio is on":"Reply audio is off";
- if(!voiceEnabled && "speechSynthesis" in window)window.speechSynthesis.cancel();
-};
+function stopSpeech(show=true){
+ speechRunId++;if("speechSynthesis"in window)window.speechSynthesis.cancel();
+ if(currentSpeechAudio){currentSpeechAudio.pause();currentSpeechAudio.removeAttribute("src");currentSpeechAudio.load();currentSpeechAudio=null;}
+ if(currentSpeechUrl){URL.revokeObjectURL(currentSpeechUrl);currentSpeechUrl=null;}
+ if(show)showSpeechStatus("خواندن متوقف شد.");
+}
+function getDeviceVoices(){return new Promise(resolve=>{if(!("speechSynthesis"in window)){resolve([]);return;}const synth=window.speechSynthesis;let voices=synth.getVoices();if(voices.length){resolve(voices);return;}let timer;const done=()=>{clearTimeout(timer);synth.removeEventListener("voiceschanged",done);resolve(synth.getVoices());};timer=setTimeout(done,1200);synth.addEventListener("voiceschanged",done);});}
+async function readOnDevice(chunks,lang,rate,run){
+ if(!("speechSynthesis"in window)||typeof SpeechSynthesisUtterance==="undefined")throw new Error("خواندن متن در این مرورگر پشتیبانی نمی‌شود.");
+ const voices=await getDeviceVoices();if(run!==speechRunId)return;
+ const voicesForLang=voices.filter(v=>String(v.lang||"").toLowerCase().startsWith(lang));
+ const voice=voicesForLang.find(v=>lang==="fa"?/^fa-ir$/i.test(v.lang):/^en-us$/i.test(v.lang))||voicesForLang[0];
+ if(lang==="fa"&&!voice)throw new Error("صدای فارسی روی این دستگاه نصب نیست. برای صدای ابری فارسی، کلیدهای Azure Speech باید در Render تنظیم شوند.");
+ for(let i=0;i<chunks.length;i++){if(run!==speechRunId)return;const u=new SpeechSynthesisUtterance(chunks[i]);u.lang=lang==="fa"?"fa-IR":"en-US";if(voice)u.voice=voice;u.rate=rate;showSpeechStatus("در حال خواندن "+(i+1)+" از "+chunks.length+"…",true);await new Promise((resolve,reject)=>{u.onend=resolve;u.onerror=e=>run!==speechRunId?resolve():reject(new Error("صدای دستگاه نتوانست متن را بخواند: "+e.error));window.speechSynthesis.speak(u);});}
+}
+async function readOnCloud(chunks,lang,rate,run){
+ for(let i=0;i<chunks.length;i++){if(run!==speechRunId)return;const response=await fetch("/api/tts",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:chunks[i],language:lang,rate,voice:speechVoice?.value||"fa-IR-DilaraNeural"}),signal:AbortSignal.timeout(40000)});if(!response.ok){const data=await response.json().catch(()=>({}));throw new Error(data.error||"سرویس صداسازی پاسخ نداد.");}
+ const blob=await response.blob();if(run!==speechRunId)return;if(currentSpeechUrl)URL.revokeObjectURL(currentSpeechUrl);currentSpeechUrl=URL.createObjectURL(blob);const audio=new Audio(currentSpeechUrl);currentSpeechAudio=audio;showSpeechStatus("در حال خواندن "+(i+1)+" از "+chunks.length+"…",true);await new Promise((resolve,reject)=>{audio.onended=resolve;audio.onerror=()=>reject(new Error("پخش صدا انجام نشد."));audio.play().catch(reject);});currentSpeechAudio=null;URL.revokeObjectURL(currentSpeechUrl);currentSpeechUrl=null;}
+}
+async function readSpeechText(raw,manual=false){
+ if(!voiceEnabled&&!manual)return;const text=cleanSpeechText(raw);if(!text)return;stopSpeech(false);const run=speechRunId,lang=getSpeechLang(text),rate=Number(speechRate?.value)||1,chunks=splitSpeech(text);
+ try{showSpeechStatus("آماده‌سازی صدا…",true);if(cloudTtsConfigured){try{await readOnCloud(chunks,lang,rate,run);}catch(error){if(run!==speechRunId)return;console.warn("Cloud TTS unavailable; using device speech.",error);await readOnDevice(chunks,lang,rate,run);}}else await readOnDevice(chunks,lang,rate,run);if(run===speechRunId)showSpeechStatus("خواندن متن تمام شد.");}catch(error){if(run===speechRunId)showSpeechStatus(error.message||"خواندن متن ممکن نشد.");}
+}
+function speakReply(text){lastAssistantReply=String(text||"");if(voiceEnabled)readSpeechText(lastAssistantReply,false);}
+voiceToggle.onclick=()=>{voiceEnabled=!voiceEnabled;voiceToggle.textContent=voiceEnabled?"🔊":"🔇";voiceToggle.classList.toggle("voice-active",voiceEnabled);voiceToggle.title=voiceEnabled?"خواندن خودکار پاسخ‌ها روشن است":"خواندن خودکار پاسخ‌ها خاموش است";voiceToggle.setAttribute("aria-pressed",String(voiceEnabled));try{localStorage.setItem("jarvis_voice_enabled_v1",String(voiceEnabled));}catch(e){}if(!voiceEnabled)stopSpeech(false);else showSpeechStatus("خواندن خودکار روشن شد.");};
+$("speechPause")?.addEventListener("click",()=>{if(currentSpeechAudio)currentSpeechAudio.pause();else if("speechSynthesis"in window)window.speechSynthesis.pause();showSpeechStatus("خواندن مکث شد.");});
+$("speechResume")?.addEventListener("click",()=>{if(currentSpeechAudio)currentSpeechAudio.play().catch(()=>{});else if("speechSynthesis"in window)window.speechSynthesis.resume();showSpeechStatus("ادامهٔ خواندن…",true);});
+$("speechStop")?.addEventListener("click",()=>stopSpeech(true));
+speechRate?.addEventListener("change",()=>{try{localStorage.setItem("jarvis_speech_rate_v1",speechRate.value);}catch(e){}});
+try{if(localStorage.getItem("jarvis_voice_enabled_v1")==="false")voiceEnabled=false;const saved=localStorage.getItem("jarvis_speech_rate_v1");if(saved&&speechRate)speechRate.value=saved;}catch(e){}
+voiceToggle.textContent=voiceEnabled?"🔊":"🔇";voiceToggle.classList.toggle("voice-active",voiceEnabled);
 
 const STORAGE_KEY="jarvis_chat_history_v1";
 const messages=[];
@@ -742,7 +796,16 @@ function renderChatList(){
  for(const chat of chatSessions){const b=document.createElement("button");b.type="button";b.className="chat-item"+(chat.id===currentChatId?" active":"");b.textContent=chat.title||"New chat";b.title=b.textContent;b.onclick=()=>openChat(chat.id);host.appendChild(b)}
 }
 function add(role,text,scroll=true){
- welcome.style.display="none";const e=document.createElement("div");e.className="msg "+(role==="user"?"user":"ai");e.textContent=text;list.appendChild(e);if(scroll)e.scrollIntoView({behavior:"smooth"});
+ welcome.style.display="none";
+ const e=document.createElement("div");e.className="msg "+(role==="user"?"user":"ai");e.textContent=text;
+ if(role==="assistant"){
+  const actions=document.createElement("div");actions.className="msg-speech-actions";
+  const readButton=document.createElement("button");readButton.type="button";readButton.className="msg-speak-button";readButton.textContent="🔊 خواندن این پاسخ";
+  readButton.setAttribute("aria-label","خواندن این پاسخ با صدای بلند");
+  readButton.addEventListener("click",()=>readSpeechText(text,true));
+  actions.appendChild(readButton);e.appendChild(actions);
+ }
+ list.appendChild(e);if(scroll)e.scrollIntoView({behavior:"smooth"});
 }
 function openChat(id){
  document.body.classList.remove("dashboard-mode");document.getElementById("dashboardUtilityPage")?.classList.remove("open");
@@ -815,6 +878,7 @@ async function health(){
   const response=await fetch("/health",{cache:"no-store",signal:AbortSignal.timeout(8000)});
   const data=await response.json().catch(()=>({}));
   if(!response.ok||!data.ok)throw new Error(data.error||"Health check failed");
+  cloudTtsConfigured=Boolean(data.azureTtsConfigured);
   status.textContent=data.aiConfigured?"● Online":"● API key missing";
   status.title=data.aiConfigured
    ? "JARVIS server is online. Provider: "+(data.provider||"AI")+". Model: "+(data.model||"configured")+"."
@@ -951,47 +1015,75 @@ async function ask(){
 document.querySelectorAll(".suggestion").forEach(b=>b.onclick=()=>{input.value=b.dataset.prompt;ask()});
 $("clearChat").onclick=clearHistory;restoreHistory();
 send.onclick=ask;input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask()}});
-let mediaRecorder=null, audioChunks=[];
+let mediaRecorder=null,audioChunks=[],recordingTimer=null;
+const micWave=$("micWave");
+function setMicRecording(active,message){
+ mic.classList.toggle("on",active);mic.textContent=active?"⏹️":"🎙️";
+ mic.title=active?"توقف ضبط و تبدیل گفتار":"شروع ضبط صدا";
+ if(micWave)micWave.hidden=!active;
+ if(message)status.textContent=message;
+}
+function microphoneErrorMessage(error){
+ if(error?.name==="NotAllowedError"||error?.name==="PermissionDeniedError")return "اجازهٔ میکروفون داده نشد. از تنظیمات مرورگر، دسترسی میکروفون را برای JARVIS فعال کن.";
+ if(error?.name==="NotFoundError"||error?.name==="DevicesNotFoundError")return "هیچ میکروفونی پیدا نشد. اتصال میکروفون را بررسی کن.";
+ if(error?.name==="NotReadableError"||error?.name==="TrackStartError")return "میکروفون در برنامهٔ دیگری مشغول است. آن برنامه را ببند و دوباره امتحان کن.";
+ if(error?.name==="SecurityError"||!window.isSecureContext)return "میکروفون فقط در اتصال امن HTTPS قابل استفاده است.";
+ return "دسترسی به میکروفون ممکن نشد: "+(error?.message||"خطای ناشناخته");
+}
 async function startRecording(){
- if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){
-  alert("Audio recording is unavailable in this browser. Make sure the site is opened over HTTPS.");return;
- }
+ if(!window.isSecureContext||!navigator.mediaDevices?.getUserMedia){alert("برای استفاده از میکروفون، سایت را با نشانی HTTPS باز کن.");return;}
+ if(!window.MediaRecorder){alert("ضبط صدا در این مرورگر پشتیبانی نمی‌شود. مرورگر را به‌روز کن.");return;}
+ let stream=null;
  try{
-  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-  let mimeType="";
-  if(MediaRecorder.isTypeSupported("audio/webm;codecs=opus"))mimeType="audio/webm;codecs=opus";
-  else if(MediaRecorder.isTypeSupported("audio/ogg;codecs=opus"))mimeType="audio/ogg;codecs=opus";
+  status.textContent="● منتظر اجازهٔ میکروفون…";
+  stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+  const types=["audio/webm;codecs=opus","audio/ogg;codecs=opus","audio/mp4","audio/webm","audio/ogg"];
+  const mimeType=typeof MediaRecorder.isTypeSupported==="function"?types.find(type=>MediaRecorder.isTypeSupported(type))||"":"";
   mediaRecorder=new MediaRecorder(stream,mimeType?{mimeType}:undefined);
-  audioChunks=[];
-  mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size)audioChunks.push(e.data)};
-  mediaRecorder.onerror=()=>{stream.getTracks().forEach(t=>t.stop());mic.classList.remove("on");mic.textContent="🎙️";alert("An error occurred while recording audio.")};
-  mediaRecorder.onstop=async()=>{
-   stream.getTracks().forEach(t=>t.stop());
-   mic.classList.remove("on");mic.textContent="🎙️";mic.disabled=true;
-   const blob=new Blob(audioChunks,{type:mediaRecorder.mimeType||"audio/webm"});
-   if(!blob.size){mic.disabled=false;return}
-   const previous=mic.title;mic.title="Transcribing audio…";status.textContent="● Recognizing speech…";
+  const recorder=mediaRecorder;audioChunks=[];
+  recorder.ondataavailable=event=>{if(event.data&&event.data.size)audioChunks.push(event.data);};
+  recorder.onerror=()=>{
+   if(recordingTimer)clearTimeout(recordingTimer);recordingTimer=null;
+   stream.getTracks().forEach(track=>track.stop());
+   setMicRecording(false,"● خطای ضبط صدا");alert("هنگام ضبط صدا خطایی رخ داد. دوباره امتحان کن.");
+  };
+  recorder.onstop=async()=>{
+   if(recordingTimer)clearTimeout(recordingTimer);recordingTimer=null;
+   stream.getTracks().forEach(track=>track.stop());
+   setMicRecording(false,"● در حال تبدیل گفتار…");mic.disabled=true;
+   const blob=new Blob(audioChunks,{type:recorder.mimeType||"audio/webm"});audioChunks=[];
+   if(!blob.size){mic.disabled=false;status.textContent="● صدای خالی دریافت شد";return;}
+   const previousTitle=mic.title;mic.title="در حال تبدیل گفتار…";
    try{
     const lang=speechLanguage==="fa-IR"?"fa":speechLanguage==="en-US"?"en":"auto";
-    const response=await fetch("/transcribe?language="+lang,{method:"POST",headers:{"Content-Type":blob.type||"audio/webm"},body:blob,signal:AbortSignal.timeout(40000)});
+    const response=await fetch("/transcribe?language="+lang,{
+     method:"POST",headers:{"Content-Type":blob.type||"audio/webm"},body:blob,
+     signal:AbortSignal.timeout(60000)
+    });
     const data=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(data.error||"Audio transcription failed.");
-    if(!data.text)throw new Error("No clear speech was detected. Please try again.");
-    input.value=data.text;await ask();
-   }catch(error){alert(error.name==="TimeoutError"||error.name==="AbortError"?"Speech recognition timed out. Please try again with a shorter message.":(error.message||"Speech recognition failed."))}
-   finally{mic.disabled=false;mic.title=previous;health()}
+    if(!response.ok)throw new Error(data.error||"تبدیل گفتار انجام نشد.");
+    if(!data.text)throw new Error("گفتاری شناسایی نشد. دوباره واضح‌تر صحبت کن.");
+    input.value=data.text;input.dispatchEvent(new Event("input",{bubbles:true}));
+    status.textContent="● گفتار شناسایی شد";await ask();
+   }catch(error){
+    let message=error.message||"تبدیل گفتار با خطا روبه‌رو شد.";
+    if(error.name==="TimeoutError"||error.name==="AbortError")message="زمان تبدیل گفتار تمام شد. یک پیام کوتاه‌تر ضبط کن.";
+    else if(error instanceof TypeError)message="ارتباط مرورگر با سرور JARVIS برقرار نشد. اتصال سایت را بررسی کن؛ درخواست صوتی از همین سرور ارسال می‌شود.";
+    alert(message);status.textContent="● خطای تشخیص گفتار";
+   }finally{mic.disabled=false;mic.title=previousTitle;health();}
   };
-  mediaRecorder.start();
-  mic.classList.add("on");mic.textContent="⏹️";mic.title="Stop recording and transcribe";
+  recorder.start(250);setMicRecording(true,"● در حال گوش‌دادن…");
+  recordingTimer=setTimeout(()=>{if(recorder.state==="recording"){status.textContent="● سقف زمان ضبط؛ در حال پردازش…";recorder.stop();}},90000);
  }catch(error){
-  if(error.name==="NotAllowedError"||error.name==="PermissionDeniedError")alert("Microphone permission was denied. Allow microphone access for this website.");
-  else alert("Microphone unavailable: "+error.message);
+  if(stream)stream.getTracks().forEach(track=>track.stop());
+  setMicRecording(false,"● میکروفون آماده نیست");alert(microphoneErrorMessage(error));health();
  }
 }
 mic.onclick=()=>{
  if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();
- else startRecording();
+ else if(!mic.disabled)startRecording();
 };
+
 const worksheetLab=$("worksheetLab"),worksheetPrompt=$("worksheetPrompt"),worksheetStatus=$("worksheetStatus"),worksheetResult=$("worksheetResult"),worksheetCreate=$("worksheetCreate");
 
 $("worksheetClose").onclick=()=>worksheetLab.classList.remove("open");

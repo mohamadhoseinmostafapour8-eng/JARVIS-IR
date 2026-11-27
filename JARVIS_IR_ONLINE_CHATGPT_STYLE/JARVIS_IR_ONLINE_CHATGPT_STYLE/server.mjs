@@ -15,6 +15,9 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
 const VISION_MODEL = process.env.GROQ_VISION_MODEL || "qwen/qwen3.8-27b";
 const OWNER_CODE = process.env.JARVIS_OWNER_CODE;
+const GROQ_STT_MODEL = process.env.GROQ_STT_MODEL || "whisper-large-v3";
+const AZURE_SPEECH_KEY = process.env.AZURE_SPEECH_KEY;
+const AZURE_SPEECH_REGION = process.env.AZURE_SPEECH_REGION;
 const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 
 const instructions = `You are JARVIS, a helpful general-purpose AI assistant.
@@ -88,6 +91,8 @@ app.get("/health", (_req, res) => {
     service: "JARVIS",
     aiConfigured: Boolean(GROQ_API_KEY),
     provider: "Groq",
+    speechToTextConfigured: Boolean(GROQ_API_KEY),
+    azureTtsConfigured: Boolean(AZURE_SPEECH_KEY && AZURE_SPEECH_REGION),
     model: MODEL,
     visionModel: VISION_MODEL,
     features: {
@@ -95,42 +100,112 @@ app.get("/health", (_req, res) => {
       webSearch: MODEL.startsWith("openai/gpt-oss"),
       imageAnalysis: true,
       worksheetBuilder: true,
-      speechToText: true
+      speechToText: Boolean(GROQ_API_KEY),
+      textToSpeech: true,
+      cloudTextToSpeech: Boolean(AZURE_SPEECH_KEY && AZURE_SPEECH_REGION)
     }
   });
 });
 
 app.post("/transcribe", express.raw({ type: () => true, limit: "20mb" }), async (req, res) => {
-  if (!GROQ_API_KEY) {
-    return res.status(503).json({ ok: false, error: "GROQ_API_KEY is missing in Render Environment." });
-  }
-  if (!Buffer.isBuffer(req.body) || req.body.length === 0) {
-    return res.status(400).json({ ok: false, error: "No audio was received." });
-  }
+  if (!GROQ_API_KEY) return res.status(503).json({ ok: false, error: "سرویس تشخیص گفتار روی سرور پیکربندی نشده است؛ کلید Groq را در تنظیمات امن Render بررسی کن." });
+  if (!Buffer.isBuffer(req.body) || req.body.length < 500) return res.status(400).json({ ok: false, error: "صدای قابل پردازشی دریافت نشد. کمی واضح‌تر و طولانی‌تر صحبت کن." });
+
+  const mime = String(req.headers["content-type"] || "audio/webm").split(";")[0].trim().toLowerCase();
+  const formats = {
+    "audio/webm": "webm", "audio/ogg": "ogg", "audio/mp4": "mp4",
+    "audio/mpeg": "mp3", "audio/mp3": "mp3", "audio/wav": "wav",
+    "audio/x-wav": "wav", "audio/flac": "flac", "audio/m4a": "m4a",
+    "audio/aac": "m4a"
+  };
+  const extension = formats[mime];
+  if (!extension) return res.status(415).json({ ok: false, error: "قالب ضبط این مرورگر پشتیبانی نمی‌شود. مرورگر را به‌روز کن و دوباره امتحان کن." });
 
   try {
-    const mime = String(req.headers["content-type"] || "audio/webm").split(";")[0];
-    const extension = mime.includes("ogg") ? "ogg" : mime.includes("mp4") ? "mp4" : mime.includes("wav") ? "wav" : "webm";
     const form = new FormData();
-    form.append("file", new Blob([req.body], { type: mime }), "recording." + extension);
-    form.append("model", "whisper-large-v3-turbo");
-    if (req.query.language === "en" || req.query.language === "fa") form.append("language", req.query.language);
+    form.append("file", new Blob([req.body], { type: mime }), "jarvis-recording." + extension);
+    form.append("model", GROQ_STT_MODEL);
+    const language = req.query.language === "fa" || req.query.language === "en" ? req.query.language : "";
+    if (language) form.append("language", language);
     form.append("response_format", "json");
+    form.append("temperature", "0");
 
     const response = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
       method: "POST",
-      headers: { Authorization: `Bearer ${GROQ_API_KEY}` },
+      headers: { Authorization: "Bearer " + GROQ_API_KEY },
       body: form,
-      signal: AbortSignal.timeout(30000)
+      signal: AbortSignal.timeout(55000)
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
-      console.error("Groq transcription failed:", response.status, data);
-      return res.status(502).json({ ok: false, error: "سرویس تبدیل گفتار فعلاً نتوانست صدا را پردازش کند. کمی بعد دوباره امتحان کن." });
+      console.error("Groq transcription failed:", response.status);
+      const message = response.status === 401 || response.status === 403
+        ? "کلید Groq یا دسترسی مدل تشخیص گفتار معتبر نیست."
+        : response.status === 429
+          ? "سهمیهٔ تشخیص گفتار موقتاً تمام شده است. کمی بعد دوباره امتحان کن."
+          : "سرویس تشخیص گفتار پاسخ مناسبی نداد. دوباره ضبط کن.";
+      return res.status(response.status === 429 ? 429 : 502).json({ ok: false, error: message });
     }
-    return res.json({ ok: true, text: String(data.text || "").trim() });
+    const transcript = typeof data.text === "string" ? data.text.trim() : "";
+    if (!transcript) return res.status(422).json({ ok: false, error: "صدای واضحی شناسایی نشد. نزدیک‌تر به میکروفون صحبت کن." });
+    return res.json({ ok: true, text: transcript, model: GROQ_STT_MODEL });
   } catch (error) {
-    return sendApiError(res, error, "ارتباط با سرویس تشخیص گفتار برقرار نشد.");
+    return sendApiError(res, error, "ارتباط سرور JARVIS با سرویس تشخیص گفتار برقرار نشد.");
+  }
+});
+
+function escapeSsmlText(value) {
+  return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+}
+
+app.post("/api/tts", async (req, res) => {
+  if (!AZURE_SPEECH_KEY || !AZURE_SPEECH_REGION) return res.status(503).json({ ok: false, code: "TTS_NOT_CONFIGURED", error: "صدای ابری فارسی هنوز پیکربندی نشده است. صدای فارسی نصب‌شده روی دستگاهت را امتحان کن." });
+
+  const text = typeof req.body?.text === "string" ? req.body.text.trim() : "";
+  const language = req.body?.language === "en" ? "en" : "fa";
+  const rateValue = Number(req.body?.rate);
+  const rate = Number.isFinite(rateValue) ? Math.min(1.3, Math.max(0.75, rateValue)) : 1;
+  const allowedPersianVoices = ["fa-IR-DilaraNeural", "fa-IR-FaridNeural"];
+  const voice = language === "fa"
+    ? (allowedPersianVoices.includes(req.body?.voice) ? req.body.voice : "fa-IR-DilaraNeural")
+    : "en-US-AvaNeural";
+  const region = String(AZURE_SPEECH_REGION).trim().toLowerCase();
+
+  if (!text || text.length > 2200) return res.status(400).json({ ok: false, error: "متن گفتار باید بین ۱ تا ۲۲۰۰ نویسه باشد." });
+  if (!/^[a-z0-9-]{2,40}$/.test(region)) return res.status(503).json({ ok: false, error: "منطقهٔ سرویس Azure Speech در Render معتبر نیست." });
+
+  const locale = language === "fa" ? "fa-IR" : "en-US";
+  const ratePercent = Math.round((rate - 1) * 100);
+  const rateText = (ratePercent > 0 ? "+" : "") + ratePercent + "%";
+  const ssml = "<speak version=\"1.0\" xml:lang=\"" + locale + "\"><voice name=\"" + voice + "\" xml:lang=\"" + locale + "\"><prosody rate=\"" + rateText + "\">" + escapeSsmlText(text) + "</prosody></voice></speak>";
+
+  try {
+    const response = await fetch("https://" + region + ".tts.speech.microsoft.com/cognitiveservices/v1", {
+      method: "POST",
+      headers: {
+        "Ocp-Apim-Subscription-Key": AZURE_SPEECH_KEY,
+        "Content-Type": "application/ssml+xml",
+        "X-Microsoft-OutputFormat": "audio-16khz-128kbitrate-mono-mp3",
+        "User-Agent": "JARVIS.IR"
+      },
+      body: ssml,
+      signal: AbortSignal.timeout(35000)
+    });
+    if (!response.ok) {
+      console.error("Azure Speech TTS failed:", response.status);
+      const message = response.status === 401 || response.status === 403
+        ? "کلید یا منطقهٔ Azure Speech صحیح نیست."
+        : response.status === 429
+          ? "محدودیت موقت سرویس صداسازی فعال شده است."
+          : "سرویس صداسازی نتوانست متن را بخواند.";
+      return res.status(response.status === 429 ? 429 : 502).json({ ok: false, error: message });
+    }
+    const audio = Buffer.from(await response.arrayBuffer());
+    if (!audio.length) return res.status(502).json({ ok: false, error: "صدای خالی از سرویس دریافت شد." });
+    res.set({ "Content-Type": "audio/mpeg", "Content-Length": String(audio.length), "Cache-Control": "no-store" });
+    return res.end(audio);
+  } catch (error) {
+    return sendApiError(res, error, "ارتباط با سرویس صداسازی برقرار نشد.");
   }
 });
 
