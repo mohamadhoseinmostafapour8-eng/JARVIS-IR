@@ -780,7 +780,7 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
       const title=card.querySelector("h2")?.textContent||"",meta=(card.dataset.game||"").toLowerCase();
       const text=(title+" "+card.textContent+" "+meta).toLowerCase();
       const platformMatch=!platform||
-        (platform==="pc"&&(/\\bpc\\b|steam|epic games/i.test(text)))||
+        (platform==="pc"&&(/\bpc\b|steam|epic games/i.test(text)))||
         (platform==="playstation"&&/(playstation|ps5|ps4)/i.test(text))||
         (platform==="xbox"&&/xbox/i.test(text))||
         (platform==="switch"&&/(switch|nintendo)/i.test(text))||
@@ -984,6 +984,8 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
   if(e.target.id==="flashcardForm"){e.preventDefault();const front=document.getElementById("flashcardFront")?.value.trim(),back=document.getElementById("flashcardBack")?.value.trim();if(!front||!back)return;jarvisFlashcards.unshift({id:String(Date.now()),front,back,learned:false,revealed:false});writeLocal("jarvis_flashcards_v1",jarvisFlashcards);e.target.reset();renderFlashcards();}
  });
  page.addEventListener("click",e=>{
+  const favoriteFilter=e.target.closest("#gameFavoritesOnly");
+  if(favoriteFilter){const active=favoriteFilter.getAttribute("aria-pressed")!=="true";favoriteFilter.setAttribute("aria-pressed",String(active));favoriteFilter.textContent=active?"★ نمایش علاقه‌مندی‌ها":"☆ همهٔ بازی‌ها";filterGames();return;}
   const fav=e.target.closest("[data-game-favorite]");
   if(fav){const title=fav.dataset.gameFavorite,index=favoriteGames.indexOf(title);if(index>=0)favoriteGames.splice(index,1);else favoriteGames.push(title);writeLocal("jarvis_game_favorites_v1",favoriteGames);const saved=favoriteGames.includes(title);fav.classList.toggle("saved",saved);fav.setAttribute("aria-pressed",String(saved));fav.textContent=saved?"★ ذخیره‌شده":"☆ علاقه‌مندی";filterGames();return;}
   const toggle=e.target.closest("[data-task-toggle]");
