@@ -563,7 +563,7 @@ body.dashboard-mode header:not(.jarvis-topbar),body.dashboard-mode main,body.das
 }
 @keyframes jarvis-chat-header-in{0%{opacity:0;transform:translateY(-24px);filter:blur(8px)}75%{opacity:1;transform:translateY(3px);filter:blur(0)}100%{opacity:1;transform:translateY(0)}}
 @keyframes jarvis-chat-main-in{0%{opacity:0;transform:translateY(25px) scale(.985);filter:blur(7px)}70%{opacity:1;transform:translateY(-3px) scale(1.002);filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes jarvis-chat-composer-in{0%{opacity:0;transform:translate(-50%,34px) scale(.96);filter:blur(5px)}75%{opacity:1;transform:translate(-50%,-3px) scale(1.005);filter:blur(0)}100%{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes jarvis-chat-composer-in{0%{opacity:0;transform:translateY(34px) scale(.96);filter:blur(5px)}75%{opacity:1;transform:translateY(-3px) scale(1.005);filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes jarvis-chat-message-in{0%{opacity:0;transform:translateY(17px) scale(.985)}100%{opacity:1;transform:translateY(0) scale(1)}}
 body.chat-entering:after{content:"";position:fixed;inset:-5%;z-index:100;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle at 50% 52%,#9ceeff18 0 10%,#52c9ff55 11%,transparent 12% 27%,#e7a94b38 28%,transparent 29% 47%,#d8483c35 48%,transparent 49%),linear-gradient(110deg,transparent 35%,#50d5ff18 49%,transparent 62%);animation:jarvis-portal-expand .9s cubic-bezier(.16,.78,.28,1) both}
 body.chat-entering .chat-topbar{animation:jarvis-chat-header-in .62s cubic-bezier(.2,.8,.2,1) both}
@@ -1030,13 +1030,58 @@ if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(
  if(!dashboard)return;
  document.body.classList.add("dashboard-mode");
  const chatEntryAnimation=()=>{
-  document.body.classList.remove("chat-entering");
-  void document.body.offsetWidth;
-  document.body.classList.add("chat-entering");
-  if(chatEntryTimer!==null)window.clearTimeout(chatEntryTimer);
-  chatEntryTimer=window.setTimeout(()=>{document.body.classList.remove("chat-entering");chatEntryTimer=null;},1150);
+  const reduced=document.body.classList.contains("reduce-motion")||
+   (typeof window.matchMedia==="function"&&window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  if(reduced)return;
+  const play=(element,frames,options={})=>{
+   if(!element||typeof element.animate!=="function")return;
+   try{return element.animate(frames,{duration:options.duration||760,delay:options.delay||0,
+    easing:options.easing||"cubic-bezier(.2,.8,.2,1)",fill:"both"});}
+   catch(error){console.warn("JARVIS chat animation skipped",error);}
+  };
+  if(typeof Element==="undefined"||typeof Element.prototype.animate!=="function"){
+   document.body.classList.remove("chat-entering");void document.body.offsetWidth;
+   document.body.classList.add("chat-entering");
+   window.setTimeout(()=>document.body.classList.remove("chat-entering"),1200);
+   return;
+  }
+  window.requestAnimationFrame(()=>window.requestAnimationFrame(()=>{
+   const topbar=document.querySelector(".chat-topbar");
+   const main=topbar?.nextElementSibling;
+   const composer=document.querySelector(".composer");
+   play(topbar,[
+    {opacity:0,transform:"translateY(-25px)",filter:"blur(8px)"},
+    {opacity:1,transform:"translateY(3px)",filter:"blur(0)",offset:.78},
+    {opacity:1,transform:"translateY(0)",filter:"blur(0)"}
+   ],{duration:680});
+   if(main?.tagName==="MAIN")play(main,[
+    {opacity:0,transform:"translateY(26px) scale(.985)",filter:"blur(7px)"},
+    {opacity:1,transform:"translateY(-3px) scale(1.002)",filter:"blur(0)",offset:.72},
+    {opacity:1,transform:"translateY(0) scale(1)",filter:"blur(0)"}
+   ],{duration:780,delay:75});
+   play(composer,[
+    {opacity:0,transform:"translateY(38px) scale(.97)",filter:"blur(6px)"},
+    {opacity:1,transform:"translateY(-3px) scale(1.005)",filter:"blur(0)",offset:.78},
+    {opacity:1,transform:"translateY(0) scale(1)",filter:"blur(0)"}
+   ],{duration:760,delay:130});
+   const messages=[...document.querySelectorAll(".messages .msg")].slice(-4);
+   messages.forEach((message,index)=>play(message,[
+    {opacity:0,transform:"translateY(17px) scale(.985)"},
+    {opacity:1,transform:"translateY(0) scale(1)"}
+   ],{duration:430,delay:190+index*55}));
+   const portal=document.createElement("div");
+   portal.setAttribute("aria-hidden","true");
+   portal.style.cssText="position:fixed;inset:0;z-index:100;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle at 50% 52%,#9ceeff18 0 10%,#52c9ff55 11%,transparent 12% 27%,#e7a94b38 28%,transparent 29% 47%,#d8483c35 48%,transparent 49%),linear-gradient(110deg,transparent 35%,#50d5ff22 49%,transparent 62%);";
+   document.body.appendChild(portal);
+   const portalAnimation=play(portal,[
+    {opacity:0,clipPath:"circle(0 at 50% 52%)",filter:"blur(10px)"},
+    {opacity:.95,offset:.2},
+    {opacity:0,clipPath:"circle(115% at 50% 52%)",filter:"blur(0)"}
+   ],{duration:1050,easing:"cubic-bezier(.16,.78,.28,1)"});
+   if(portalAnimation)portalAnimation.onfinish=()=>portal.remove();
+   else window.setTimeout(()=>portal.remove(),1100);
+  }));
  };
- let chatEntryTimer=null;
  const showChat=()=>{stopTimer();document.getElementById("dashboardUtilityPage")?.classList.remove("open");document.body.classList.remove("dashboard-mode");setActiveNav("chat");window.scrollTo({top:0,behavior:"smooth"});chatEntryAnimation();};
  const openHistory=()=>{stopTimer();const sidebar=document.getElementById("historySidebar"),shade=document.getElementById("sidebarShade");sidebar?.classList.add("open");shade?.classList.add("show");setActiveNav("history");renderChatList();};
  const showDashboardHome=()=>{stopTimer();page?.classList.remove("open");document.body.classList.add("dashboard-mode");closeSidebar();document.getElementById("worksheetLab")?.classList.remove("open");setActiveNav("home");window.scrollTo({top:0,behavior:"smooth"});};
